@@ -66,7 +66,7 @@ const Login_SignUp = () => {
 
   return (
     <div className="background-login">
-      <div className="container" id="container">
+      <div className="container containerLogin" id="container">
         <div className="form-container sign-up">
           <form>
             <h1>Create Account</h1>
