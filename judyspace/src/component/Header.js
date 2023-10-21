@@ -1,7 +1,15 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import "../css/header.css";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
 const Header = () => {
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
   return (
     <Row className="header">
       <Container className="container-fluid">
@@ -9,7 +17,7 @@ const Header = () => {
           <Col xs={6} className="header-left">
             <NavLink
               to={"/"}
-              className={({ isActive }) => (isActive ? "link-active" : "link")}
+              className={isActive("/") ? "link-active" : "link"}
             >
               judySpace+
             </NavLink>
@@ -21,12 +29,17 @@ const Header = () => {
             >
               blog
             </NavLink>
-            <NavLink
-              to={"/inspiration"}
-              className={({ isActive }) => (isActive ? "link-active" : "link")}
-            >
-              inspiration
-            </NavLink>
+            <NavDropdown title="Inspiration" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
             <NavLink
               to={"/feedback"}
               className={({ isActive }) => (isActive ? "link-active" : "link")}

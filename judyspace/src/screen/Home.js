@@ -2,7 +2,9 @@ import DefaultTemplate from "../template/DefaultTemplate";
 const Home = () => {
   return (
     <>
-      <DefaultTemplate></DefaultTemplate>
+      <DefaultTemplate>
+        <h1 className=" text-white">home</h1>
+      </DefaultTemplate>
     </>
   );
 };

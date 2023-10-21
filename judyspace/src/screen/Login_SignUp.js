@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/loginSignup.css";
+import Modal from "react-bootstrap/Modal";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -15,6 +16,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 library.add(faFacebookF, faInstagram, faLinkedinIn);
 
 const Login_SignUp = () => {
+  //popup reset password
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   // Toggle login/signup
   useEffect(() => {
     const container = document.getElementById("container");
@@ -42,7 +48,29 @@ const Login_SignUp = () => {
   // Form management
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const username = useRef(null);
+  const emailRG = useRef(null);
+  const passwordRG = useRef(null);
   const navigate = useNavigate();
+  const HandleRegister = (e) => {
+    e.preventDefault();
+    const info = {
+      email: emailRG.current.value,
+      userName: username.current.value,
+      password: passwordRG.current.value,
+    };
+    fetch("http://localhost:8080/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(info),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        navigate("/");
+      });
+  };
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -81,23 +109,36 @@ const Login_SignUp = () => {
     <div className="background-login">
       <div className="container containerLogin" id="container">
         <div className="form-container sign-up">
-          <form>
+          <form onSubmit={(e) => HandleRegister(e)}>
             <h1>Create Account</h1>
             <div className="social-icons">
-              <a href="#" className="icon">
-                <FontAwesomeIcon icon={faFacebookF} />
+              <a
+                href="http://localhost:8080/oauth2/authorization/google"
+                className="icon"
+              >
+                <FontAwesomeIcon icon={faGoogle} />
               </a>
               <a href="#" className="icon">
                 <FontAwesomeIcon icon={faInstagram} />
               </a>
               <a href="#" className="icon">
-                <FontAwesomeIcon icon={faLinkedinIn} />
+                <FontAwesomeIcon icon={faFacebookF} />
               </a>
             </div>
             <span>or use your email for registration</span>
-            <input type="text" placeholder="Name" name="name" />
-            <input type="email" placeholder="Email" name="email" />
-            <input type="password" placeholder="Password" name="password" />
+            <input type="text" placeholder="Name" name="name" ref={username} />
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              ref={emailRG}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              ref={passwordRG}
+            />
             <button type="submit">Sign Up</button>
           </form>
         </div>
@@ -134,7 +175,29 @@ const Login_SignUp = () => {
               name="password"
               ref={passwordRef}
             />
-            <a href="#">Forgot Your Password?</a>
+            <>
+              <p variant="primary" onClick={handleShow}>
+                Launch demo modal
+              </p>
+
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Woohoo, you are reading this text in a modal!
+                </Modal.Body>
+                <Modal.Footer>
+                  <button variant="secondary" onClick={handleClose}>
+                    Close
+                  </button>
+                  <button variant="primary" onClick={handleClose}>
+                    Save Changes
+                  </button>
+                </Modal.Footer>
+              </Modal>
+            </>
+            <a href="">Forgot Your Password?</a>
             <button type="submit">Sign In</button>
           </form>
         </div>
