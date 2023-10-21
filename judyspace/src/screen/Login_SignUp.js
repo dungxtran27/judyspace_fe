@@ -53,14 +53,27 @@ const Login_SignUp = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((errorData) => {
+            throw new Error(errorData.key + ": " + errorData.value);
+          });
+        }
+      })
       .then((responseData) => {
         localStorage.setItem("accessToken", responseData.accessToken);
         localStorage.setItem("refreshToken", responseData.refreshToken);
+        // Only navigate on a successful response
         navigate("/default");
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the fetch.
+        console.error(error);
+        // You can display an error message to the user or take other appropriate actions.
       });
   };
 
