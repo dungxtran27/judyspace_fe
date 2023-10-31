@@ -1,0 +1,15 @@
+.header-bloglist{
+    width: 25.22725rem;
+height: 3.13781rem;
+flex-shrink: 0;
+color: #F2F2F2;
+font-feature-settings: 'liga' off;
+
+/* Heading/H3 Bold */
+font-family: Mulish;
+font-size: 2.4375rem;
+font-style: normal;
+font-weight: 700;
+line-height: 120%; /* 2.925rem */
+letter-spacing: 0.01219rem;
+}

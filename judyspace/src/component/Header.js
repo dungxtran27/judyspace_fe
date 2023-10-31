@@ -1,62 +1,55 @@
-import { Col, Container, Row } from "react-bootstrap";
-import { NavLink, useLocation } from "react-router-dom";
+import { Col, Container, Image, Row } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
 import "../css/header.css";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+
 const Header = () => {
   const location = useLocation();
 
   const isActive = (path) => {
-    return location.pathname === path;
+    return location.pathname === path ? "link-active" : "link";
   };
+
   return (
-    <Row className="header">
-      <Container className="container-fluid">
-        <Row>
-          <Col xs={6} className="header-left">
-            <NavLink
-              to={"/"}
-              className={isActive("/") ? "link-active" : "link"}
-            >
-              judySpace+
-            </NavLink>
+    <Navbar expand="lg" sticky="top">
+      <Container>
+        <Col xs={6} className="header-left">
+          <Link to={"/"}>
+            <img
+              className="home-img"
+              src="./3.png"
+              alt="notfound"
+              sticky="top"
+            ></img>
+          </Link>
+        </Col>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse>
+          <Col xs={5} className="header-right">
+            <Nav className="me-auto">
+              <Link to={"/blog"} className={isActive("/blog")}>
+                Blog
+              </Link>
+              <Link to={"/portfolio"} className={isActive("/portfolio")}>
+                Portfolio
+              </Link>
+              <Link
+                to="/musicInspiration"
+                className={isActive("/musicInspiration")}
+              >
+                Inspiration
+              </Link>
+            </Nav>
           </Col>
-          <Col xs={6} className="header-right">
-            <NavLink
-              to={"/blog"}
-              className={({ isActive }) => (isActive ? "link-active" : "link")}
-            >
-              blog
-            </NavLink>
-            <NavDropdown title="Inspiration" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-            <NavLink
-              to={"/feedback"}
-              className={({ isActive }) => (isActive ? "link-active" : "link")}
-            >
-              feedback
-            </NavLink>
-            <NavLink
-              to={"/login"}
-              style={{ textAlign: "right" }}
-              className={({ isActive }) => (isActive ? "link-active" : "link")}
-            >
-              Login
-            </NavLink>
-          </Col>
-        </Row>
+        </Navbar.Collapse>
+        <Col xs={1} className="header-avatar">
+          hehe
+        </Col>
       </Container>
-    </Row>
+    </Navbar>
   );
 };
+
 export default Header;

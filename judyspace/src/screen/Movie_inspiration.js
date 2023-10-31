@@ -2,7 +2,7 @@ import DefaultTemplate from "../template/DefaultTemplate";
 const Movie_inspiration = () => {
   return (
     <DefaultTemplate>
-      <h1 className=" text-white">home</h1>
+      <h1 className=" text-white">movie</h1>
     </DefaultTemplate>
   );
 };

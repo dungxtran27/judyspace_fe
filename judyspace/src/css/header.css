@@ -4,8 +4,14 @@
 .header-right{
     display: flex;
 align-items: flex-start;
-gap: 68px;
-margin-top: 20px;
+
+}
+.custom-dropdown .dropdown-menu {
+  background-color: #343a40; /* Replace with your desired dark color */
+  color: #fff; /* Replace with your desired text color */
+}
+.navbar-toggler-icon{
+  background-image: url("../img/menu-bar.png") !important;
 }
 .header-right a{
     text-decoration: none;
@@ -27,6 +33,24 @@ font-style: normal;
 font-weight: 400;
 line-height: normal;
 }
-.link-active{
- background-color: red;
+.link {
+  color: #ec0b0b;
+  font-size: 16px;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.link-active {
+  color: #ff0000;
+  font-size: 16px;
+  background-color: rgba(93, 0, 255, 0.454);
+  margin-right: 10px;
+  border-radius: 20px;
+}
+.home-img{
+  width: 150px;
+}
+.navbar-nav a{
+  padding: 0.5em;
+  padding-top: 0.5em;
 }

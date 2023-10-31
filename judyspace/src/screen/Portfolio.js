@@ -1,5 +1,11 @@
+import DefaultTemplate from "../template/DefaultTemplate";
+
 const Portfolio = () => {
-  return <div>portfolio</div>;
+  return (
+    <DefaultTemplate>
+      <h1 className=" text-white">port nel</h1>
+    </DefaultTemplate>
+  );
 };
 
 export default Portfolio;
