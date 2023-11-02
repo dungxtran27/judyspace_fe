@@ -3,3 +3,9 @@ body{
  background-size: auto;
    
 }
+a{
+    text-decoration: none;
+}
+::-webkit-scrollbar {
+    display: none;
+}

@@ -1,11 +1,30 @@
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Col, Container, Dropdown, Image, Row } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import "../css/header.css";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useEffect, useState } from "react";
 
 const Header = () => {
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refereshToken");
+  const [user, SetUser] = useState("");
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  };
+  useEffect(() => {
+    fetch("http://localhost:8080/api/users/testingSecurity", {
+      method: "GET",
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        SetUser(data.userName);
+      });
+  }, []);
+
   const location = useLocation();
 
   const isActive = (path) => {
@@ -43,10 +62,25 @@ const Header = () => {
               </Link>
             </Nav>
           </Col>
+          <Col xs={1}>
+            {{ user } == null ? (
+              <Link to="/login" className={isActive("/login")}>
+                Login
+              </Link>
+            ) : (
+              <Dropdown>
+                <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                  {user}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <div href="#/action-1">Change Password</div>
+                  <div href="#/action-2">SignOut</div>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </Col>
         </Navbar.Collapse>
-        <Col xs={1} className="header-avatar">
-          hehe
-        </Col>
       </Container>
     </Navbar>
   );

@@ -13,9 +13,14 @@ import {
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from "react-toastify";
 library.add(faFacebookF, faInstagram, faLinkedinIn);
 
 const Login_SignUp = () => {
+  //toast
+  const toastNow = () => {
+    toast.error("dungmuahaha");
+  };
   //popup reset password
   const [show, setShow] = useState(false);
 
@@ -44,7 +49,37 @@ const Login_SignUp = () => {
       loginBtn.removeEventListener("click", handleLoginClick);
     };
   }, []);
+  //reset pass word
+  const emailreset = useRef(null);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    setIsButtonDisabled(true);
 
+    setTimeout(() => {
+      setIsButtonDisabled(false);
+    }, 10000);
+    const data = {
+      email: emailreset.current.value,
+    };
+    fetch("http://localhost:8080/api/users/resetPassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Add responseData as a parameter
+        if (responseData.key !== null) {
+          toast.error(responseData.value);
+        } else {
+          toast.success("Thay đổi thành công, kiểm tra email của bạn!");
+          navigate("/");
+        }
+      });
+  };
   // Form management
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -67,8 +102,14 @@ const Login_SignUp = () => {
       body: JSON.stringify(info),
     })
       .then((response) => response.json())
-      .then(() => {
-        navigate("/");
+      .then((responseData) => {
+        // Add responseData as a parameter
+        if (responseData.key !== null) {
+          toast.error(responseData.value);
+        } else {
+          navigate("/");
+          toast.success("Đăng kí thành công,vui lòng kiểm tra email");
+        }
       });
   };
   const handleFormSubmit = (e) => {
@@ -86,9 +127,14 @@ const Login_SignUp = () => {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        localStorage.setItem("accessToken", responseData.accessToken);
-        localStorage.setItem("refreshToken", responseData.refreshToken);
-        navigate("/default");
+        if (responseData.key !== null) {
+          toast.error(responseData.value);
+        } else {
+          localStorage.setItem("accessToken", responseData.accessToken);
+          localStorage.setItem("refreshToken", responseData.refreshToken);
+          toast.success("Đăng nhập thành công!");
+          navigate("/");
+        }
       });
   };
 
@@ -119,12 +165,14 @@ const Login_SignUp = () => {
               placeholder="Email"
               name="email"
               ref={emailRG}
+              required
             />
             <input
               type="password"
               placeholder="Password"
               name="password"
               ref={passwordRG}
+              required
             />
             <button type="submit">Sign Up</button>
           </form>
@@ -155,36 +203,47 @@ const Login_SignUp = () => {
               placeholder="Email"
               name="email"
               ref={emailRef}
+              required
             />
             <input
               type="password"
               placeholder="Password"
               name="password"
               ref={passwordRef}
+              required
             />
             <>
-              <p variant="primary" onClick={handleShow}>
-                Launch demo modal
-              </p>
-
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  Woohoo, you are reading this text in a modal!
+                  <Form></Form>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="name@example.com"
+                      autoFocus
+                      ref={emailreset}
+                      disabled={isButtonDisabled}
+                    />
+                  </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                  <button variant="secondary" onClick={handleClose}>
-                    Close
-                  </button>
-                  <button variant="primary" onClick={handleClose}>
-                    Save Changes
-                  </button>
+                  <Button variant="danger" onClick={handleClose}>
+                    Cancel
+                  </Button>
+                  <Button variant="primary" onClick={handleEmailSubmit}>
+                    Send to email
+                  </Button>
                 </Modal.Footer>
               </Modal>
             </>
-            <a href="">Forgot Your Password?</a>
+            <a onClick={handleShow}>Forgot Your Password?</a>
             <button type="submit">Sign In</button>
           </form>
         </div>
