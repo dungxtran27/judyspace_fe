@@ -122,10 +122,17 @@ const Login_SignUp = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((errorData) => {
+            throw new Error(errorData.key + ": " + errorData.value);
+          });
+        }
+      })
       .then((responseData) => {
         if (responseData.key !== null) {
           toast.error(responseData.value);

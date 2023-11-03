@@ -16,14 +16,26 @@ export default function () {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((responseData) => {
         localStorage.setItem("accessToken", responseData.accessToken);
         localStorage.setItem("refreshToken", responseData.refreshToken);
-        navigate("/default");
+        // Only navigate on a successful response
+        // navigate("/default");
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the fetch.
+        console.error("Fetch error:", error);
+        // You can display an error message to the user or take other appropriate actions.
       });
   };
   return (

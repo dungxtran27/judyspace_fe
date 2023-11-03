@@ -34,7 +34,7 @@ const Header = () => {
   return (
     <Navbar expand="lg" sticky="top">
       <Container>
-        <Col xs={6} className="header-left">
+        <Col xs={3} className="header-left">
           <Link to={"/"}>
             <img
               className="home-img"
@@ -46,7 +46,7 @@ const Header = () => {
         </Col>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse>
-          <Col xs={5} className="header-right">
+          <Col xs={6} className="header-right">
             <Nav className="me-auto">
               <Link to={"/blog"} className={isActive("/blog")}>
                 Blog
@@ -63,22 +63,9 @@ const Header = () => {
             </Nav>
           </Col>
           <Col xs={1}>
-            {{ user } == null ? (
-              <Link to="/login" className={isActive("/login")}>
-                Login
-              </Link>
-            ) : (
-              <Dropdown>
-                <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                  {user}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <div href="#/action-1">Change Password</div>
-                  <div href="#/action-2">SignOut</div>
-                </Dropdown.Menu>
-              </Dropdown>
-            )}
+            <Link to="/login" className={isActive("/login")}>
+              Login
+            </Link>
           </Col>
         </Navbar.Collapse>
       </Container>
