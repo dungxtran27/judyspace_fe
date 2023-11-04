@@ -34,7 +34,7 @@ const Header = () => {
   return (
     <Navbar expand="lg" sticky="top">
       <Container>
-        <Col xs={3} className="header-left">
+        <Col xs={6} className="header-left">
           <Link to={"/"}>
             <img
               className="home-img"
@@ -43,10 +43,10 @@ const Header = () => {
               sticky="top"
             ></img>
           </Link>
-        </Col>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse>
-          <Col xs={6} className="header-right">
+        </Col>{" "}
+        <Col xs={5} className="header-right">
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse>
             <Nav className="me-auto">
               <Link to={"/blog"} className={isActive("/blog")}>
                 Blog
@@ -61,13 +61,35 @@ const Header = () => {
                 Inspiration
               </Link>
             </Nav>
-          </Col>
-          <Col xs={1}>
-            <Link to="/login" className={isActive("/login")}>
+          </Navbar.Collapse>
+        </Col>
+        <Col xs={1}>
+          {{ user } == null ? (
+            <Link to="/login" className={isActive("/musicInspiration")}>
               Login
             </Link>
-          </Col>
-        </Navbar.Collapse>
+          ) : (
+            <div className="nav-drop">
+              <ul className="links">
+                <li className="dropdown">
+                  <a href="#" className="trigger-drop">
+                    <div className="avt"> {user} </div>
+                    <i className="arrow"></i>
+                  </a>
+                  <ul className="drop">
+                    <li>
+                      <a href="#">Sign Out</a>
+                    </li>
+
+                    <li>
+                      <a href="#">Change Password</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          )}
+        </Col>
       </Container>
     </Navbar>
   );
