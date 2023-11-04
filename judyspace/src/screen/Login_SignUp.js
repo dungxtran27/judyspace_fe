@@ -68,17 +68,19 @@ const Login_SignUp = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        // Add responseData as a parameter
-        if (responseData.key !== null) {
-          toast.error(responseData.value);
-        } else {
-          toast.success("Thay đổi thành công, kiểm tra email của bạn!");
-          navigate("/");
-        }
-      });
+    }).then((response) => {
+      if (response.status != 200) {
+        response.json().then((data1) => {
+          console.log(data1);
+          toast.error(data1.value);
+        });
+      } else {
+        response.json().then((data1) => {
+          console.log(data1);
+          toast.success(data1.value);
+        });
+      }
+    });
   };
   // Form management
   const emailRef = useRef(null);
@@ -104,6 +106,7 @@ const Login_SignUp = () => {
       .then((response) => response.json())
       .then((responseData) => {
         // Add responseData as a parameter
+
         if (responseData.key !== null) {
           toast.error(responseData.value);
         } else {
@@ -126,13 +129,7 @@ const Login_SignUp = () => {
       },
       body: JSON.stringify(data),
     })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((errorData) => {
-            throw new Error(errorData.key + ": " + errorData.value);
-          });
-        }
-      })
+      .then((response) => response.json())
       .then((responseData) => {
         if (responseData.key !== null) {
           toast.error(responseData.value);
@@ -236,7 +233,6 @@ const Login_SignUp = () => {
                       placeholder="name@example.com"
                       autoFocus
                       ref={emailreset}
-                      disabled={isButtonDisabled}
                     />
                   </Form.Group>
                 </Modal.Body>
@@ -244,7 +240,11 @@ const Login_SignUp = () => {
                   <Button variant="danger" onClick={handleClose}>
                     Cancel
                   </Button>
-                  <Button variant="primary" onClick={handleEmailSubmit}>
+                  <Button
+                    variant="primary"
+                    disabled={isButtonDisabled}
+                    onClick={handleEmailSubmit}
+                  >
                     Send to email
                   </Button>
                 </Modal.Footer>

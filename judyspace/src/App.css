@@ -1,11 +1,10 @@
-body{
-    background-image: url("../img/bg_3.jpg");
- background-size: auto;
-   
+body {
+  background-image: url("../img/bg_3.jpg");
+  background-size: auto;
 }
-a{
-    text-decoration: none;
+a {
+  text-decoration: none !important;
 }
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }

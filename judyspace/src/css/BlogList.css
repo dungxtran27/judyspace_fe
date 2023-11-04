@@ -1,263 +1,255 @@
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css);
 
-
 .cardBlogList .wrapperBlogList {
-	background-color: #fff;
-	min-height: 540px;
-	position: relative;
-	overflow: hidden;
-	box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3),
-          0 15px 12px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  min-height: 540px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.2);
 }
 
 .cardBlogList .wrapperBlogList:hover .dataBlogList {
-	transform: translateY(0);
+  transform: translateY(0);
 }
 
 .cardBlogList .dataBlogList {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	transform: translateY(calc(115px + 1em));
-	transition: transform 0.3s;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transform: translateY(calc(115px + 1em));
+  transition: transform 0.3s;
 }
 
 .cardBlogList .dataBlogList .contentBlogList {
-	padding: 1em;
-	position: relative;
-	z-index: 1;
+  padding: 1em;
+  position: relative;
+  z-index: 1;
 }
 
 .cardBlogList .authorBlogList {
-	font-size: 12px;
+  font-size: 12px;
 }
 
 .cardBlogList .titleBlogList {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 .cardBlogList .textBlogList {
-	height: 70px;
-	margin: 0;
+  height: 70px;
+  margin: 0;
 }
 
 .cardBlogList input[type="checkbox"] {
-	display: none;
+  display: none;
 }
 
 .cardBlogList input[type="checkbox"]:checked + .menu-content {
-	transform: translateY(-60px);
+  transform: translateY(-60px);
 }
 
 .dataBlogList {
-	background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255, 255, 255, 0) 92%);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(255, 255, 255, 0) 92%
+  );
 }
 
 .authorBlogList {
-	background: rgba(48, 22, 74, 0.662);
+  background: rgba(48, 22, 74, 0.662);
 }
-      /* .wrapper {
+/* .wrapper {
         background: url(https://tvseriescritic.files.wordpress.com/2016/10/stranger-things-bicycle-lights-children.jpg)
           center / cover no-repeat;
       } */
 
 .headerBlogList {
-	color: #fff;
-	padding: 1em;
-	background: rgba(48, 22, 74, 0.662);
+  color: #fff;
+  padding: 1em;
+  background: rgba(48, 22, 74, 0.662);
 }
 
 .headerBlogList::before,
-      .headerBlogList::after {
-	content: "";
-	display: table;
+.headerBlogList::after {
+  content: "";
+  display: table;
 }
 
 .headerBlogList::after {
-	clear: both;
+  clear: both;
 }
 
 .headerBlogList .dateBlogList {
-	float: left;
-	font-size: 12px;
+  float: left;
+  font-size: 12px;
 }
 
 .dataBlogList {
-	color: #fff;
-	transform: translateY(calc(70px + 4em));
+  color: #fff;
+  transform: translateY(calc(70px + 4em));
 }
 
 .titleBlogList a {
-	color: #fff;
+  color: #fff;
 }
 
 .buttonBlogList {
-	display: block;
-	width: 100px;
-	margin: 2em auto 1em;
-	text-align: center;
-	font-size: 12px;
-	color: #ffffff;
-	line-height: 1;
-	position: relative;
-	font-weight: 700;
+  display: block;
+  width: 100px;
+  margin: 2em auto 1em;
+  text-align: center;
+  font-size: 12px;
+  color: #ffffff;
+  line-height: 1;
+  position: relative;
+  font-weight: 700;
 }
 
 .buttonBlogList::after {
-	opacity: 0;
-	position: absolute;
-	right: 0;
-	top: 50%;
-	transform: translate(0, -50%);
-	transition: all 0.3s;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  transition: all 0.3s;
 }
 
 .buttonBlogList:hover::after {
-	transform: translate(5px, -50%);
-	opacity: 1;
+  transform: translate(5px, -50%);
+  opacity: 1;
 }
 
+.blog-cardPopularList {
+  display: flex;
+  flex-direction: column;
 
+  box-shadow: 0 3px 7px -1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.6%;
+  background: #fff;
+  line-height: 1.4;
+  font-family: sans-serif;
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 0;
+}
+.blog-cardPopularList a {
+  color: inherit;
+}
+.blog-cardPopularList a:hover {
+  color: #5ad67d;
+}
+.blog-cardPopularList:hover .photoPopularList {
+  transform: scale(1.3) rotate(3deg);
+}
+.blog-cardPopularList .metaPopularList {
+  position: relative;
+  z-index: 0;
+  height: 200px;
+}
+.blog-cardPopularList .photoPopularList {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.2s;
+}
+.blog-cardPopularList .detailsPopularList,
+.blog-cardPopularList .detailsPopularList ul {
+  margin: auto;
+  padding: 0;
+  list-style: none;
+}
+.blog-cardPopularList .detailsPopularList {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -100%;
+  margin: auto;
+  transition: left 0.2s;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 10px;
+  width: 100%;
+  font-size: 0.9rem;
+}
 
-      .blog-cardPopularList {
-        display: flex;
-        flex-direction: column;
-      
-        box-shadow: 0 3px 7px -1px rgba(0, 0, 0, 0.1);
-        margin-bottom: 1.6%;
-        background: #fff;
-        line-height: 1.4;
-        font-family: sans-serif;
-        border-radius: 5px;
-        overflow: hidden;
-        z-index: 0;
-      }
-      .blog-cardPopularList a {
-        color: inherit;
-      }
-      .blog-cardPopularList a:hover {
-        color: #5ad67d;
-      }
-      .blog-cardPopularList:hover .photoPopularList {
-        transform: scale(1.3) rotate(3deg);
-      }
-      .blog-cardPopularList .metaPopularList {
-        position: relative;
-        z-index: 0;
-        height: 200px;
-      }
-      .blog-cardPopularList .photoPopularList {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-size: cover;
-        background-position: center;
-        transition: transform 0.2s;
-      }
-      .blog-cardPopularList .detailsPopularList,
-      .blog-cardPopularList .detailsPopularList ul {
-        margin: auto;
-        padding: 0;
-        list-style: none;
-      }
-      .blog-cardPopularList .detailsPopularList {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: -100%;
-        margin: auto;
-        transition: left 0.2s;
-        background: rgba(0, 0, 0, 0.6);
-        color: #fff;
-        padding: 10px;
-        width: 100%;
-        font-size: 0.9rem;
-      }
-      
-     
-      
-      .blog-cardPopularList .detailsPopularList .tags li {
-        margin-right: 2px;
-      }
-      .blog-cardPopularList .detailsPopularList .tags li:first-child {
-        margin-left: -4px;
-      }
-      .blog-cardPopularList .descriptionPopularList {
-        padding: 1rem;
-        background: #060320;
-        position: relative;
-        z-index: 1;
-      }
-      .blog-cardPopularList .descriptionPopularList h1 {
-        font-family: Poppins, sans-serif;
-        color: wheat;
-      }
-      .blog-cardPopularList .descriptionPopularList h1 {
-        line-height: 1;
-        margin: 0;
-        font-size: 1.7rem;
-      }
-    
-     
-      .blog-cardPopularList
-        .descriptionPopularList
-        .read-morePopularList
-        a:after {
-        content: "(づ￣ ³￣)づ";
-        font-family: FontAwesome;
-        margin-left: -10px;
-        opacity: 0;
-        vertical-align: middle;
-        transition: margin 0.3s, opacity 0.3s;
-      }
-      .blog-cardPopularList
-        .descriptionPopularList
-        .read-morePopularList
-        a:hover:after {
-        margin-left: 5px;
-        opacity: 1;
-      }
-      .blog-cardPopularList p {
-        position: relative;
-        margin: 1rem 0 0;
-        color: whitesmoke;
-      }
-      
-     
-      .blog-cardPopularList:hover .detailsPopularList {
-        left: 0%;
-      }
-      @media (min-width: 640px) {
-        
-        .blog-cardPopularList {
-          flex-direction: row;
-          /* max-width: 700px; */
-        }
-        .blog-cardPopularList .metaPopularList {
-          flex-basis: 40%;
-          height: auto;
-        }
-        .blog-cardPopularList .descriptionPopularList {
-          flex-basis: 60%;
-        }
-        .blog-cardPopularList .descriptionPopularList:before {
-          transform: skewX(-3deg);
-          content: "";
-          background: #060320;
-          width: 30px;
-          position: absolute;
-          left: -10px;
-          top: 0;
-          bottom: 0;
-          z-index: -1;
-        }
-      }
- .popular {
+.blog-cardPopularList .detailsPopularList .tags li {
+  margin-right: 2px;
+}
+.blog-cardPopularList .detailsPopularList .tags li:first-child {
+  margin-left: -4px;
+}
+.blog-cardPopularList .descriptionPopularList {
+  padding: 1rem;
+  background: #060320;
+  position: relative;
+  z-index: 1;
+}
+.blog-cardPopularList .descriptionPopularList h1 {
+  font-family: Poppins, sans-serif;
+  color: wheat;
+}
+.blog-cardPopularList .descriptionPopularList h1 {
+  line-height: 1;
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.blog-cardPopularList .descriptionPopularList .read-morePopularList a:after {
+  content: "(づ￣ ³￣)づ";
+  font-family: FontAwesome;
+  margin-left: -10px;
+  opacity: 0;
+  vertical-align: middle;
+  transition: margin 0.3s, opacity 0.3s;
+}
+.blog-cardPopularList
+  .descriptionPopularList
+  .read-morePopularList
+  a:hover:after {
+  margin-left: 5px;
+  opacity: 1;
+}
+.blog-cardPopularList p {
+  position: relative;
+  margin: 1rem 0 0;
+  color: whitesmoke;
+}
+
+.blog-cardPopularList:hover .detailsPopularList {
+  left: 0%;
+}
+@media (min-width: 640px) {
+  .blog-cardPopularList {
+    flex-direction: row;
+    /* max-width: 700px; */
+  }
+  .blog-cardPopularList .metaPopularList {
+    flex-basis: 40%;
+    height: auto;
+  }
+  .blog-cardPopularList .descriptionPopularList {
+    flex-basis: 60%;
+  }
+  .blog-cardPopularList .descriptionPopularList:before {
+    transform: skewX(-3deg);
+    content: "";
+    background: #060320;
+    width: 30px;
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+}
+.popular {
   display: flex;
 }
 
@@ -274,10 +266,24 @@
 }
 
 paginatedBlogList {
-
- margin-top: 30px;
+  margin-top: 30px;
 }
-.icon-social-blog span{
+.icon-social-blog span {
   color: azure;
   padding: 0.5rem;
+}
+.btnRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.buttonLoadmore {
+  background: rgb(4, 10, 137);
+  padding: 10px 10px;
+  border-radius: 10px;
+  color: white;
+  border: none;
+}
+.buttonLoadmore:hover {
+  background: rgb(0, 21, 255);
 }

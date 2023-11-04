@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DefaultTemplate from "../template/DefaultTemplate";
-import { Col, Container, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  FormControl,
+  Row,
+} from "react-bootstrap";
 import "../css/BlogList.css";
 import { Link } from "react-router-dom";
 const BlogList = () => {
@@ -181,11 +188,17 @@ const BlogList = () => {
                 </div>
               </div>
             ))}
+            <Row xs={12} lg={4} className="btnRow">
+              <button className="buttonLoadmore">Load more</button>
+            </Row>
           </Col>
           <Col xs={3} className="related-blog">
-            hoh
+            <Form>
+              <FormControl placeholder="search"></FormControl>
+            </Form>
           </Col>
         </Row>
+        <Row> </Row>
       </Container>
     </DefaultTemplate>
   );
