@@ -58,7 +58,7 @@ const Login_SignUp = () => {
 
     setTimeout(() => {
       setIsButtonDisabled(false);
-    }, 10000);
+    }, 5000);
     const data = {
       email: emailreset.current.value,
     };
@@ -226,7 +226,7 @@ const Login_SignUp = () => {
             <>
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Modal heading</Modal.Title>
+                  <Modal.Title>Reset password</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <Form></Form>
