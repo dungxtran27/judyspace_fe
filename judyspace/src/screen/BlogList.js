@@ -9,17 +9,26 @@ import {
   Container,
   Form,
   FormControl,
+  FormLabel,
+  Modal,
   Row,
 } from "react-bootstrap";
 import "../css/BlogList.css";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  useParams,
+  useHistory,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
+
 const BlogList = () => {
   const [BlogListPopula, setBloglistPopula] = useState([]);
   const [BlogListPage, setBlogListPage] = useState([]);
   const [pageSize, setPageSize] = useState(4);
   const [pageIndex, setPageIndex] = useState(0);
   const [searchName, setSearchName] = useState("");
-  const [sortType, setSortType] = useState("");
+  const [sortType, setSortType] = useState("latest");
   const [tagId, setTagId] = useState(null);
   const [maxLoadmore, setMaxLoadMore] = useState(false);
   //list popular
@@ -46,12 +55,20 @@ const BlogList = () => {
 
     fetchData();
   }, []);
+  //setsorttypr
 
+  const setsort = () => {
+    if (sortType == "latest") {
+      setSortType("oldest");
+    } else if (sortType == "oldest") {
+      setSortType("latest");
+    }
+  };
   //search
   // const submitSearch = () => {
   //   setSearchNam;
   // };
-
+  //
   //loadmomre
   /// baấmm nhiều lần thay đổi toast
   const loadmore = () => {
@@ -89,7 +106,12 @@ const BlogList = () => {
 
     fetchData();
   }, [pageIndex, pageSize, tagId, searchName, sortType]);
+  //popup comment
+  const navigate = useNavigate();
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <DefaultTemplate>
       <Container>
@@ -164,8 +186,26 @@ const BlogList = () => {
         </Row>
         <Row className="paginatedBlogList ">
           <Col xs={9} className="blogListpaginate">
+            <div className="filter">
+              <button className="buttonFilter" onClick={(e) => setsort()}>
+                {sortType == "latest" ? "Oldest" : "Latest"}
+              </button>
+
+              <button className="buttonFilter">Popularity</button>
+            </div>
+            <div className="tagFilter">
+              <div className="tagIdFilter" onClick={(e) => setTagId(null)}>
+                All
+              </div>
+              <div className="tagIdFilter" onClick={(e) => setTagId(1)}>
+                The Talk
+              </div>
+              <div className="tagIdFilter" onClick={(e) => setTagId(2)}>
+                My Story
+              </div>
+            </div>
             {BlogListPage.map((bp) => (
-              <div className="blog-cardPopularList " key={bp.blogId}>
+              <div className="blog-cardPopularList  aninek" key={bp.blogId}>
                 <div className="metaPopularList">
                   <div
                     className="photoPopularList"
@@ -197,8 +237,21 @@ const BlogList = () => {
                       <span>99+</span>
                     </span>
                     <span>
-                      <img src="./cmt.png" />
+                      <img src="./cmt.png" onClick={(e) => handleShow()} />
+                      <Modal
+                        centered={true}
+                        show={show}
+                        onHide={handleClose}
+                        animation={true}
+                      >
+                        <Modal.Header closeButton></Modal.Header>
 
+                        <Modal.Footer>
+                          <Button variant="danger" onClick={handleClose}>
+                            Close
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
                       <span>{bp.commentSetSize}</span>
                     </span>
                     <span>
