@@ -125,7 +125,7 @@
 .blog-cardPopularList {
   display: flex;
   flex-direction: column;
-
+  animation: customAni 500ms linear 0s 1 normal forwards;
   box-shadow: 0 3px 7px -1px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.6%;
   background: #fff;
@@ -265,8 +265,8 @@
   flex-grow: 1;
 }
 
-paginatedBlogList {
-  margin-top: 30px;
+.paginatedBlogList {
+  margin-top: 30px !important;
 }
 .icon-social-blog span {
   color: azure;
@@ -286,4 +286,14 @@ paginatedBlogList {
 }
 .buttonLoadmore:hover {
   background: rgb(0, 21, 255);
+}
+
+@keyframes customAni {
+  0% {
+    transform: translateX(100px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
 }

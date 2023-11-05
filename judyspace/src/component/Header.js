@@ -14,16 +14,6 @@ const Header = () => {
     Authorization: `Bearer ${accessToken}`,
     "Content-Type": "application/json",
   };
-  useEffect(() => {
-    fetch("http://localhost:8080/api/users/testingSecurity", {
-      method: "GET",
-      headers: headers,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        SetUser(data.userName);
-      });
-  }, []);
 
   const location = useLocation();
 
@@ -45,7 +35,7 @@ const Header = () => {
           </Link>
         </Col>{" "}
         <Container>
-          <Col xs={5} className="header-right">
+          <Col xs={6} className="header-right">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse>
               <Nav className="me-auto">
@@ -61,15 +51,13 @@ const Header = () => {
                 >
                   Inspiration
                 </Link>
+                <Link to="/login" className={isActive("/musicInspiration")}>
+                  Login
+                </Link>
               </Nav>
             </Navbar.Collapse>
           </Col>
         </Container>
-        <Col xs={1}>
-          <Link to="/login" className={isActive("/musicInspiration")}>
-            Login
-          </Link>
-        </Col>
       </Container>
     </Navbar>
   );

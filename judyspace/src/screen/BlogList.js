@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DefaultTemplate from "../template/DefaultTemplate";
+import { toast } from "react-toastify";
+
 import {
   Button,
   Col,
@@ -14,7 +16,12 @@ import { Link } from "react-router-dom";
 const BlogList = () => {
   const [BlogListPopula, setBloglistPopula] = useState([]);
   const [BlogListPage, setBlogListPage] = useState([]);
-
+  const [pageSize, setPageSize] = useState(4);
+  const [pageIndex, setPageIndex] = useState(0);
+  const [searchName, setSearchName] = useState("");
+  const [sortType, setSortType] = useState("");
+  const [tagId, setTagId] = useState(null);
+  const [maxLoadmore, setMaxLoadMore] = useState(false);
   //list popular
   useEffect(() => {
     const fetchData = async () => {
@@ -32,8 +39,6 @@ const BlogList = () => {
         // const blogArray = Object.values(response.blogs);
         //setBloglistPopula(blogArray);
         setBloglistPopula(response.data.content);
-        console.log(response.data.content);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -42,6 +47,24 @@ const BlogList = () => {
     fetchData();
   }, []);
 
+  //search
+  // const submitSearch = () => {
+  //   setSearchNam;
+  // };
+
+  //loadmomre
+  /// baấmm nhiều lần thay đổi toast
+  const loadmore = () => {
+    setPageSize(pageSize + 1);
+    console.log("test");
+    console.log(maxLoadmore);
+    if (maxLoadmore) {
+      console.log("hahah");
+      toast.warning("Hết rùi ( ´◔ ω◔`) ノシ");
+    }
+
+    console.log(maxLoadmore);
+  };
   //list paginated
   useEffect(() => {
     const fetchData = async () => {
@@ -49,26 +72,24 @@ const BlogList = () => {
         const response = await axios.post(
           "http://localhost:8080/api/blog/getBlogsPaginated",
           {
-            pageIndex: 0,
-            pageSize: 5,
-            searchName: "",
-            sortType: "popularityAllTime",
-            tagId: null,
+            pageIndex: pageIndex,
+            pageSize: pageSize,
+            searchName: searchName,
+            sortType: sortType,
+            tagId: tagId,
           }
         );
-        // const blogArray = Object.values(response.blogs);
-        //setBloglistPopula(blogArray);
+        setMaxLoadMore(response.data.last);
+
         setBlogListPage(response.data.content);
-        console.log(response.data.content);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []);
-  console.log(BlogListPopula);
+  }, [pageIndex, pageSize, tagId, searchName, sortType]);
+
   return (
     <DefaultTemplate>
       <Container>
@@ -83,22 +104,22 @@ const BlogList = () => {
                   }}
                   className="wrapperBlogList"
                 >
-                  <div class="headerBlogList">
-                    <div class="dateBlogList">
+                  <div className="headerBlogList">
+                    <div className="dateBlogList">
                       {new Date(t.createDate * 1000).toDateString()}
                     </div>
                   </div>
-                  <div class="dataBlogList">
-                    <div class="contentBlogList">
-                      <span class="authorBlogList">waozouq</span>
-                      <h1 class="titleBlogList">
+                  <div className="dataBlogList">
+                    <div className="contentBlogList">
+                      <span className="authorBlogList">waozouq</span>
+                      <h1 className="titleBlogList">
                         <Link to="#">{t.title}</Link>
                       </h1>
-                      <p class="textBlogList">
+                      <p className="textBlogList">
                         The antsy bingers of Netflix will eagerly anticipate the
                         digital release of the Survive soundtrack, out today.
                       </p>
-                      <Link to="#" class="buttonBlogList">
+                      <Link to="#" className="buttonBlogList">
                         Read more
                       </Link>
                     </div>
@@ -110,7 +131,7 @@ const BlogList = () => {
           <Col xs={6} className="popular-right">
             {/* Second Column */}
             {BlogListPopula.slice(1).map((t) => (
-              <div class="blog-cardPopularList" key={t.blogId}>
+              <div className="blog-cardPopularList" key={t.blogId}>
                 <div className="metaPopularList">
                   <div
                     className="photoPopularList"
@@ -144,7 +165,7 @@ const BlogList = () => {
         <Row className="paginatedBlogList ">
           <Col xs={9} className="blogListpaginate">
             {BlogListPage.map((bp) => (
-              <div class="blog-cardPopularList " key={bp.blogId}>
+              <div className="blog-cardPopularList " key={bp.blogId}>
                 <div className="metaPopularList">
                   <div
                     className="photoPopularList"
@@ -189,12 +210,17 @@ const BlogList = () => {
               </div>
             ))}
             <Row xs={12} lg={4} className="btnRow">
-              <button className="buttonLoadmore">Load more</button>
+              <button className="buttonLoadmore" onClick={loadmore}>
+                Load more
+              </button>
             </Row>
           </Col>
           <Col xs={3} className="related-blog">
             <Form>
-              <FormControl placeholder="search"></FormControl>
+              <FormControl
+                onChange={(e) => setSearchName(e.currentTarget.value)}
+                placeholder="search"
+              ></FormControl>
             </Form>
           </Col>
         </Row>

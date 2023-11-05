@@ -69,6 +69,12 @@ const Login_SignUp = () => {
       },
       body: JSON.stringify(data),
     }).then((response) => {
+      // console.log("haha");
+      // console.log(response.status);
+      // if (response.status == 407) {
+      //   navigate("/login");
+      //   toast.warning("Đăng nhập trước khi thay đổi mật khẩu!");
+      // } else
       if (response.status != 200) {
         response.json().then((data1) => {
           console.log(data1);
