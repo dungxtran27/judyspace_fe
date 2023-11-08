@@ -5,15 +5,32 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Header = () => {
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refereshToken");
-  const [user, SetUser] = useState("");
-  const headers = {
-    Authorization: `Bearer ${accessToken}`,
-    "Content-Type": "application/json",
-  };
+  const [user, SetUser] = useState([]);
+
+  // //get currUser
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: refreshToken,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       SetUser(data);
+  //       console.log(data);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Fetch error: ", error);
+  //     });
+  // }, []);
 
   const location = useLocation();
 
