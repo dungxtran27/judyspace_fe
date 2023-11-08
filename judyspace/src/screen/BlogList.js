@@ -54,10 +54,10 @@ export default function BlogList() {
   //setsorttypr
 
   const setsort = () => {
-    if (sortType === "latest") {
-      setSortType("oldest");
-    } else if (sortType === "oldest") {
+    if (sortType !== "latest") {
       setSortType("latest");
+    } else {
+      setSortType("oldest");
     }
   };
   //search
@@ -113,35 +113,6 @@ export default function BlogList() {
     setShow(true);
   }
   //handle comment
-  const commentRef = useRef();
-  const blogIdRef = useRef();
-  const handleSubmitComment = (e) => {
-    e.preventDefault();
-    const data = {
-      content: commentRef.current.value,
-      blogRepliedTo: { blogId: blogIdRef.current.value },
-    };
-    const token = localStorage.getItem("accessToken");
-    fetch("http://localhost:8080/api/comment/makeRootComment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    }).then((response) => {
-      if (response.status !== 200) {
-        response.json().then((data2) => {
-          toast.error(data2.value);
-        });
-      } else {
-        response.json().then((data2) => {
-          toast.success("comment success");
-        });
-      }
-    });
-  };
   return (
     <DefaultTemplate>
       <Container>
@@ -215,7 +186,7 @@ export default function BlogList() {
           </Col>
         </Row>
         <Row className="paginatedBlogList ">
-          <Col xs={9} className="blogListpaginate">
+          <Col xs={9} lg={12} className="blogListpaginate">
             <div className="filter">
               <button className="buttonFilter" onClick={(e) => setsort()}>
                 {sortType == "latest" ? (
@@ -324,7 +295,7 @@ export default function BlogList() {
               </button>
             </Row>
           </Col>
-          <Col xs={3} className="related-blog">
+          <Col xs={3} lg={12} className="related-blog">
             <Form>
               <FormControl
                 onChange={(e) => setSearchName(e.currentTarget.value)}
@@ -343,9 +314,9 @@ export default function BlogList() {
             closeButton
             style={{ backgroundColor: "RGB(73 73 76)" }}
           >
-            <h5 style={{ color: "white" }}>Bình luận</h5>
+            <Modal.Title style={{ color: "white" }}>Bình luận</Modal.Title>
           </Modal.Header>
-          <ModalBody
+          <Modal.Body
             style={{
               backgroundColor: "RGB(73 73 76)",
               height: "500px",
@@ -353,7 +324,7 @@ export default function BlogList() {
             }}
           >
             <Comment type={"Root"} parameter={blogIdForComment} />
-          </ModalBody>
+          </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "RGB(73 73 76)" }}>
             <Button variant="outline-warning" onClick={handleClose}>
               Close
