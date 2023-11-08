@@ -11,6 +11,7 @@ import {
   FormControl,
   FormLabel,
   Modal,
+  ModalBody,
   Row,
 } from "react-bootstrap";
 import "../css/BlogList.css";
@@ -21,6 +22,7 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
+import Comment from "../testConnect/Comment";
 
 const BlogList = () => {
   const [BlogListPopula, setBloglistPopula] = useState([]);
@@ -31,6 +33,7 @@ const BlogList = () => {
   const [sortType, setSortType] = useState("latest");
   const [tagId, setTagId] = useState(null);
   const [maxLoadmore, setMaxLoadMore] = useState(false);
+  const [blogIdForComment, setBlogIdForComment] = useState(0);
   //list popular
   useEffect(() => {
     const fetchData = async () => {
@@ -111,7 +114,10 @@ const BlogList = () => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (blogId) => {
+    setShow(true);
+    setBlogIdForComment(blogId);
+  };
   return (
     <DefaultTemplate>
       <Container>
@@ -237,21 +243,10 @@ const BlogList = () => {
                       <span>99+</span>
                     </span>
                     <span>
-                      <img src="./cmt.png" onClick={(e) => handleShow()} />
-                      <Modal
-                        centered={true}
-                        show={show}
-                        onHide={handleClose}
-                        animation={true}
-                      >
-                        <Modal.Header closeButton></Modal.Header>
-
-                        <Modal.Footer>
-                          <Button variant="danger" onClick={handleClose}>
-                            Close
-                          </Button>
-                        </Modal.Footer>
-                      </Modal>
+                      <img
+                        src="./cmt.png"
+                        onClick={(e) => handleShow(bp.blogId)}
+                      />
                       <span>{bp.commentSetSize}</span>
                     </span>
                     <span>
@@ -277,10 +272,37 @@ const BlogList = () => {
             </Form>
           </Col>
         </Row>
-        <Row> </Row>
+        <Modal
+          centered={true}
+          show={show}
+          onHide={handleClose}
+          animation={true}
+          
+        >
+          <Modal.Header
+            closeButton
+            style={{ backgroundColor: "RGB(73 73 76)"}}
+          >
+            <h5 style={{ color: "white" }}>Bình luận</h5>
+          </Modal.Header>
+          <ModalBody
+            style={{
+              backgroundColor: "RGB(73 73 76)",
+              height: "500px",
+              overflowY: "scroll"
+            }}
+          >
+            <Comment type={"Root"} parameter={blogIdForComment} />
+          </ModalBody>
+          <Modal.Footer style={{ backgroundColor: "RGB(73 73 76)"}}>
+            <Button variant="outline-warning" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     </DefaultTemplate>
   );
-};
+}
 
 export default BlogList;
