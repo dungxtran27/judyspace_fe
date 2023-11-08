@@ -69,14 +69,19 @@ const Login_SignUp = () => {
       },
       body: JSON.stringify(data),
     }).then((response) => {
-      if (response.status != 200) {
-        response.json().then((data1) => {
-          toast.error(data1.value);
-        });
+      if (response.status === 417) {
+        window.open("/login");
+        toast.warning("Đăng nhập trước khi thay đổi mật khẩu!");
       } else {
-        response.json().then((data1) => {
-          toast.success(data1.value);
-        });
+        if (response.status != 200) {
+          response.json().then((data1) => {
+            toast.error(data1.value);
+          });
+        } else {
+          response.json().then((data1) => {
+            toast.success(data1.value);
+          });
+        }
       }
     });
   };
