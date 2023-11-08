@@ -69,20 +69,12 @@ const Login_SignUp = () => {
       },
       body: JSON.stringify(data),
     }).then((response) => {
-      // console.log("haha");
-      // console.log(response.status);
-      // if (response.status == 407) {
-      //   navigate("/login");
-      //   toast.warning("Đăng nhập trước khi thay đổi mật khẩu!");
-      // } else
       if (response.status != 200) {
         response.json().then((data1) => {
-          console.log(data1);
           toast.error(data1.value);
         });
       } else {
         response.json().then((data1) => {
-          console.log(data1);
           toast.success(data1.value);
         });
       }
@@ -108,18 +100,18 @@ const Login_SignUp = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(info),
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        // Add responseData as a parameter
-
-        if (responseData.key !== null) {
-          toast.error(responseData.value);
-        } else {
+    }).then((response) => {
+      if (response.status !== 200) {
+        response.json().then((data2) => {
+          toast.error(data2.value);
+        });
+      } else {
+        response.json().then((data2) => {
           navigate("/");
           toast.success("Đăng kí thành công,vui lòng kiểm tra email");
-        }
-      });
+        });
+      }
+    });
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -134,18 +126,20 @@ const Login_SignUp = () => {
         Accept: "application/json",
       },
       body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        if (responseData.key !== null) {
-          toast.error(responseData.value);
-        } else {
-          localStorage.setItem("accessToken", responseData.accessToken);
-          localStorage.setItem("refreshToken", responseData.refreshToken);
+    }).then((response) => {
+      if (response.status !== 200) {
+        response.json().then((data2) => {
+          toast.error(data2.value);
+        });
+      } else {
+        response.json().then((data2) => {
+          localStorage.setItem("accessToken", data2.accessToken);
+          localStorage.setItem("refreshToken", data2.refreshToken);
           toast.success("Đăng nhập thành công!");
           navigate("/");
-        }
-      });
+        });
+      }
+    });
   };
 
   return (

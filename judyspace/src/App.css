@@ -8,3 +8,6 @@ a {
 ::-webkit-scrollbar {
   display: none;
 }
+.modal-backdrop {
+  --bs-backdrop-opacity: 0.2 !important;
+}

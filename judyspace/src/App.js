@@ -31,7 +31,6 @@ function App() {
           path="/oauth2proceed/:accessToken/:refreshToken"
           element={<Oauth2Proceed />}
         />
-        <Route path="/popupcmt/:bid" element={<Comment />} />
       </Routes>
       <ToastContainer
         position="top-right"
