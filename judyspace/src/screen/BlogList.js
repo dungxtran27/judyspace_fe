@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import DefaultTemplate from "../template/DefaultTemplate";
 import { toast } from "react-toastify";
-import Comment from "../component/Comment";
+import Comment from "../testConnect/Comment";
+
 import {
   Button,
   Col,
@@ -16,7 +17,7 @@ import {
 import "../css/BlogList.css";
 import { Link, useNavigate } from "react-router-dom";
 
-const BlogList = () => {
+export default function BlogList() {
   const [BlogListPopula, setBloglistPopula] = useState([]);
   const [BlogListPage, setBlogListPage] = useState([]);
   const [pageSize, setPageSize] = useState(4);
@@ -107,10 +108,10 @@ const BlogList = () => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = (blogId) => {
-    setShow(true);
+  function handleShow(blogId) {
     setBlogIdForComment(blogId);
-
+    setShow(true);
+  }
   //handle comment
   const commentRef = useRef();
   const blogIdRef = useRef();
@@ -337,11 +338,10 @@ const BlogList = () => {
           show={show}
           onHide={handleClose}
           animation={true}
-          
         >
           <Modal.Header
             closeButton
-            style={{ backgroundColor: "RGB(73 73 76)"}}
+            style={{ backgroundColor: "RGB(73 73 76)" }}
           >
             <h5 style={{ color: "white" }}>Bình luận</h5>
           </Modal.Header>
@@ -349,12 +349,12 @@ const BlogList = () => {
             style={{
               backgroundColor: "RGB(73 73 76)",
               height: "500px",
-              overflowY: "scroll"
+              overflowY: "scroll",
             }}
           >
             <Comment type={"Root"} parameter={blogIdForComment} />
           </ModalBody>
-          <Modal.Footer style={{ backgroundColor: "RGB(73 73 76)"}}>
+          <Modal.Footer style={{ backgroundColor: "RGB(73 73 76)" }}>
             <Button variant="outline-warning" onClick={handleClose}>
               Close
             </Button>
@@ -364,5 +364,3 @@ const BlogList = () => {
     </DefaultTemplate>
   );
 }
-
-export default BlogList;
