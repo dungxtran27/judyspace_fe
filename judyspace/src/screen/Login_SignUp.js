@@ -71,8 +71,8 @@ const Login_SignUp = () => {
     }).then((response) => {
       console.log("haha");
       console.log(response.status);
-      if (response.status === 410) {
-        navigate("/login");
+      if (response.status === 417) {
+        window.open("/login")
         toast.warning("Đăng nhập trước khi thay đổi mật khẩu!");
       } else {
         if (response.status != 200) {
