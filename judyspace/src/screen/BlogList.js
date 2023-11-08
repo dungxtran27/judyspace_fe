@@ -1,28 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import DefaultTemplate from "../template/DefaultTemplate";
 import { toast } from "react-toastify";
-
+import Comment from "../component/Comment";
 import {
   Button,
   Col,
   Container,
   Form,
   FormControl,
-  FormLabel,
   Modal,
   ModalBody,
   Row,
 } from "react-bootstrap";
 import "../css/BlogList.css";
-import {
-  Link,
-  useParams,
-  useHistory,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
-import Comment from "../testConnect/Comment";
+import { Link, useNavigate } from "react-router-dom";
 
 const BlogList = () => {
   const [BlogListPopula, setBloglistPopula] = useState([]);
@@ -61,9 +53,9 @@ const BlogList = () => {
   //setsorttypr
 
   const setsort = () => {
-    if (sortType == "latest") {
+    if (sortType === "latest") {
       setSortType("oldest");
-    } else if (sortType == "oldest") {
+    } else if (sortType === "oldest") {
       setSortType("latest");
     }
   };
@@ -102,6 +94,7 @@ const BlogList = () => {
         setMaxLoadMore(response.data.last);
 
         setBlogListPage(response.data.content);
+        console.log(response.data.content);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -117,6 +110,36 @@ const BlogList = () => {
   const handleShow = (blogId) => {
     setShow(true);
     setBlogIdForComment(blogId);
+
+  //handle comment
+  const commentRef = useRef();
+  const blogIdRef = useRef();
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+    const data = {
+      content: commentRef.current.value,
+      blogRepliedTo: { blogId: blogIdRef.current.value },
+    };
+    const token = localStorage.getItem("accessToken");
+    fetch("http://localhost:8080/api/comment/makeRootComment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.status !== 200) {
+        response.json().then((data2) => {
+          toast.error(data2.value);
+        });
+      } else {
+        response.json().then((data2) => {
+          toast.success("comment success");
+        });
+      }
+    });
   };
   return (
     <DefaultTemplate>
@@ -194,10 +217,47 @@ const BlogList = () => {
           <Col xs={9} className="blogListpaginate">
             <div className="filter">
               <button className="buttonFilter" onClick={(e) => setsort()}>
-                {sortType == "latest" ? "Oldest" : "Latest"}
+                {sortType == "latest" ? (
+                  <div className="filter-icon">
+                    <p>Oldest</p>
+                  </div>
+                ) : (
+                  <div className="filter-icon">
+                    <p>Latest</p>
+                    <img src="./new.png" />
+                  </div>
+                )}
               </button>
 
-              <button className="buttonFilter">Popularity</button>
+              <div class="dropdown">
+                <button class="dropbtn">
+                  <p>Popular </p>
+                  <img src="./right-arrow.png" />
+                </button>
+                <div class="dropdown-content">
+                  <a
+                    onClick={(e) => {
+                      setSortType("popularity24h");
+                    }}
+                  >
+                    24 Hours
+                  </a>
+                  <a
+                    onClick={(e) => {
+                      setSortType("popularityWeek");
+                    }}
+                  >
+                    Week
+                  </a>
+                  <a
+                    onClick={(e) => {
+                      setSortType("popularityAllTime");
+                    }}
+                  >
+                    All
+                  </a>
+                </div>
+              </div>
             </div>
             <div className="tagFilter">
               <div className="tagIdFilter" onClick={(e) => setTagId(null)}>
