@@ -11,6 +11,8 @@ import {
 } from "react-bootstrap";
 import ReactDOM from "react-dom";
 import { toast } from "react-toastify";
+import "../css/Comment.css";
+
 export default function Comment({ type, parameter }) {
   const [rootComments, setRootComment] = useState([]);
   const [childComments, setChilComments] = useState([]);
@@ -65,6 +67,18 @@ export default function Comment({ type, parameter }) {
       }
     });
   };
+  const [formHide, setFormHide] = useState(false);
+
+  const toggleDisplay = (commentId) => {
+    // if (formHide !== "hide") {
+    //   setFormHide("hide");
+    // } else {
+    //   setFormHide("seen");
+    // }
+    const input = document.getElementById("cmtinput" + commentId);
+    input.style.display =
+      input.style.display === "none" ? "inline-block" : "none";
+  };
   return (
     <Container>
       {rootComments.map((comment) => (
@@ -74,7 +88,7 @@ export default function Comment({ type, parameter }) {
             className={type === "Root" ? "root" : "children"}
           >
             <Image
-              style={{ width: "30px", marginRight: "20px" }}
+              style={{ width: "30px", marginRight: "3px" }}
               roundedCircle
               src={comment.poster.avatarLink}
             />
@@ -88,37 +102,41 @@ export default function Comment({ type, parameter }) {
               Xem thêm phản hồi
             </p>
           </div>
+          <div>
+            <p onClick={(e) => toggleDisplay(comment.commentId)}>phản hồi</p>
+          </div>
+          <Form id={"cmtinput" + comment.commentId} key={comment.commentId}>
+            <Row>
+              <Col xs={10}>
+                <FormControl
+                  type="input"
+                  ref={commentRef}
+                  placeholder="enter your thought here"
+                ></FormControl>
+                <FormControl
+                  type="hidden"
+                  value={parameter}
+                  ref={blogIdRef}
+                ></FormControl>
+              </Col>
+              <Col xs={2}>
+                <Button variant="info" onClick={(e) => handleSubmitComment(e)}>
+                  send
+                </Button>
+              </Col>
+            </Row>
+          </Form>
           <div
             className="children"
             id={"childrenList" + comment.commentId}
-            style={{ borderLeft: "2px solid white" }}
-          ></div>
+            style={{ borderLeft: "2px solid white", paddingLeft: "20px" }}
+          >
+            {" "}
+          </div>
           <hr />
         </Row>
       ))}
-      <div style={{ backgroundColor: "RGB(73 73 76)" }}>
-        <Form>
-          <Row>
-            <Col xs={10}>
-              <FormControl
-                type="input"
-                ref={commentRef}
-                placeholder="enter your thought here"
-              ></FormControl>
-              <FormControl
-                type="hidden"
-                value={parameter}
-                ref={blogIdRef}
-              ></FormControl>
-            </Col>
-            <Col xs={2}>
-              <Button variant="info" onClick={(e) => handleSubmitComment(e)}>
-                send
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </div>
+      <div style={{ backgroundColor: "RGB(73 73 76)" }}></div>
     </Container>
   );
 }

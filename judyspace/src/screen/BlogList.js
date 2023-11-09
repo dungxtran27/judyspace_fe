@@ -69,14 +69,10 @@ export default function BlogList() {
   /// baấmm nhiều lần thay đổi toast
   const loadmore = () => {
     setPageSize(pageSize + 1);
-    console.log("test");
-    console.log(maxLoadmore);
+
     if (maxLoadmore) {
-      console.log("hahah");
       toast.warning("Hết rùi ( ´◔ ω◔`) ノシ");
     }
-
-    console.log(maxLoadmore);
   };
   //list paginated
   useEffect(() => {
@@ -93,9 +89,7 @@ export default function BlogList() {
           }
         );
         setMaxLoadMore(response.data.last);
-
         setBlogListPage(response.data.content);
-        console.log(response.data.content);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -113,6 +107,36 @@ export default function BlogList() {
     setShow(true);
   }
   //handle comment
+
+  const commentRef = useRef();
+  const blogIdRef = useRef();
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+    const data = {
+      content: commentRef.current.value,
+      blogRepliedTo: { blogId: blogIdRef.current.value },
+    };
+    const token = localStorage.getItem("accessToken");
+    fetch("http://localhost:8080/api/comment/makeRootComment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.status !== 200) {
+        response.json().then((data2) => {
+          toast.error(data2.value);
+        });
+      } else {
+        response.json().then((data2) => {
+          toast.success("comment success");
+        });
+      }
+    });
+  };
   return (
     <DefaultTemplate>
       <Container>
@@ -186,7 +210,7 @@ export default function BlogList() {
           </Col>
         </Row>
         <Row className="paginatedBlogList ">
-          <Col xs={9} lg={12} className="blogListpaginate">
+          <Col xs={9} className="blogListpaginate">
             <div className="filter">
               <button className="buttonFilter" onClick={(e) => setsort()}>
                 {sortType == "latest" ? (
@@ -201,12 +225,12 @@ export default function BlogList() {
                 )}
               </button>
 
-              <div class="dropdown">
-                <button class="dropbtn">
+              <div className="dropdown">
+                <button className="dropbtn">
                   <p>Popular </p>
                   <img src="./right-arrow.png" />
                 </button>
-                <div class="dropdown-content">
+                <div className="dropdown-content">
                   <a
                     onClick={(e) => {
                       setSortType("popularity24h");
@@ -282,8 +306,15 @@ export default function BlogList() {
                       <span>{bp.commentSetSize}</span>
                     </span>
                     <span>
-                      <img src="./love.png" />
-                      <span> {bp.upvoteUserSetSize}</span>
+                      <span>
+                        {bp.upvotedByCurrentUser ? (
+                          <img src="./love.png" />
+                        ) : (
+                          <img src="./love2.png" />
+                        )}
+
+                        <span> {bp.upvoteUserSetSize}</span>
+                      </span>
                     </span>
                   </div>
                 </div>
@@ -295,7 +326,7 @@ export default function BlogList() {
               </button>
             </Row>
           </Col>
-          <Col xs={3} lg={12} className="related-blog">
+          <Col xs={3} className="related-blog">
             <Form>
               <FormControl
                 onChange={(e) => setSearchName(e.currentTarget.value)}
@@ -319,17 +350,38 @@ export default function BlogList() {
           <Modal.Body
             style={{
               backgroundColor: "RGB(73 73 76)",
-              height: "500px",
+              height: "400px",
               overflowY: "scroll",
             }}
           >
             <Comment type={"Root"} parameter={blogIdForComment} />
           </Modal.Body>
-          <Modal.Footer style={{ backgroundColor: "RGB(73 73 76)" }}>
-            <Button variant="outline-warning" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
+          <Modal.Body style={{ backgroundColor: "RGB(73 73 76)" }}>
+            <Form>
+              <Row>
+                <Col xs={10}>
+                  <FormControl
+                    type="input"
+                    ref={commentRef}
+                    placeholder="enter your thought here"
+                  ></FormControl>
+                  <FormControl
+                    type="hidden"
+                    value={blogIdForComment}
+                    ref={blogIdRef}
+                  ></FormControl>
+                </Col>
+                <Col xs={2}>
+                  <Button
+                    variant="info"
+                    onClick={(e) => handleSubmitComment(e)}
+                  >
+                    send
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </Modal.Body>
         </Modal>
       </Container>
     </DefaultTemplate>
