@@ -15,6 +15,7 @@ import Portfolio from "./screen/Portfolio";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Comment from "./component/Comment";
+import UploadForm from "./testConnect/UploadingToCloudinary";
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +32,7 @@ function App() {
           path="/oauth2proceed/:accessToken/:refreshToken"
           element={<Oauth2Proceed />}
         />
+        <Route path="/testingImageUpload" element={<UploadForm/>}/>
       </Routes>
       <ToastContainer
         position="top-right"
