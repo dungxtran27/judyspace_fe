@@ -38,16 +38,18 @@ export default function Comment({ type, parameter }) {
 
   const handleClose = () => setShow(false);
 
-  const commentRef = useRef();
+  const commentChildRef = useRef();
   const blogIdRef = useRef();
+  const comtIdRef = useRef();
   const handleSubmitComment = (e) => {
     e.preventDefault();
     const data = {
-      content: commentRef.current.value,
+      content: commentChildRef.current.value,
       blogRepliedTo: { blogId: blogIdRef.current.value },
+      parentComment: { commentId: comtIdRef.current.value },
     };
     const token = localStorage.getItem("accessToken");
-    fetch("http://localhost:8080/api/comment/makeRootComment", {
+    fetch("http://localhost:8080/api/comment/makeChildComment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,14 +69,8 @@ export default function Comment({ type, parameter }) {
       }
     });
   };
-  const [formHide, setFormHide] = useState(false);
 
   const toggleDisplay = (commentId) => {
-    // if (formHide !== "hide") {
-    //   setFormHide("hide");
-    // } else {
-    //   setFormHide("seen");
-    // }
     const input = document.getElementById("cmtinput" + commentId);
     input.style.display =
       input.style.display === "none" ? "inline-block" : "none";
@@ -97,26 +93,40 @@ export default function Comment({ type, parameter }) {
               <h6>{comment.content}</h6>
             </div>
           </div>
-          <div>
-            <p onClick={(e) => loadChildComment(comment.commentId)}>
-              Xem thêm phản hồi
-            </p>
+          <div className="row-btn">
+            <div className="btn-action">
+              <p>Thích</p>
+            </div>
+            <div className="btn-action">
+              <p onClick={(e) => loadChildComment(comment.commentId)}>
+                Xem phản hồi
+              </p>
+            </div>
+            <div className="btn-action">
+              <p onClick={(e) => toggleDisplay(comment.commentId)}>Phản hồi</p>
+            </div>
           </div>
-          <div>
-            <p onClick={(e) => toggleDisplay(comment.commentId)}>phản hồi</p>
-          </div>
-          <Form id={"cmtinput" + comment.commentId} key={comment.commentId}>
+          <Form
+            id={"cmtinput" + comment.commentId}
+            className="inputcomment"
+            key={comment.commentId}
+          >
             <Row>
               <Col xs={10}>
                 <FormControl
                   type="input"
-                  ref={commentRef}
+                  ref={commentChildRef}
                   placeholder="enter your thought here"
                 ></FormControl>
                 <FormControl
                   type="hidden"
                   value={parameter}
                   ref={blogIdRef}
+                ></FormControl>
+                <FormControl
+                  type="hidden"
+                  value={comment.commentId}
+                  ref={comtIdRef}
                 ></FormControl>
               </Col>
               <Col xs={2}>
@@ -130,9 +140,7 @@ export default function Comment({ type, parameter }) {
             className="children"
             id={"childrenList" + comment.commentId}
             style={{ borderLeft: "2px solid white", paddingLeft: "20px" }}
-          >
-            {" "}
-          </div>
+          ></div>
           <hr />
         </Row>
       ))}

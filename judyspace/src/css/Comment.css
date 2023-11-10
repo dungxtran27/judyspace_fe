@@ -1,6 +1,10 @@
-.hide {
-  display: none !important;
+.row-btn {
+  display: flex;
+  justify-content: flex-end;
 }
-.seen {
-  display: inline-block !important;
+.btn-action p {
+  padding-left: 10px;
+}
+.btn-action:hover p {
+  text-decoration: underline;
 }
