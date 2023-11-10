@@ -308,9 +308,9 @@ export default function BlogList() {
                     <span>
                       <span>
                         {bp.upvotedByCurrentUser ? (
-                          <img src="./love.png" />
-                        ) : (
                           <img src="./love2.png" />
+                        ) : (
+                          <img src="./love.png" />
                         )}
 
                         <span> {bp.upvoteUserSetSize}</span>
