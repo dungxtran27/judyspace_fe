@@ -23,7 +23,6 @@ export default function UploadForm() {
     fetch("https://api.cloudinary.com/v1_1/djzdhtdpj/image/upload", {
       method: "POST", 
       body: data,
-
     }).then((response)=>response.json())
     .then((data)=>{
       console.log(data.secure_url);
