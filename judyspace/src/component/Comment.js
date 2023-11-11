@@ -61,7 +61,8 @@ export default function Comment({ type, parameter }) {
   //toggle edit cmt
 
   // setEditCmt(editCmt === false ? true : false);
-
+  const editComment = (e) => {};
+  const deleteCmt = (e) => {};
   //toggle handle cmt
   const handleSubmitComment = ({ blogId, commentId }) => {
     const data = {
@@ -126,7 +127,7 @@ export default function Comment({ type, parameter }) {
                 overlay={
                   <Popover id={`popover-positioned-${"right"}`}>
                     <Popover.Body>
-                      <p onClick={(e) => editCmt(e)}>
+                      <p onClick={(e) => editComment}>
                         <strong>Sửa</strong>
                       </p>
                       <p onClick={(e) => deleteCmt(e)}>
