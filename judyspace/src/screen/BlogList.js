@@ -27,6 +27,7 @@ export default function BlogList() {
   const [tagId, setTagId] = useState(null);
   const [maxLoadmore, setMaxLoadMore] = useState(false);
   const [blogIdForComment, setBlogIdForComment] = useState(0);
+  const token = localStorage.getItem("accessToken");
   //list popular
   useEffect(() => {
     const fetchData = async () => {
@@ -86,6 +87,13 @@ export default function BlogList() {
             searchName: searchName,
             sortType: sortType,
             tagId: tagId,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         setMaxLoadMore(response.data.last);
@@ -97,6 +105,26 @@ export default function BlogList() {
 
     fetchData();
   }, [pageIndex, pageSize, tagId, searchName, sortType]);
+  const upVoteOrUnUpvote = async ({ blogId }) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/blogUpvote/add/${blogId}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Handle the response as needed
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   //popup comment
   const navigate = useNavigate();
 
@@ -308,9 +336,15 @@ export default function BlogList() {
                     <span>
                       <span>
                         {bp.upvotedByCurrentUser ? (
-                          <img src="./love2.png" />
+                          <img
+                            src="./love2.png"
+                            onClick={(e) => upVoteOrUnUpvote(bp.blogId)}
+                          />
                         ) : (
-                          <img src="./love.png" />
+                          <img
+                            src="./love.png"
+                            onClick={(e) => upVoteOrUnUpvote(bp.blogId)}
+                          />
                         )}
 
                         <span> {bp.upvoteUserSetSize}</span>
@@ -373,10 +407,7 @@ export default function BlogList() {
                   ></FormControl>
                 </Col>
                 <Col xs={2}>
-                  <Button
-                    variant="info"
-                    type="submit"
-                  >
+                  <Button variant="info" type="submit">
                     send
                   </Button>
                 </Col>
