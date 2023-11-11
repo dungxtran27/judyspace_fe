@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import DefaultTemplate from "../template/DefaultTemplate";
 import { toast } from "react-toastify";
-import Comment from "../testConnect/Comment";
-
+import Comment from "../component/Comment";
+import globalStateContext from "../index";
 import {
   Button,
   Col,
@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 import "../css/BlogList.css";
 import { Link, useNavigate } from "react-router-dom";
-
+import { userGlobe } from "../App";
 export default function BlogList() {
   const [BlogListPopula, setBloglistPopula] = useState([]);
   const [BlogListPage, setBlogListPage] = useState([]);
@@ -27,7 +27,10 @@ export default function BlogList() {
   const [tagId, setTagId] = useState(null);
   const [maxLoadmore, setMaxLoadMore] = useState(false);
   const [blogIdForComment, setBlogIdForComment] = useState(0);
+  const [like, setLike] = useState(1);
   const token = localStorage.getItem("accessToken");
+  const userCurr = useContext(userGlobe);
+  console.log(userCurr);
   //list popular
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +107,7 @@ export default function BlogList() {
     };
 
     fetchData();
-  }, [pageIndex, pageSize, tagId, searchName, sortType]);
+  }, [pageIndex, pageSize, tagId, searchName, sortType, like]);
   const upVoteOrUnUpvote = async ({ blogId }) => {
     try {
       const response = await axios.post(
@@ -165,6 +168,58 @@ export default function BlogList() {
       }
     });
   };
+  //upvoteBlog
+  function upvoteBlog(blogid) {
+    fetch(`http://localhost:8080/api/blogUpvote/add/${blogid}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          if (like !== 2) {
+            setLike(2);
+          } else {
+            setLike(1);
+          }
+          console.log("done");
+        } else {
+          console.log("not done");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  //delete upvote
+  function deleteUpvoteBlog(blogid) {
+    fetch(`http://localhost:8080/api/blogUpvote/delete/${blogid}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          if (like !== 1) {
+            setLike(1);
+          } else {
+            setLike(2);
+          }
+          console.log("done delete");
+        } else {
+          console.log("not done delete");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   return (
     <DefaultTemplate>
       <Container>
@@ -337,13 +392,13 @@ export default function BlogList() {
                       <span>
                         {bp.upvotedByCurrentUser ? (
                           <img
+                            onClick={(e) => deleteUpvoteBlog(bp.blogId)}
                             src="./love2.png"
-                            onClick={(e) => upVoteOrUnUpvote(bp.blogId)}
                           />
                         ) : (
                           <img
+                            onClick={(e) => upvoteBlog(bp.blogId)}
                             src="./love.png"
-                            onClick={(e) => upVoteOrUnUpvote(bp.blogId)}
                           />
                         )}
 
@@ -385,7 +440,7 @@ export default function BlogList() {
           <Modal.Body
             style={{
               backgroundColor: "RGB(73 73 76)",
-              height: "400px",
+              height: "500px",
               overflowY: "scroll",
             }}
           >

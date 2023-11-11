@@ -1,10 +1,10 @@
 import { Col, Container, Dropdown, Image, Row } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link, createBrowserRouter, useLocation } from "react-router-dom";
 import "../css/header.css";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 const Header = () => {
@@ -32,7 +32,7 @@ const Header = () => {
         console.log("Fetch error: ", error);
       });
   }, []);
-
+  const userGlobe = createContext(user);
   const location = useLocation();
 
   const isActive = (path) => {

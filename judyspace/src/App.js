@@ -3,7 +3,6 @@ import "./App.css";
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 
 import Login_SignUp from "./screen/Login_SignUp";
-import LoginPage from "./testConnect/LoginPage";
 import DisplayUserInfo from "./testConnect/DisplayUserInfo";
 import Oauth2Proceed from "./testConnect/Oauth2Proceed";
 import Home from "./screen/Home";
@@ -16,37 +15,67 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Comment from "./component/Comment";
 import UploadForm from "./testConnect/UploadingToCloudinary";
+import { createContext, useEffect, useState } from "react";
+export const userGlobe = createContext();
+
 function App() {
+  const accessToken = localStorage.getItem("accessToken");
+  const [user, SetUser] = useState();
+  useEffect(() => {
+    if (accessToken === null) {
+      console.log("deo on roi");
+    } else {
+      fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          SetUser(data);
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log("Fetch error: ", error);
+        });
+    }
+  }, []);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login_SignUp />} />
-        <Route path="/blog" element={<BlogList />} />
-        <Route path="/musicInspiration" element={<Music_inspiration />} />
-        <Route path="/bookInspiration" element={<Book_inspiration />} />
-        <Route path="/movieInspiration" element={<Movie_inspiration />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/default" element={<DisplayUserInfo />} />
-        <Route
-          path="/oauth2proceed/:accessToken/:refreshToken"
-          element={<Oauth2Proceed />}
+    <userGlobe.Provider value={user}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login_SignUp />} />
+          <Route path="/blog" element={<BlogList />} />
+          <Route path="/musicInspiration" element={<Music_inspiration />} />
+          <Route path="/bookInspiration" element={<Book_inspiration />} />
+          <Route path="/movieInspiration" element={<Movie_inspiration />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/default" element={<DisplayUserInfo />} />
+          <Route
+            path="/oauth2proceed/:accessToken/:refreshToken"
+            element={<Oauth2Proceed />}
+          />
+          <Route path="/testingImageUpload" element={<UploadForm />} />
+        </Routes>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
         />
-        <Route path="/testingImageUpload" element={<UploadForm/>}/>
-      </Routes>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-    </BrowserRouter>
+      </BrowserRouter>
+    </userGlobe.Provider>
   );
 }
 
