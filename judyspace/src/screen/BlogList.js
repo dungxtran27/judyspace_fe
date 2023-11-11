@@ -81,6 +81,13 @@ export default function BlogList() {
   //list paginated
   useEffect(() => {
     const fetchData = async () => {
+      const head = {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      };
+      if(token!==null){
+        head.Authorization = `Bearer ${token}`
+      }
       try {
         const response = await axios.post(
           "http://localhost:8080/api/blog/getBlogsPaginated",
@@ -92,11 +99,7 @@ export default function BlogList() {
             tagId: tagId,
           },
           {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${token}`,
-            },
+            headers: head,
           }
         );
         setMaxLoadMore(response.data.last);
