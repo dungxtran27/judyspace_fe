@@ -9,14 +9,17 @@ import {
   Modal,
   Row,
 } from "react-bootstrap";
-import ReactDOM from "react-dom";
+import ReactDOM, { unmountComponentAtNode } from "react-dom";
 import { toast } from "react-toastify";
 import "../css/Comment.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 export default function Comment({ type, parameter }) {
   const [rootComments, setRootComment] = useState([]);
   const [childComments, setChilComments] = useState([]);
   const [showChild, setShowChild] = useState(false);
+  const [replyContent, setReplyContent] = useState("");
   useEffect(() => {
     fetch(
       "http://localhost:8080/api/comment/get" + type + "Comments/" + parameter,
@@ -28,27 +31,40 @@ export default function Comment({ type, parameter }) {
       .then((responseData) => {
         setRootComment(responseData);
       });
-  }, [type, parameter]);
+  }, []);
   const loadChildComment = (commentId) => {
+    console.log("child of " + commentId);
     const element = <Comment type={"Child"} parameter={commentId} />;
     const container = document.getElementById("childrenList" + commentId);
+    const modal = document.getElementById("commentListofBlog");
+    //unmount the component
+    unmountComponentAtNode(container)
     ReactDOM.render(element, container);
+    // Scroll to the newly added element
+    modal.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+      inline: "nearest",
+    });
   };
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-
-  const commentChildRef = useRef();
-  const blogIdRef = useRef();
-  const comtIdRef = useRef();
-  const handleSubmitComment = (e) => {
-    e.preventDefault();
+  const toggleDisplay = (commentId) => {
+    const input = document.getElementById("cmtinput" + commentId);
+    input.style.display =
+      input.style.display === "none" ? "inline-block" : "none";
+  };
+  const handleSubmitComment = ({ blogId, commentId }) => {
     const data = {
-      content: commentChildRef.current.value,
-      blogRepliedTo: { blogId: blogIdRef.current.value },
-      parentComment: { commentId: comtIdRef.current.value },
+      content: replyContent,
+      blogRepliedTo: {
+        blogId: blogId,
+      },
+      parentComment: {
+        commentId: commentId,
+      },
     };
     const token = localStorage.getItem("accessToken");
+    console.log(data);
     fetch("http://localhost:8080/api/comment/makeChildComment", {
       method: "POST",
       headers: {
@@ -65,15 +81,14 @@ export default function Comment({ type, parameter }) {
       } else {
         response.json().then((data2) => {
           toast.success("comment success");
+          console.log("added to " + commentId);
+          loadChildComment(commentId);
+          const input = document.getElementById("cmtinput" + commentId);
+          input.value = "";
+          input.style.display = "none";
         });
       }
     });
-  };
-
-  const toggleDisplay = (commentId) => {
-    const input = document.getElementById("cmtinput" + commentId);
-    input.style.display =
-      input.style.display === "none" ? "inline-block" : "none";
   };
   return (
     <Container>
@@ -84,7 +99,7 @@ export default function Comment({ type, parameter }) {
             className={type === "Root" ? "root" : "children"}
           >
             <Image
-              style={{ width: "30px", marginRight: "3px" }}
+              style={{ width: "40px", marginRight: "10px" }}
               roundedCircle
               src={comment.poster.avatarLink}
             />
@@ -97,41 +112,41 @@ export default function Comment({ type, parameter }) {
             <div className="btn-action">
               <p>Thích</p>
             </div>
-            <div className="btn-action">
-              <p onClick={(e) => loadChildComment(comment.commentId)}>
-                Xem phản hồi
-              </p>
-            </div>
+            {comment.childCommentNumber > 0 ? (
+              <div className="btn-action">
+                <p style={{color: "RGB(214 181 152)"}} onClick={(e) => loadChildComment(comment.commentId)}>Xem phản hồi</p>
+              </div>
+            ) : (
+              <div className="btn-action">
+                <p style={{color: "RGB(136, 136, 136, 0.5)", pointerEvents: "none"}}>Xem phản hồi</p>
+              </div>
+            )}
+
             <div className="btn-action">
               <p onClick={(e) => toggleDisplay(comment.commentId)}>Phản hồi</p>
             </div>
           </div>
           <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmitComment({
+                blogId: comment.blogRepliedTo.blogId,
+                commentId: comment.commentId,
+              });
+            }}
             id={"cmtinput" + comment.commentId}
-            className="inputcomment"
-            key={comment.commentId}
+            style={{ display: "none" }}
           >
             <Row>
               <Col xs={10}>
-                <FormControl
-                  type="input"
-                  ref={commentChildRef}
-                  placeholder="enter your thought here"
-                ></FormControl>
-                <FormControl
-                  type="hidden"
-                  value={parameter}
-                  ref={blogIdRef}
-                ></FormControl>
-                <FormControl
-                  type="hidden"
-                  value={comment.commentId}
-                  ref={comtIdRef}
-                ></FormControl>
+                <Form.Control
+                  type="text"
+                  onInput={(e) => setReplyContent(e.currentTarget.value)}
+                />
               </Col>
               <Col xs={2}>
-                <Button variant="info" onClick={(e) => handleSubmitComment(e)}>
-                  send
+                <Button type="submit">
+                  <FontAwesomeIcon icon={faPaperPlane} />
                 </Button>
               </Col>
             </Row>

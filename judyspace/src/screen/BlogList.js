@@ -340,6 +340,7 @@ export default function BlogList() {
           show={show}
           onHide={handleClose}
           animation={true}
+          id={"commentListofBlog"}
         >
           <Modal.Header
             closeButton
@@ -357,7 +358,7 @@ export default function BlogList() {
             <Comment type={"Root"} parameter={blogIdForComment} />
           </Modal.Body>
           <Modal.Body style={{ backgroundColor: "RGB(73 73 76)" }}>
-            <Form>
+            <Form onSubmit={(e) => handleSubmitComment(e)}>
               <Row>
                 <Col xs={10}>
                   <FormControl
@@ -374,7 +375,7 @@ export default function BlogList() {
                 <Col xs={2}>
                   <Button
                     variant="info"
-                    onClick={(e) => handleSubmitComment(e)}
+                    type="submit"
                   >
                     send
                   </Button>
