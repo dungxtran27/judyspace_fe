@@ -15,7 +15,7 @@ import ReactDOM, { unmountComponentAtNode } from "react-dom";
 import { toast } from "react-toastify";
 import "../css/Comment.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { fa0, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { userGlobe } from "../App";
 
 export default function Comment({ type, parameter }) {
@@ -25,7 +25,10 @@ export default function Comment({ type, parameter }) {
   const [replyContent, setReplyContent] = useState("");
   const [editCmt, setEditCmt] = useState(false);
   const currUser = useContext(userGlobe);
+  const token = localStorage.getItem("accessToken");
+  const [cmtRefresh, setCmtRefresh] = useState(true);
   useEffect(() => {
+    console.log(cmtRefresh);
     fetch(
       "http://localhost:8080/api/comment/get" + type + "Comments/" + parameter,
       {
@@ -36,7 +39,7 @@ export default function Comment({ type, parameter }) {
       .then((responseData) => {
         setRootComment(responseData);
       });
-  }, []);
+  }, [cmtRefresh]);
   const loadChildComment = (commentId) => {
     console.log("child of " + commentId);
     const element = <Comment type={"Child"} parameter={commentId} />;
@@ -62,7 +65,27 @@ export default function Comment({ type, parameter }) {
 
   // setEditCmt(editCmt === false ? true : false);
   const editComment = (e) => {};
-  const deleteCmt = (e) => {};
+  function deleteCmt(cmtid) {
+    fetch(`http://localhost:8080/api/comment/deleteComment/${cmtid}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          setCmtRefresh(cmtRefresh === true ? false : true);
+          console.log("done delete");
+        } else {
+          console.log("not done delete");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   //toggle handle cmt
   const handleSubmitComment = ({ blogId, commentId }) => {
     const data = {
@@ -74,8 +97,6 @@ export default function Comment({ type, parameter }) {
         commentId: commentId,
       },
     };
-    const token = localStorage.getItem("accessToken");
-    console.log(data);
     fetch("http://localhost:8080/api/comment/makeChildComment", {
       method: "POST",
       headers: {
@@ -92,7 +113,6 @@ export default function Comment({ type, parameter }) {
       } else {
         response.json().then((data2) => {
           toast.success("comment success");
-          console.log("added to " + commentId);
           loadChildComment(commentId);
           const input = document.getElementById("cmtinput" + commentId);
           input.value = "";
@@ -101,6 +121,7 @@ export default function Comment({ type, parameter }) {
       }
     });
   };
+  console.log(currUser + "hihih");
   return (
     <Container>
       {rootComments.map((comment) => (
@@ -119,33 +140,39 @@ export default function Comment({ type, parameter }) {
 
               <h6 className="cmt-content">{comment.content}</h6>
             </div>
-            {currUser.userId == comment.poster.userId ? (
-              <OverlayTrigger
-                trigger="click"
-                key={"right"}
-                placement={"right"}
-                overlay={
-                  <Popover id={`popover-positioned-${"right"}`}>
-                    <Popover.Body>
-                      <p onClick={(e) => editComment}>
-                        <strong>Sửa</strong>
-                      </p>
-                      <p onClick={(e) => deleteCmt(e)}>
-                        <strong>Xoá</strong>
-                      </p>
-                    </Popover.Body>
-                  </Popover>
-                }
-              >
-                <Button className="btn-edit-cmt">
-                  {" "}
-                  <div className="dot"></div>
-                  <div className="dot"></div>
-                  <div className="dot"></div>
-                </Button>
-              </OverlayTrigger>
-            ) : (
+            {currUser === undefined ? (
               <></>
+            ) : (
+              <>
+                {currUser.userId == comment.poster.userId ? (
+                  <OverlayTrigger
+                    trigger="click"
+                    key={"right"}
+                    placement={"right"}
+                    overlay={
+                      <Popover id={`popover-positioned-${"right"}`}>
+                        <Popover.Body>
+                          <p onClick={(e) => editComment}>
+                            <strong>Sửa</strong>
+                          </p>
+                          <p onClick={(e) => deleteCmt(comment.commentId)}>
+                            <strong>Xoá</strong>
+                          </p>
+                        </Popover.Body>
+                      </Popover>
+                    }
+                  >
+                    <Button className="btn-edit-cmt">
+                      {" "}
+                      <div className="dot"></div>
+                      <div className="dot"></div>
+                      <div className="dot"></div>
+                    </Button>
+                  </OverlayTrigger>
+                ) : (
+                  <></>
+                )}
+              </>
             )}
           </div>
           <div className="row-btn">

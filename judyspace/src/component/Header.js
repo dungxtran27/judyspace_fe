@@ -26,7 +26,6 @@ const Header = () => {
       })
       .then((data) => {
         SetUser(data);
-        console.log(data);
       })
       .catch((error) => {
         console.log("Fetch error: ", error);
