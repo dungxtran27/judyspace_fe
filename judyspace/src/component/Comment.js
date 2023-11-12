@@ -23,12 +23,14 @@ export default function Comment({ type, parameter }) {
   const [childComments, setChilComments] = useState([]);
   const [showChild, setShowChild] = useState(false);
   const [replyContent, setReplyContent] = useState("");
-  const [editCmt, setEditCmt] = useState(false);
+  const [editContent, setEditContent] = useState("");
   const currUser = useContext(userGlobe);
   const token = localStorage.getItem("accessToken");
   const [cmtRefresh, setCmtRefresh] = useState(true);
+  const [isEditing, setEditing] = useState(false);
+  const [editingCommentId, seteditingCommentId] = useState(-1);
   useEffect(() => {
-    console.log(cmtRefresh);
+    console.log("cmtRefresh");
     fetch(
       "http://localhost:8080/api/comment/get" + type + "Comments/" + parameter,
       {
@@ -39,7 +41,7 @@ export default function Comment({ type, parameter }) {
       .then((responseData) => {
         setRootComment(responseData);
       });
-  }, [cmtRefresh]);
+  }, [cmtRefresh, isEditing]);
   const loadChildComment = (commentId) => {
     console.log("child of " + commentId);
     const element = <Comment type={"Child"} parameter={commentId} />;
@@ -49,11 +51,11 @@ export default function Comment({ type, parameter }) {
     unmountComponentAtNode(container);
     ReactDOM.render(element, container);
     // Scroll to the newly added element
-    modal.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-      inline: "nearest",
-    });
+    // modal.scrollIntoView({
+    //   behavior: "smooth",
+    //   block: "end",
+    //   inline: "nearest",
+    // });
   };
 
   const toggleDisplay = (commentId) => {
@@ -64,7 +66,32 @@ export default function Comment({ type, parameter }) {
   //toggle edit cmt
 
   // setEditCmt(editCmt === false ? true : false);
-  const editComment = (e) => {};
+  const HandleEditSubmit = (cmtId) => {
+    const data = {
+      commentId: cmtId,
+      content: editContent,
+    };
+    fetch(`http://localhost:8080/api/comment/updateComment`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setEditing(false)
+          console.log("done UPDATE");
+        } else {
+          console.log("not done UPDATE");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   function deleteCmt(cmtid) {
     fetch(`http://localhost:8080/api/comment/deleteComment/${cmtid}`, {
       method: "DELETE",
@@ -86,6 +113,7 @@ export default function Comment({ type, parameter }) {
         console.log(error);
       });
   }
+
   //toggle handle cmt
   const handleSubmitComment = ({ blogId, commentId }) => {
     const data = {
@@ -121,7 +149,6 @@ export default function Comment({ type, parameter }) {
       }
     });
   };
-  console.log(currUser + "hihih");
   return (
     <Container>
       {rootComments.map((comment) => (
@@ -137,8 +164,37 @@ export default function Comment({ type, parameter }) {
             />
             <div className="cmt-container">
               <h6 className="cmt-user ">{comment.poster.username}</h6>
-
-              <h6 className="cmt-content">{comment.content}</h6>
+              {isEditing === true && comment.commentId === editingCommentId ? (
+                <Form
+                  id={"cmtedit" + comment.commentId}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    HandleEditSubmit(comment.commentId);
+                  }}
+                >
+                  <Row>
+                    <Col xs={10}>
+                      <Form.Control
+                        type="text"
+                        className="editInput"
+                        defaultValue={comment.content}
+                        onInput={(e) => setEditContent(e.currentTarget.value)}
+                      />
+                    </Col>
+                    <Col xs={2}>
+                      <Button type="submit">
+                        <FontAwesomeIcon
+                          className="icon-hover"
+                          icon={faPaperPlane}
+                        />
+                      </Button>
+                    </Col>
+                  </Row>
+                  <p onClick={(e) => setEditing(false)}>Huỷ</p>
+                </Form>
+              ) : (
+                <h6 className="cmt-content">{comment.content}</h6>
+              )}
             </div>
             {currUser === undefined ? (
               <></>
@@ -152,7 +208,12 @@ export default function Comment({ type, parameter }) {
                     overlay={
                       <Popover id={`popover-positioned-${"right"}`}>
                         <Popover.Body>
-                          <p onClick={(e) => editComment}>
+                          <p
+                            onClick={(e) => {
+                              seteditingCommentId(comment.commentId);
+                              setEditing(true);
+                            }}
+                          >
                             <strong>Sửa</strong>
                           </p>
                           <p onClick={(e) => deleteCmt(comment.commentId)}>

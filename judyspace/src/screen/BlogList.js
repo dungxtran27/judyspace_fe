@@ -85,8 +85,8 @@ export default function BlogList() {
         "Content-Type": "application/json",
         Accept: "application/json",
       };
-      if(token!==null){
-        head.Authorization = `Bearer ${token}`
+      if (token !== null) {
+        head.Authorization = `Bearer ${token}`;
       }
       try {
         const response = await axios.post(
@@ -112,16 +112,19 @@ export default function BlogList() {
     fetchData();
   }, [pageIndex, pageSize, tagId, searchName, sortType, like]);
   const upVoteOrUnUpvote = async ({ blogId }) => {
+    const head = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+    if (token !== null) {
+      head.Authorization = `Bearer ${token}`;
+    }
     try {
       const response = await axios.post(
         `http://localhost:8080/api/blogUpvote/add/${blogId}`,
         {},
         {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+          headers: head,
         }
       );
 
@@ -353,64 +356,66 @@ export default function BlogList() {
               </div>
             </div>
             {BlogListPage.map((bp) => (
-              <div className="blog-cardPopularList  aninek" key={bp.blogId}>
-                <div className="metaPopularList">
-                  <div
-                    className="photoPopularList"
-                    style={{
-                      background: `url(${bp.blogThumbnail}) center / cover no-repeat`,
-                      // background: `url("https://www.publicdomainpictures.net/pictures/80000/velka/kitty-cat-1395206763uwr.jpg") center / cover no-repeat`,
-                    }}
-                  ></div>
-                  <ul className="detailsPopularList">
-                    <li className="authorPopularList">- waozouq</li>
-                    <li className="datePopularList">
-                      - {new Date(bp.createDate * 1000).toDateString()}
-                    </li>
-                  </ul>
-                </div>
-                <div className="descriptionPopularList">
-                  <h1>{bp.title}</h1>
+              <Link to={"/blogDetail/"+bp.blogId}>
+                <div className="blog-cardPopularList  aninek" key={bp.blogId}>
+                  <div className="metaPopularList">
+                    <div
+                      className="photoPopularList"
+                      style={{
+                        background: `url(${bp.blogThumbnail}) center / cover no-repeat`,
+                        // background: `url("https://www.publicdomainpictures.net/pictures/80000/velka/kitty-cat-1395206763uwr.jpg") center / cover no-repeat`,
+                      }}
+                    ></div>
+                    <ul className="detailsPopularList">
+                      <li className="authorPopularList">- waozouq</li>
+                      <li className="datePopularList">
+                        - {new Date(bp.createDate * 1000).toDateString()}
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="descriptionPopularList">
+                    <h1>{bp.title}</h1>
 
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-                    eum dolorum m. Veritatis, sit.
-                  </p>
-                  <p className="read-morePopularList">
-                    <Link to="#">Read More</Link>
-                  </p>
-                  <div className="icon-social-blog">
-                    <span>
-                      <img src="./eye.png" />
-                      <span>99+</span>
-                    </span>
-                    <span>
-                      <img
-                        src="./cmt.png"
-                        onClick={(e) => handleShow(bp.blogId)}
-                      />
-                      <span>{bp.commentSetSize}</span>
-                    </span>
-                    <span>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Ad eum dolorum m. Veritatis, sit.
+                    </p>
+                    <p className="read-morePopularList">
+                      <Link to="#">Read More</Link>
+                    </p>
+                    <div className="icon-social-blog">
                       <span>
-                        {bp.upvotedByCurrentUser ? (
-                          <img
-                            onClick={(e) => deleteUpvoteBlog(bp.blogId)}
-                            src="./love2.png"
-                          />
-                        ) : (
-                          <img
-                            onClick={(e) => upvoteBlog(bp.blogId)}
-                            src="./love.png"
-                          />
-                        )}
-
-                        <span> {bp.upvoteUserSetSize}</span>
+                        <img src="./eye.png" />
+                        <span>99+</span>
                       </span>
-                    </span>
+                      <span>
+                        <img
+                          src="./cmt.png"
+                          onClick={(e) => handleShow(bp.blogId)}
+                        />
+                        <span>{bp.commentSetSize}</span>
+                      </span>
+                      <span>
+                        <span>
+                          {bp.upvotedByCurrentUser ? (
+                            <img
+                              onClick={(e) => deleteUpvoteBlog(bp.blogId)}
+                              src="./love2.png"
+                            />
+                          ) : (
+                            <img
+                              onClick={(e) => upvoteBlog(bp.blogId)}
+                              src="./love.png"
+                            />
+                          )}
+
+                          <span> {bp.upvoteUserSetSize}</span>
+                        </span>
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
             <Row xs={12} lg={4} className="btnRow">
               <button className="buttonLoadmore" onClick={loadmore}>

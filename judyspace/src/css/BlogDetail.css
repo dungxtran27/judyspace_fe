@@ -1,0 +1,35 @@
+.blogDetailBackGround{
+    background-color: #18191a;
+    min-height: 700px;
+    width: 85%;
+    margin-left: 50px;
+    border-radius: 10px;
+    padding: 40px 50px;
+}
+.Judy{
+
+    display: flex;
+    align-items: center;
+}
+.JudyText {
+    width: 300px !important;
+    font-size: 20px;
+}
+.JudyText p:first-child{
+    margin-bottom: 5px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.postdate{
+    color: RGB(240, 240, 240, 0.5)
+}
+.JudyAvatar{
+    width: 90px !important;
+}
+.blogTitle{
+    color: white;
+}
+.blogTitle h5{
+    font-size: 40px !important; 
+}
