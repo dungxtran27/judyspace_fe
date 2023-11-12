@@ -82,7 +82,7 @@ export default function Comment({ type, parameter }) {
     })
       .then((response) => {
         if (response.ok) {
-          setEditing(false)
+          setEditing(false);
           console.log("done UPDATE");
         } else {
           console.log("not done UPDATE");
@@ -265,7 +265,18 @@ export default function Comment({ type, parameter }) {
               <p onClick={(e) => toggleDisplay(comment.commentId)}>Phản hồi</p>
             </div>
           </div>
-          <Form id={"cmtinput" + comment.commentId} style={{ display: "none" }}>
+          <Form
+            id={"cmtinput" + comment.commentId}
+            style={{ display: "none" }}
+            onSubmit={(e) => {
+              console.log("wtf");
+              e.preventDefault();
+              handleSubmitComment({
+                blogId: comment.blogRepliedTo.blogId,
+                commentId: comment.commentId,
+              });
+            } }
+          >
             <Row>
               <Col xs={2}></Col>
               <Col xs={8}>
@@ -277,16 +288,7 @@ export default function Comment({ type, parameter }) {
               </Col>
               <Col xs={2}>
                 <Button type="submit">
-                  <FontAwesomeIcon
-                    onClick={(e) =>
-                      handleSubmitComment({
-                        blogId: comment.blogRepliedTo.blogId,
-                        commentId: comment.commentId,
-                      })
-                    }
-                    className="icon-hover"
-                    icon={faPaperPlane}
-                  />
+                  <FontAwesomeIcon className="icon-hover" icon={faPaperPlane} />
                 </Button>
               </Col>
             </Row>

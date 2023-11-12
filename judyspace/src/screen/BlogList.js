@@ -72,7 +72,7 @@ export default function BlogList() {
   //loadmomre
   /// baấmm nhiều lần thay đổi toast
   const loadmore = () => {
-    setPageSize(pageSize + 1);
+    setPageSize(pageSize + 4);
 
     if (maxLoadmore) {
       toast.warning("Hết rùi ( ´◔ ω◔`) ノシ");
@@ -356,66 +356,66 @@ export default function BlogList() {
               </div>
             </div>
             {BlogListPage.map((bp) => (
-              <Link to={"/blogDetail/"+bp.blogId}>
-                <div className="blog-cardPopularList  aninek" key={bp.blogId}>
-                  <div className="metaPopularList">
-                    <div
-                      className="photoPopularList"
-                      style={{
-                        background: `url(${bp.blogThumbnail}) center / cover no-repeat`,
-                        // background: `url("https://www.publicdomainpictures.net/pictures/80000/velka/kitty-cat-1395206763uwr.jpg") center / cover no-repeat`,
-                      }}
-                    ></div>
-                    <ul className="detailsPopularList">
-                      <li className="authorPopularList">- waozouq</li>
-                      <li className="datePopularList">
-                        - {new Date(bp.createDate * 1000).toDateString()}
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="descriptionPopularList">
+              <div className="blog-cardPopularList  aninek" key={bp.blogId}>
+                <div className="metaPopularList">
+                  <div
+                    className="photoPopularList"
+                    style={{
+                      background: `url(${bp.blogThumbnail}) center / cover no-repeat`,
+                      // background: `url("https://www.publicdomainpictures.net/pictures/80000/velka/kitty-cat-1395206763uwr.jpg") center / cover no-repeat`,
+                    }}
+                  ></div>
+                  <ul className="detailsPopularList">
+                    <li className="authorPopularList">- waozouq</li>
+                    <li className="datePopularList">
+                      - {new Date(bp.createDate * 1000).toDateString()}
+                    </li>
+                  </ul>
+                </div>
+                <div className="descriptionPopularList">
+                  <Link to={"/blogDetail/" + bp.blogId}>
                     <h1>{bp.title}</h1>
+                  </Link>
 
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Ad eum dolorum m. Veritatis, sit.
-                    </p>
-                    <p className="read-morePopularList">
-                      <Link to="#">Read More</Link>
-                    </p>
-                    <div className="icon-social-blog">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
+                    eum dolorum m. Veritatis, sit.
+                  </p>
+                  <p className="read-morePopularList">
+                    <Link to="#">Read More</Link>
+                  </p>
+                  <div className="icon-social-blog">
+                    <span>
+                      <img src="./eye.png" />
+                      <span>99+</span>
+                    </span>
+                    <span>
+                      <img
+                        src="./cmt.png"
+                        onClick={(e) => handleShow(bp.blogId)}
+                      />
+                      <span>{bp.commentSetSize}</span>
+                    </span>
+                    <span>
                       <span>
-                        <img src="./eye.png" />
-                        <span>99+</span>
-                      </span>
-                      <span>
-                        <img
-                          src="./cmt.png"
-                          onClick={(e) => handleShow(bp.blogId)}
-                        />
-                        <span>{bp.commentSetSize}</span>
-                      </span>
-                      <span>
-                        <span>
-                          {bp.upvotedByCurrentUser ? (
-                            <img
-                              onClick={(e) => deleteUpvoteBlog(bp.blogId)}
-                              src="./love2.png"
-                            />
-                          ) : (
-                            <img
-                              onClick={(e) => upvoteBlog(bp.blogId)}
-                              src="./love.png"
-                            />
-                          )}
+                        {bp.upvotedByCurrentUser ? (
+                          <img
+                            onClick={(e) => deleteUpvoteBlog(bp.blogId)}
+                            src="./love2.png"
+                          />
+                        ) : (
+                          <img
+                            onClick={(e) => upvoteBlog(bp.blogId)}
+                            src="./love.png"
+                          />
+                        )}
 
-                          <span> {bp.upvoteUserSetSize}</span>
-                        </span>
+                        <span> {bp.upvoteUserSetSize}</span>
                       </span>
-                    </div>
+                    </span>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
             <Row xs={12} lg={4} className="btnRow">
               <button className="buttonLoadmore" onClick={loadmore}>
