@@ -9,11 +9,16 @@ import {
   Image,
   Row,
 } from "react-bootstrap";
+import ReactQuill, { Quill } from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import QuillToolbar, { formats, modules } from "./utilities/QuillToolBar";
+import MyDropZone from "./utilities/DragAndDropFileUpload";
 export default function UploadForm() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [image, setImage] = useState("");
   const [preview, setPreview] = useState();
   const [url, setUrl] = useState("");
+  const [value, setValue] = useState("");
   const uploadImage = () => {
     const data = new FormData();
     data.append("file", image);
@@ -30,41 +35,39 @@ export default function UploadForm() {
       })
       .catch((errors) => console.log(errors));
   };
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setImage(file);
-    if (file) {
-      // Use FileReader to read the selected image and set it in the state
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSelectedFile(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleChange = (content, delta, source, editor) => {
+    setValue(content);
+    const currentContents = editor.getContents();
+    var text = editor.getHTML();
+    console.log(text);
   };
+  // const handleImageChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setImage(file);
+  //   if (file) {
+  //     // Use FileReader to read the selected image and set it in the state
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       setSelectedFile(reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
   return (
     <Container>
-      <Form>
-        <FormGroup>
-          <FormLabel>Choose Image</FormLabel>
-          <FormControl type="file" onChange={handleImageChange} />
-        </FormGroup>
-        {selectedFile && (
-          <div>
-            <Image
-              style={{ margin: "0 auto", width: "200px" }}
-              src={selectedFile}
-            />
-          </div>
-        )}
-        <br />
-        <Button variant="outline-primary" onClick={(e) => uploadImage()}>
-          Upload
-        </Button>
-      </Form>
-      <Row>
-        hế hế 
+      <Row style={{ color: "white", backgroundColor: "white" }}>
+        <QuillToolbar style={{ with: "100%" }} />
+        <ReactQuill
+          theme="snow"
+          style={{ width: "100%", padding: "0px", color: "black" }}
+          value={value}
+          onChange={handleChange}
+          modules={modules}
+          formats={formats}
+        />
       </Row>
+      <MyDropZone />
     </Container>
   );
 }
