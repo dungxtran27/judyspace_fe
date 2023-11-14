@@ -7,31 +7,32 @@ import {
   FormGroup,
   FormLabel,
   Image,
+  Row,
 } from "react-bootstrap";
 export default function UploadForm() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [image, setImage] = useState("");
   const [preview, setPreview] = useState();
   const [url, setUrl] = useState("");
-  const uploadImage = ()=> {
+  const uploadImage = () => {
     const data = new FormData();
     data.append("file", image);
-    data.append(
-      "upload_preset", "JudySpace"
-    );
-    data.append("cloud_name", "")
+    data.append("upload_preset", "JudySpace");
+    data.append("cloud_name", "");
     fetch("https://api.cloudinary.com/v1_1/djzdhtdpj/image/upload", {
-      method: "POST", 
+      method: "POST",
       body: data,
-    }).then((response)=>response.json())
-    .then((data)=>{
-      console.log(data.secure_url);
-      setUrl(data.secure_url)
-    }).catch((errors)=>console.log(errors))
-  }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.secure_url);
+        setUrl(data.secure_url);
+      })
+      .catch((errors) => console.log(errors));
+  };
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    setImage(file)
+    setImage(file);
     if (file) {
       // Use FileReader to read the selected image and set it in the state
       const reader = new FileReader();
@@ -48,15 +49,22 @@ export default function UploadForm() {
           <FormLabel>Choose Image</FormLabel>
           <FormControl type="file" onChange={handleImageChange} />
         </FormGroup>
+        {selectedFile && (
+          <div>
+            <Image
+              style={{ margin: "0 auto", width: "200px" }}
+              src={selectedFile}
+            />
+          </div>
+        )}
+        <br />
+        <Button variant="outline-primary" onClick={(e) => uploadImage()}>
+          Upload
+        </Button>
       </Form>
-      {selectedFile && (
-        <div>
-          <Image style={{margin: "0 auto", width: "200px"}} src={selectedFile} />
-        </div>
-      )}
-      <br/>
-      <Button variant="outline-primary" onClick={(e)=>uploadImage()}>Upload</Button>
+      <Row>
+        hế hế 
+      </Row>
     </Container>
-
   );
 }

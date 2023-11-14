@@ -176,29 +176,35 @@ export default function BlogList() {
   };
   //upvoteBlog
   function upvoteBlog(blogid) {
+    const head = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+    if (token !== null) {
+      head.Authorization = `Bearer ${token}`;
+    }
     fetch(`http://localhost:8080/api/blogUpvote/add/${blogid}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
+      headers: head,
+    }).then((response) => {
+      if (response.status === 417) {
+        toast.warning("Đăng nhập đê bạn ê");
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 2000);
+      } else {
+        if (response.status != 200) {
+          console.log("not done");
+        } else {
           if (like !== 2) {
             setLike(2);
           } else {
             setLike(1);
           }
           console.log("done");
-        } else {
-          console.log("not done");
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      }
+    });
   }
   //delete upvote
   function deleteUpvoteBlog(blogid) {
