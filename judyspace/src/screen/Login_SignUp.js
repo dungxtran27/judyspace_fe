@@ -4,6 +4,7 @@ import { Container, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/loginSignup.css";
 import Modal from "react-bootstrap/Modal";
+import DefaultTemplate from "../template/DefaultTemplate";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -146,7 +147,9 @@ const Login_SignUp = () => {
       }
     });
   };
-
+  const notSupported = () => {
+    toast.info("Tính năng này chưa được hỗ trợ");
+  };
   return (
     <div className="background-login">
       <div className="container containerLogin" id="container">
@@ -160,10 +163,10 @@ const Login_SignUp = () => {
               >
                 <FontAwesomeIcon icon={faGoogle} />
               </a>
-              <a href="#" className="icon">
+              <a href="#" onClick={(e) => notSupported(e)} className="icon">
                 <FontAwesomeIcon icon={faInstagram} />
               </a>
-              <a href="#" className="icon">
+              <a href="#" onClick={(e) => notSupported(e)} className="icon">
                 <FontAwesomeIcon icon={faFacebookF} />
               </a>
             </div>
@@ -196,13 +199,13 @@ const Login_SignUp = () => {
               >
                 <FontAwesomeIcon icon={faGoogle} />
               </a>
-              <a href="#" className="icon">
+              <a href="#" onClick={(e) => notSupported(e)} className="icon">
                 <FontAwesomeIcon icon={faFacebookF} />
               </a>
-              <a href="#" className="icon">
+              <a href="#" onClick={(e) => notSupported(e)} className="icon">
                 <FontAwesomeIcon icon={faInstagram} />
               </a>
-              <a href="#" className="icon">
+              <a href="#" onClick={(e) => notSupported(e)} className="icon">
                 <FontAwesomeIcon icon={faLinkedinIn} />
               </a>
             </div>

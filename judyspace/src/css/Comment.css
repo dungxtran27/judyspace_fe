@@ -55,6 +55,9 @@
 .no-pad-left {
   padding-left: 0px !important;
 }
+.no-pad-right {
+  padding-right: 0px !important;
+}
 .popover {
   border-radius: 10px !important;
   background-color: #3a3b3d !important;

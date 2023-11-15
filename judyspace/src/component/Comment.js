@@ -17,18 +17,18 @@ import "../css/Comment.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fa0, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { userGlobe } from "../App";
+import { useNavigate } from "react-router-dom";
 
-export default function Comment({ type, parameter }) {
+export default function Comment({ type, parameter, refreshcmt }) {
   const [rootComments, setRootComment] = useState([]);
-  const [childComments, setChilComments] = useState([]);
-  const [showChild, setShowChild] = useState(false);
+
   const [replyContent, setReplyContent] = useState("");
   const [editCmt, setEditCmt] = useState(false);
   const currUser = useContext(userGlobe);
   const token = localStorage.getItem("accessToken");
   const [cmtRefresh, setCmtRefresh] = useState(true);
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log(cmtRefresh);
     fetch(
       "http://localhost:8080/api/comment/get" + type + "Comments/" + parameter,
       {
@@ -39,9 +39,8 @@ export default function Comment({ type, parameter }) {
       .then((responseData) => {
         setRootComment(responseData);
       });
-  }, [cmtRefresh]);
+  }, [cmtRefresh, refreshcmt]);
   const loadChildComment = (commentId) => {
-    console.log("child of " + commentId);
     const element = <Comment type={"Child"} parameter={commentId} />;
     const container = document.getElementById("childrenList" + commentId);
     const modal = document.getElementById("commentListofBlog");
@@ -97,31 +96,36 @@ export default function Comment({ type, parameter }) {
         commentId: commentId,
       },
     };
-    fetch("http://localhost:8080/api/comment/makeChildComment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    }).then((response) => {
-      if (response.status !== 200) {
-        response.json().then((data2) => {
-          toast.error(data2.value);
-        });
-      } else {
-        response.json().then((data2) => {
-          toast.success("comment success");
-          loadChildComment(commentId);
-          const input = document.getElementById("cmtinput" + commentId);
-          input.value = "";
-          input.style.display = "none";
-        });
-      }
-    });
+    if (token === null) {
+      toast.error("Đăng nhập để bình luận nha m");
+      navigate("/login");
+    } else {
+      fetch("http://localhost:8080/api/comment/makeChildComment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }).then((response) => {
+        if (response.status !== 200) {
+          response.json().then((data2) => {
+            toast.error(data2.value);
+          });
+        } else {
+          response.json().then((data2) => {
+            setReplyContent("");
+            toast.success("comment success");
+            loadChildComment(commentId);
+            const input = document.getElementById("cmtinput" + commentId);
+            input.value = "";
+            input.style.display = "none";
+          });
+        }
+      });
+    }
   };
-  console.log(currUser + "hihih");
   return (
     <Container>
       {rootComments.map((comment) => (
@@ -141,7 +145,7 @@ export default function Comment({ type, parameter }) {
               <h6 className="cmt-content">{comment.content}</h6>
             </div>
             {currUser === undefined ? (
-              <></>
+              <>undefine</>
             ) : (
               <>
                 {currUser.userId == comment.poster.userId ? (
@@ -152,7 +156,7 @@ export default function Comment({ type, parameter }) {
                     overlay={
                       <Popover id={`popover-positioned-${"right"}`}>
                         <Popover.Body>
-                          <p onClick={(e) => editComment}>
+                          <p onClick={(e) => editComment()}>
                             <strong>Sửa</strong>
                           </p>
                           <p onClick={(e) => deleteCmt(comment.commentId)}>
@@ -170,7 +174,7 @@ export default function Comment({ type, parameter }) {
                     </Button>
                   </OverlayTrigger>
                 ) : (
-                  <></>
+                  <> no eidt</>
                 )}
               </>
             )}
@@ -207,33 +211,35 @@ export default function Comment({ type, parameter }) {
           <Form id={"cmtinput" + comment.commentId} style={{ display: "none" }}>
             <Row>
               <Col xs={2}></Col>
-              <Col xs={8}>
+              <Col xs={8} className="no-pad-right">
                 <Form.Control
                   type="textarea"
                   className="content-input"
                   onInput={(e) => setReplyContent(e.currentTarget.value)}
                 />
               </Col>
-              <Col xs={2}>
-                <Button type="submit">
-                  <FontAwesomeIcon
-                    onClick={(e) =>
-                      handleSubmitComment({
-                        blogId: comment.blogRepliedTo.blogId,
-                        commentId: comment.commentId,
-                      })
-                    }
-                    className="icon-hover"
-                    icon={faPaperPlane}
-                  />
-                </Button>
+              <Col xs={2} className="no-pad-left">
+                <FontAwesomeIcon
+                  onClick={(e) =>
+                    handleSubmitComment({
+                      blogId: comment.blogRepliedTo.blogId,
+                      commentId: comment.commentId,
+                    })
+                  }
+                  size="2xl"
+                  className="icon-hover"
+                  icon={faPaperPlane}
+                />
               </Col>
             </Row>
           </Form>
           <div
             className="children"
             id={"childrenList" + comment.commentId}
-            style={{ borderLeft: "2px solid white", paddingLeft: "20px" }}
+            style={{
+              borderLeft: "1px solid white",
+              marginLeft: "20px",
+            }}
           ></div>
           <hr />
         </Row>

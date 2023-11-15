@@ -28,9 +28,10 @@ export default function BlogList() {
   const [maxLoadmore, setMaxLoadMore] = useState(false);
   const [blogIdForComment, setBlogIdForComment] = useState(0);
   const [like, setLike] = useState(1);
+  const [newcmt, setNewcmt] = useState(1);
+
   const token = localStorage.getItem("accessToken");
   const userCurr = useContext(userGlobe);
-  console.log(userCurr);
   //list popular
   useEffect(() => {
     const fetchData = async () => {
@@ -85,8 +86,8 @@ export default function BlogList() {
         "Content-Type": "application/json",
         Accept: "application/json",
       };
-      if(token!==null){
-        head.Authorization = `Bearer ${token}`
+      if (token !== null) {
+        head.Authorization = `Bearer ${token}`;
       }
       try {
         const response = await axios.post(
@@ -111,25 +112,6 @@ export default function BlogList() {
 
     fetchData();
   }, [pageIndex, pageSize, tagId, searchName, sortType, like]);
-  const upVoteOrUnUpvote = async ({ blogId }) => {
-    try {
-      const response = await axios.post(
-        `http://localhost:8080/api/blogUpvote/add/${blogId}`,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Handle the response as needed
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
 
   //popup comment
   const navigate = useNavigate();
@@ -151,77 +133,87 @@ export default function BlogList() {
       blogRepliedTo: { blogId: blogIdRef.current.value },
     };
     const token = localStorage.getItem("accessToken");
-    fetch("http://localhost:8080/api/comment/makeRootComment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    }).then((response) => {
-      if (response.status !== 200) {
-        response.json().then((data2) => {
-          toast.error(data2.value);
-        });
-      } else {
-        response.json().then((data2) => {
-          toast.success("comment success");
-        });
-      }
-    });
+
+    if (token === null) {
+      toast.error("Đăng nhập để bình luận nha m");
+      navigate("/login");
+    } else {
+      fetch("http://localhost:8080/api/comment/makeRootComment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }).then((response) => {
+        if (response.status !== 200) {
+          response.json().then((data2) => {
+            toast.error(data2.value);
+          });
+        } else {
+          setNewcmt(newcmt === 1 ? 2 : 1);
+          commentRef.current.value = "";
+          response.json().then((data2) => {
+            toast.success("comment success");
+          });
+        }
+      });
+    }
   };
   //upvoteBlog
   function upvoteBlog(blogid) {
-    fetch(`http://localhost:8080/api/blogUpvote/add/${blogid}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          if (like !== 2) {
-            setLike(2);
-          } else {
-            setLike(1);
-          }
-          console.log("done");
-        } else {
-          console.log("not done");
-        }
+    if (token === null) {
+      toast.error("Bạn cần đăng nhập");
+      navigate("/login");
+    } else {
+      fetch(`http://localhost:8080/api/blogUpvote/add/${blogid}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          if (response.ok) {
+            setLike(like === 1 ? 2 : 1);
+            console.log("done");
+          } else {
+            console.log("not done");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
   //delete upvote
   function deleteUpvoteBlog(blogid) {
-    fetch(`http://localhost:8080/api/blogUpvote/delete/${blogid}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          if (like !== 1) {
-            setLike(1);
-          } else {
-            setLike(2);
-          }
-          console.log("done delete");
-        } else {
-          console.log("not done delete");
-        }
+    if (token === null) {
+      toast.error("Bạn cần đăng nhập");
+      navigate("/login");
+    } else {
+      fetch(`http://localhost:8080/api/blogUpvote/delete/${blogid}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          if (response.ok) {
+            setLike(like === 1 ? 2 : 1);
+            console.log("done delete");
+          } else {
+            console.log("not done delete");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
   return (
     <DefaultTemplate>
@@ -447,7 +439,11 @@ export default function BlogList() {
               overflowY: "scroll",
             }}
           >
-            <Comment type={"Root"} parameter={blogIdForComment} />
+            <Comment
+              type={"Root"}
+              parameter={blogIdForComment}
+              refreshcmt={newcmt}
+            />
           </Modal.Body>
           <Modal.Body style={{ backgroundColor: "RGB(73 73 76)" }}>
             <Form onSubmit={(e) => handleSubmitComment(e)}>
