@@ -73,7 +73,7 @@ export default function BlogList() {
   //loadmomre
   /// baấmm nhiều lần thay đổi toast
   const loadmore = () => {
-    setPageSize(pageSize + 1);
+    setPageSize(pageSize + 4);
 
     if (maxLoadmore) {
       toast.warning("Hết rùi ( ´◔ ω◔`) ノシ");
@@ -112,6 +112,28 @@ export default function BlogList() {
 
     fetchData();
   }, [pageIndex, pageSize, tagId, searchName, sortType, like]);
+  const upVoteOrUnUpvote = async ({ blogId }) => {
+    const head = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+    if (token !== null) {
+      head.Authorization = `Bearer ${token}`;
+    }
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/blogUpvote/add/${blogId}`,
+        {},
+        {
+          headers: head,
+        }
+      );
+
+      // Handle the response as needed
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   //popup comment
   const navigate = useNavigate();
@@ -362,7 +384,9 @@ export default function BlogList() {
                   </ul>
                 </div>
                 <div className="descriptionPopularList">
-                  <h1>{bp.title}</h1>
+                  <Link to={"/blogDetail/" + bp.blogId}>
+                    <h1>{bp.title}</h1>
+                  </Link>
 
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad

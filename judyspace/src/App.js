@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Comment from "./component/Comment";
 import UploadForm from "./testConnect/UploadingToCloudinary";
 import { createContext, useEffect, useState } from "react";
+import BlogDetail from "./screen/BlogDetail";
 export const userGlobe = createContext();
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
             element={<Oauth2Proceed />}
           />
           <Route path="/testingImageUpload" element={<UploadForm />} />
+          <Route path="/blogDetail/:blogId" element={<BlogDetail />} />
         </Routes>
         <ToastContainer
           position="top-right"
