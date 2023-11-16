@@ -17,7 +17,6 @@ import "../css/Comment.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fa0, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { userGlobe } from "../App";
-import { useNavigate } from "react-router-dom";
 
 export default function Comment({ type, parameter, refreshcmt }) {
   const [rootComments, setRootComment] = useState([]);
@@ -27,17 +26,24 @@ export default function Comment({ type, parameter, refreshcmt }) {
   const currUser = useContext(userGlobe);
   const token = localStorage.getItem("accessToken");
   const [cmtRefresh, setCmtRefresh] = useState(true);
-  const navigate = useNavigate();
 
   const [isEditing, setEditing] = useState(false);
   const [editingCommentId, seteditingCommentId] = useState(-1);
   useEffect(() => {
+    const head = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+    if(token != null){
+      head.Authorization = `Bearer ${token}`;
+    }
     console.log("cmtRefresh");
     fetch(
       "http://localhost:8080/api/comment/get" + type + "Comments/" + parameter,
       {
         method: "POST",
-      }
+        headers: head
+      },
     )
       .then((response) => response.json())
       .then((responseData) => {
@@ -127,8 +133,7 @@ export default function Comment({ type, parameter, refreshcmt }) {
       },
     };
     if (token === null) {
-      toast.error("Đăng nhập để bình luận nha m");
-      navigate("/login");
+      toast.error("Đăng nhập đê bạn ê");
     } else {
       fetch("http://localhost:8080/api/comment/makeChildComment", {
         method: "POST",
@@ -203,44 +208,38 @@ export default function Comment({ type, parameter, refreshcmt }) {
                 <h6 className="cmt-content">{comment.content}</h6>
               )}
             </div>
-            {currUser === undefined ? (
-              <>undefine</>
+            {comment.postedByUser ? (
+              <OverlayTrigger
+                trigger="click"
+                key={"right"}
+                placement={"right"}
+                overlay={
+                  <Popover id={`popover-positioned-${"right"}`}>
+                    <Popover.Body>
+                      <p
+                        onClick={(e) => {
+                          seteditingCommentId(comment.commentId);
+                          setEditing(true);
+                        }}
+                      >
+                        <strong>Sửa</strong>
+                      </p>
+                      <p onClick={(e) => deleteCmt(comment.commentId)}>
+                        <strong>Xoá</strong>
+                      </p>
+                    </Popover.Body>
+                  </Popover>
+                }
+              >
+                <Button className="btn-edit-cmt">
+                  {" "}
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                </Button>
+              </OverlayTrigger>
             ) : (
-              <>
-                {currUser.userId == comment.poster.userId ? (
-                  <OverlayTrigger
-                    trigger="click"
-                    key={"right"}
-                    placement={"right"}
-                    overlay={
-                      <Popover id={`popover-positioned-${"right"}`}>
-                        <Popover.Body>
-                          <p
-                            onClick={(e) => {
-                              seteditingCommentId(comment.commentId);
-                              setEditing(true);
-                            }}
-                          >
-                            <strong>Sửa</strong>
-                          </p>
-                          <p onClick={(e) => deleteCmt(comment.commentId)}>
-                            <strong>Xoá</strong>
-                          </p>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button className="btn-edit-cmt">
-                      {" "}
-                      <div className="dot"></div>
-                      <div className="dot"></div>
-                      <div className="dot"></div>
-                    </Button>
-                  </OverlayTrigger>
-                ) : (
-                  <> no eidt</>
-                )}
-              </>
+              <div>{console.log(comment.postedByUser)}</div>
             )}
           </div>
           <div className="row-btn">
