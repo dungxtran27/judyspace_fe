@@ -112,28 +112,6 @@ export default function BlogList() {
 
     fetchData();
   }, [pageIndex, pageSize, tagId, searchName, sortType, like]);
-  const upVoteOrUnUpvote = async ({ blogId }) => {
-    const head = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    };
-    if (token !== null) {
-      head.Authorization = `Bearer ${token}`;
-    }
-    try {
-      const response = await axios.post(
-        `http://localhost:8080/api/blogUpvote/add/${blogId}`,
-        {},
-        {
-          headers: head,
-        }
-      );
-
-      // Handle the response as needed
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
 
   //popup comment
   const navigate = useNavigate();

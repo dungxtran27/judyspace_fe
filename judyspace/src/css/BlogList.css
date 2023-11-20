@@ -1,8 +1,36 @@
 * {
   box-sizing: border-box;
 }
+:root {
+  --headercolor: #7286d3;
+  --blogDate: #8ea7e9;
+  --nothover-btn: #749bc2;
+  --hover-btn: #4682a9;
+
+  /*   
+  --headercolor: #ecee81;
+  --blogDate: #8ddfcb;
+  --nothover-btn: #749bc2;
+  --hover-btn: #4682a9; */
+
+  /* --headercolor: #f4d160;
+  --blogDate: #75c2f6;
+  --nothover-btn: #749bc2;
+  --hover-btn: #4682a9; */
+
+  /* --headercolor: #00a9ff;
+  --blogDate: #89cff3;
+  --nothover-btn: #a0e9ff;
+  --hover-btn: #cdf5fd; */
+
+  /* --headercolor: #39A7FF;
+  --blogDate: #87C4FF;
+  --nothover-btn: #E0F4FF;
+  --hover-btn: #FFEED9; */
+}
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css);
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
 .cardBlogList .wrapperBlogList {
   background-color: #fff;
   min-height: 540px;
@@ -59,7 +87,9 @@
 }
 
 .authorBlogList {
-  background: rgba(48, 22, 74, 0.662);
+  background: var(--blogDate);
+  color: black;
+  font-weight: 500;
 }
 /* .wrapper {
         background: url(https://tvseriescritic.files.wordpress.com/2016/10/stranger-things-bicycle-lights-children.jpg)
@@ -67,9 +97,9 @@
       } */
 
 .headerBlogList {
-  color: #fff;
+  color: #ffffff;
   padding: 1em;
-  background: rgba(48, 22, 74, 0.662);
+  background: var(--blogDate);
 }
 
 .headerBlogList::before,
@@ -198,7 +228,7 @@
   z-index: 1;
 }
 .blog-cardPopularList .descriptionPopularList h1 {
-  font-family: Poppins, sans-serif;
+  font-family: Poppins;
   color: wheat;
 }
 .blog-cardPopularList .descriptionPopularList h1 {
@@ -289,14 +319,14 @@
   justify-content: center;
 }
 .buttonLoadmore {
-  background: rgb(4, 10, 137);
+  background: var(--blogDate);
   padding: 10px 10px;
   border-radius: 10px;
-  color: white;
+  color: rgb(255, 255, 255);
   border: none;
 }
 .buttonLoadmore:hover {
-  background: rgb(0, 21, 255);
+  background: var(--headercolor);
 }
 
 @keyframes customAni {
@@ -321,7 +351,7 @@
   background-color: rgb(255, 255, 255);
 }
 .tagIdFilter:hover {
-  background-color: rgb(191, 205, 224);
+  background-color: #e0f4ff;
 }
 
 .buttonFilter {
@@ -353,7 +383,7 @@
   background-color: rgb(255, 255, 255);
 }
 .buttonFilter:hover {
-  background-color: rgb(191, 205, 224);
+  background-color: #e0f4ff;
 }
 
 .filter-icon:hover img {

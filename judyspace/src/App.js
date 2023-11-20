@@ -57,10 +57,12 @@ function App() {
           <Route path="/movieInspiration" element={<Movie_inspiration />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/default" element={<DisplayUserInfo />} />
+          <Route path="/cmt" element={<Comment type parameter refreshcmt />} />
           <Route
             path="/oauth2proceed/:accessToken/:refreshToken"
             element={<Oauth2Proceed />}
           />
+
           <Route path="/testingImageUpload" element={<UploadForm />} />
           <Route path="/blogDetail/:blogId" element={<BlogDetail />} />
         </Routes>

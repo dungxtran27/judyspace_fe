@@ -34,16 +34,14 @@
   line-height: normal;
 }
 .link {
-  color: #ec0b0b;
   font-size: 16px;
   text-decoration: none;
   margin-right: 10px;
 }
 
 .link-active {
-  color: #ff0000;
   font-size: 16px;
-  background-color: #8aff70;
+  background-color: var(--headercolor);
   margin-right: 10px;
 }
 .home-img {

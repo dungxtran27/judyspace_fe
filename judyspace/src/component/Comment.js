@@ -27,12 +27,12 @@ export default function Comment({ type, parameter, refreshcmt }) {
   const currUser = useContext(userGlobe);
   const token = localStorage.getItem("accessToken");
   const [cmtRefresh, setCmtRefresh] = useState(true);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [isEditing, setEditing] = useState(false);
   const [editingCommentId, seteditingCommentId] = useState(-1);
   useEffect(() => {
-    console.log("cmtRefresh");
+    console.log(currUser + type);
     fetch(
       "http://localhost:8080/api/comment/get" + type + "Comments/" + parameter,
       {
@@ -128,7 +128,7 @@ export default function Comment({ type, parameter, refreshcmt }) {
     };
     if (token === null) {
       toast.error("Đăng nhập để bình luận nha m");
-      navigate("/login");
+      // navigate("/login");
     } else {
       fetch("http://localhost:8080/api/comment/makeChildComment", {
         method: "POST",
