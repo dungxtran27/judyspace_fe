@@ -276,8 +276,10 @@ export default function BlogList() {
                   <h1>{t.title}</h1>
 
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-                    eum dolorum m. Veritatis, sit.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Donec pulvinar ac risus sit amet tempus. Sed mollis, sem
+                    viverra pellentesque volutpat, lectus tellus laoreet arcu,
+                    vitae venenatis risus nunc sit amet diam
                   </p>
                   <p className="read-morePopularList">
                     <Link to="#">Read More</Link>
@@ -367,8 +369,10 @@ export default function BlogList() {
                   </Link>
 
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-                    eum dolorum m. Veritatis, sit.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Donec pulvinar ac risus sit amet tempus. Sed mollis, sem
+                    viverra pellentesque volutpat, lectus tellus laoreet arcu,
+                    vitae venenatis risus nunc sit amet diam
                   </p>
                   <p className="read-morePopularList">
                     <Link to="#">Read More</Link>
