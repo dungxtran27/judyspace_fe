@@ -364,7 +364,7 @@ export default function BlogList() {
                   </ul>
                 </div>
                 <div className="descriptionPopularList">
-                  <Link to={"/blogDetail/" + bp.blogId}>
+                  <Link to={"/blog/blogDetail/" + bp.blogId}>
                     <h1>{bp.title}</h1>
                   </Link>
 
@@ -375,7 +375,7 @@ export default function BlogList() {
                     vitae venenatis risus nunc sit amet diam
                   </p>
                   <p className="read-morePopularList">
-                    <Link to="#">Read More</Link>
+                    <Link to={"/blog/blogDetail/" + bp.blogId}>Read More</Link>
                   </p>
                   <div className="icon-social-blog">
                     <span>
@@ -414,6 +414,7 @@ export default function BlogList() {
               <button className="buttonLoadmore" onClick={loadmore}>
                 Load more
               </button>
+              <img src="./3.png" />
             </Row>
           </Col>
           <Col xs={3} className="related-blog">

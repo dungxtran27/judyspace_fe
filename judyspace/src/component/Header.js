@@ -1,19 +1,19 @@
-import { Col, Container, Dropdown, Image, Row } from "react-bootstrap";
-import { Link, createBrowserRouter, useLocation } from "react-router-dom";
+import { Col, Container } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
 import "../css/header.css";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
 
 const Header = () => {
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refereshToken");
+  const JudyLogo = `/3.png`;
   const [user, SetUser] = useState({});
-
-  // //get currUser
   useEffect(() => {
+    if (accessToken !== null) {
+      console.log(user);
+    }
     fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
       method: "GET",
       headers: {
@@ -26,11 +26,13 @@ const Header = () => {
       })
       .then((data) => {
         SetUser(data);
+        console.log(user);
       })
       .catch((error) => {
         console.log("Fetch error: ", error);
       });
   }, []);
+
   const userGlobe = createContext(user);
   const location = useLocation();
 
@@ -45,7 +47,7 @@ const Header = () => {
           <Link to={"/"}>
             <img
               className="home-img"
-              src="./3.png"
+              src={JudyLogo}
               alt="notfound"
               sticky="top"
             ></img>
@@ -68,6 +70,7 @@ const Header = () => {
                 >
                   Inspiration
                 </Link>
+
                 <Link to="/login" className={isActive("/musicInspiration")}>
                   Login
                 </Link>

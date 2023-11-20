@@ -36,6 +36,8 @@ const BlogDetail = () => {
           />
           <div className="JudyText">
             <p>Judy the marketer</p>
+            <img src="./eye.png" />
+            Judy the marketer
             <p className="postdate">
               {" "}
               {new Date(blogDetail.createDate * 1000).toDateString()}
@@ -48,7 +50,7 @@ const BlogDetail = () => {
               {blogDetail.title}
             </h5>
             <div style={{ width: "5%", textAlign: "center" }}>
-              <Image src="./love2.png" />
+              <Image src="./" />
               <h6 style={{ color: "#D6b598" }}>
                 {blogDetail.upvoteUserSetSize}
               </h6>

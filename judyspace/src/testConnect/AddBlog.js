@@ -10,7 +10,6 @@ import {
   Image,
   Row
 } from "react-bootstrap";
-import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
 import { Editor } from "@tinymce/tinymce-react";
@@ -36,7 +35,6 @@ export default function UploadForm() {
 
   const getEditorContent = (content, editor) => {
     const raw = editor.getContent({ format: "raw" });
-    console.log(raw);
     const escapedParagraph = raw.replace(/"/g, '\\"');
     setParagraphContent(escapedParagraph);
   };
@@ -72,12 +70,13 @@ export default function UploadForm() {
       headers: head,
       body: JSON.stringify(blog),
     }).then((response) => {
-      if (response.status === 417) {
+   if (response.status === 417) {
         window.location.href("/login");
         toast.warning("Đăng nhập trước khi thêm blog");
       } else {
         if (response.status != 200) {
           response.json().then((data1) => {
+            
             toast.error(data1.value);
           });
         } else {
@@ -185,7 +184,7 @@ export default function UploadForm() {
           />
         </FormGroup>
         <FormGroup>
-          <Button onClick={submitBlog}>Submit</Button>
+          <Button onClick={submitBlog()}>Submit</Button>
         </FormGroup>
       </Form>
     </Container>

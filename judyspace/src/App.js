@@ -64,7 +64,7 @@ function App() {
           />
 
           <Route path="/testingImageUpload" element={<UploadForm />} />
-          <Route path="/blogDetail/:blogId" element={<BlogDetail />} />
+          <Route path="/blog/blogDetail/:blogId" element={<BlogDetail />} />
         </Routes>
         <ToastContainer
           position="top-right"
