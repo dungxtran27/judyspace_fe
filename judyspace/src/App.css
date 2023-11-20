@@ -1,13 +1,21 @@
 body {
-  background-image: url("../img/bg_3.jpg");
+  /* background-image: url("../img/bg_3.jpg"); */
+  background-color: #18191a !important;
   background-size: auto;
 }
+
 a {
   text-decoration: none !important;
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
+
 .modal-backdrop {
   --bs-backdrop-opacity: 0.7 !important;
+}
+
+#wrapper {
+  padding: 0 !important;
 }

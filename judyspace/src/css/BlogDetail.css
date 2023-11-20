@@ -2,9 +2,10 @@
     background-color: #18191a;
     min-height: 700px;
     width: 85%;
-    margin-left: 50px;
+    /* margin-left: 50px; */
     border-radius: 10px;
     padding: 40px 50px;
+    margin: 0 auto;
 }
 .Judy{
 

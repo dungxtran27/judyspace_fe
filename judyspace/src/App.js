@@ -14,7 +14,7 @@ import Portfolio from "./screen/Portfolio";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Comment from "./component/Comment";
-import UploadForm from "./testConnect/UploadingToCloudinary";
+import UploadForm from "./testConnect/AddBlog";
 import { createContext, useEffect, useState } from "react";
 import BlogDetail from "./screen/BlogDetail";
 export const userGlobe = createContext();

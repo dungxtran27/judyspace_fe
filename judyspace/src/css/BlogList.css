@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css);
 
 .cardBlogList .wrapperBlogList {
@@ -46,21 +47,20 @@
   display: none;
 }
 
-.cardBlogList input[type="checkbox"]:checked + .menu-content {
+.cardBlogList input[type="checkbox"]:checked+.menu-content {
   transform: translateY(-60px);
 }
 
 .dataBlogList {
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(255, 255, 255, 0) 92%
-  );
+  background: linear-gradient(0deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(255, 255, 255, 0) 92%);
 }
 
 .authorBlogList {
   background: rgba(48, 22, 74, 0.662);
 }
+
 /* .wrapper {
         background: url(https://tvseriescritic.files.wordpress.com/2016/10/stranger-things-bicycle-lights-children.jpg)
           center / cover no-repeat;
@@ -134,27 +134,34 @@
   overflow: hidden;
   z-index: 0;
 }
+
 .aninek {
   margin-top: 2%;
   animation: customAni 500ms linear 0ms 1 normal forwards;
 }
+
 .aninek .descriptionPopularList:before {
   transform: skewX(0deg) !important;
 }
+
 .blog-cardPopularList a {
   color: inherit;
 }
+
 .blog-cardPopularList a:hover {
   color: #5ad67d;
 }
+
 .blog-cardPopularList:hover .photoPopularList {
   transform: scale(1.3) rotate(3deg);
 }
+
 .blog-cardPopularList .metaPopularList {
   position: relative;
   z-index: 0;
   height: 200px;
 }
+
 .blog-cardPopularList .photoPopularList {
   position: absolute;
   top: 0;
@@ -165,12 +172,14 @@
   background-position: center;
   transition: transform 0.2s;
 }
+
 .blog-cardPopularList .detailsPopularList,
 .blog-cardPopularList .detailsPopularList ul {
   margin: auto;
   padding: 0;
   list-style: none;
 }
+
 .blog-cardPopularList .detailsPopularList {
   position: absolute;
   top: 0;
@@ -188,19 +197,23 @@
 .blog-cardPopularList .detailsPopularList .tags li {
   margin-right: 2px;
 }
+
 .blog-cardPopularList .detailsPopularList .tags li:first-child {
   margin-left: -4px;
 }
+
 .blog-cardPopularList .descriptionPopularList {
   padding: 1rem;
-  background: #060320;
+  background: #3f2e3e;
   position: relative;
   z-index: 1;
 }
+
 .blog-cardPopularList .descriptionPopularList h1 {
-  font-family: Poppins, sans-serif;
-  color: wheat;
+  font-family: "Montserrat", sans-serif;
+  color: #efe1d1;
 }
+
 .blog-cardPopularList .descriptionPopularList h1 {
   line-height: 1;
   margin: 0;
@@ -215,13 +228,12 @@
   vertical-align: middle;
   transition: margin 0.3s, opacity 0.3s;
 }
-.blog-cardPopularList
-  .descriptionPopularList
-  .read-morePopularList
-  a:hover:after {
+
+.blog-cardPopularList .descriptionPopularList .read-morePopularList a:hover:after {
   margin-left: 5px;
   opacity: 1;
 }
+
 .blog-cardPopularList p {
   position: relative;
   margin: 1rem 0 0;
@@ -231,22 +243,26 @@
 .blog-cardPopularList:hover .detailsPopularList {
   left: 0%;
 }
+
 @media (min-width: 640px) {
   .blog-cardPopularList {
     flex-direction: row;
     /* max-width: 700px; */
   }
+
   .blog-cardPopularList .metaPopularList {
     flex-basis: 40%;
     height: auto;
   }
+
   .blog-cardPopularList .descriptionPopularList {
     flex-basis: 60%;
   }
+
   .blog-cardPopularList .descriptionPopularList:before {
     transform: skewX(-3deg);
     content: "";
-    background: #060320;
+    background: #3f2e3e;
     width: 30px;
     position: absolute;
     left: -10px;
@@ -255,6 +271,7 @@
     z-index: -1;
   }
 }
+
 .popular {
   display: flex;
 }
@@ -274,6 +291,7 @@
 .paginatedBlogList {
   margin-top: 30px !important;
 }
+
 .icon-social-blog span {
   color: azure;
   padding: 0.5rem;
@@ -283,20 +301,24 @@
 .icon-social-blog span:hover img {
   transform: scale(1.2);
 }
+
 .btnRow {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .buttonLoadmore {
-  background: rgb(4, 10, 137);
+  background: #efe1d1;
   padding: 10px 10px;
   border-radius: 10px;
-  color: white;
+  color: #3f2e3e;
   border: none;
+  font-weight: 200 !important;
 }
+
 .buttonLoadmore:hover {
-  background: rgb(0, 21, 255);
+  background: rgb(201, 100, 120);
 }
 
 @keyframes customAni {
@@ -308,11 +330,13 @@
     transform: translateX(0px);
   }
 }
+
 .tagFilter {
   border-top: 1px solid black;
 
   background-color: rgb(255, 255, 255);
 }
+
 .tagIdFilter {
   display: inline-block;
   color: rgb(47, 47, 38);
@@ -320,6 +344,7 @@
 
   background-color: rgb(255, 255, 255);
 }
+
 .tagIdFilter:hover {
   background-color: rgb(191, 205, 224);
 }
@@ -331,18 +356,24 @@
   padding: 0.5rem 1rem;
   border-radius: 1rem;
 }
+
 .filter-icon {
   align-items: center;
   display: flex;
   height: 1.5rem;
   position: relative;
 }
+
 .filter-icon img {
   height: 30px;
-  position: relative; /* Required for pseudo-element positioning */
-  z-index: 1; /* Ensure image is below the text */
-  transition: transform 0.3s; /* Add smooth transition */
+  position: relative;
+  /* Required for pseudo-element positioning */
+  z-index: 1;
+  /* Ensure image is below the text */
+  transition: transform 0.3s;
+  /* Add smooth transition */
 }
+
 .filter-icon p {
   margin-bottom: 0px;
   position: relative;
@@ -352,16 +383,20 @@
 .filter {
   background-color: rgb(255, 255, 255);
 }
+
 .buttonFilter:hover {
   background-color: rgb(191, 205, 224);
 }
 
 .filter-icon:hover img {
-  transform: scale(1.5) rotate(360deg); /* Scale the image on hover */
+  transform: scale(1.5) rotate(360deg);
+  /* Scale the image on hover */
 }
+
 .filter-icon:hover p {
   font-weight: 400;
-  transform: scale(1.2); /* Scale the image on hover */
+  transform: scale(1.2);
+  /* Scale the image on hover */
 }
 
 /* Style the dropdown container */
@@ -381,21 +416,26 @@
   border: none;
   cursor: pointer;
 }
+
 .dropdown .dropbtn:hover {
   background-color: rgb(191, 205, 224);
 }
+
 .dropdown .dropbtn p {
   margin-bottom: 0;
   margin-right: 5px;
 }
+
 .dropdown .dropbtn img {
   height: 20px;
   transition: transform 0.5s;
 }
+
 .dropbtn:hover p {
   font-weight: 400;
   transform: scale(1.2);
 }
+
 .dropdown .dropbtn:hover img {
   transform: scale(1.2) rotate(810deg);
 }
