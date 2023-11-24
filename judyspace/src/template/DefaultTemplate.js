@@ -9,9 +9,7 @@ export default function DefaultTemplate({
   return (
     <div className={className} id="wrapper">
       <Header />
-      <div className="row">
-        <h3>{title}</h3>
-      </div>
+
       {children}
       <Footer />
     </div>

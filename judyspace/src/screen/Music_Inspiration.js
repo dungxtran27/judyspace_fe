@@ -7,15 +7,16 @@ import Book from "../component/book";
 import Movie from "../component/movie";
 const Music_inspiration = () => {
   const [bannerImg, setbannerImg] = useState("/musicBanner.png");
+  const [activeTab, setActiveTab] = useState("music");
   const [Inspi_element, setInspi_element] = useState(<Music />);
   const musicquotes =
-    " Không biết anh Thành Vũ có biết Tú có Ny hay không, chúng tôibiết rằng tú có ny là người chơi khá nổi tiếng với con bàiFlorentino, ngày hôm nay anh ta đi";
+    " Không biết anh Thành Vũ có biết Tú có Ny anh ta đi cầm Flore trận thi đấu vừa xong là trận ";
 
   const bookquotes =
-    " tôi thấy rằng anh ta chưa để cái tốc biến mình hồi được hiện xanh quá lâu anh ta sử dụng ngay lập tức bằng những tình huống mở giao tranh của mình và chính Tú có Ny là MVP của trận thi đấu này với 14.0 điểm MVP";
+    "rằng anh ta chưa để cái tốc biến mình hồi ủa trận thi đấu này với 14.0 điểm MVP";
 
   const moviequotes =
-    "Một tình huống mà có lẽ Flo đang làm quá nhiều điều, những tình huống bông muq muq muq muq, bỏ chạy với Flo, Flo đang múa quá nhức nách, phải nói là Flo võ công quá cao cường Và đây là Florentino,";
+    "Một tình huống mà có lẽ Flo đang làm quá ngFlo, Flo đang múa quá nhức nách, phải nói làà Florentino,";
 
   const [quote, setQuote] = useState(musicquotes);
 
@@ -43,60 +44,70 @@ const Music_inspiration = () => {
           <Row>
             <div className="menuBar_inspi">
               <div className="menu-list">
-                <Nav justify variant="tabs" defaultActiveKey="/home">
+                <Nav justify variant="tabs">
                   <Nav.Item>
                     <Nav.Link
-                      href="#"
-                      className="music-color"
+                      className={`music-color ${
+                        activeTab === "music" ? "active" : ""
+                      }`}
                       onClick={(e) => {
                         setInspi_element(<Music />);
                         setbannerImg("/musicBanner.png");
                         setQuote(musicquotes);
+                        setActiveTab("music");
                       }}
                     >
                       <span className="menu-tab">
-                        <img src="/music_icon.png" />
-                        <p>Music</p>
+                        <img src="music_icon.png" />
+                        <p> Music</p>
                       </span>
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link
-                      className="book-color"
+                      className={`book-color ${
+                        activeTab === "book" ? "active" : ""
+                      }`}
                       onClick={(e) => {
                         setInspi_element(<Book />);
                         setbannerImg("/bookBanner.png");
                         setQuote(bookquotes);
+                        setActiveTab("book");
                       }}
                     >
                       <span className="menu-tab">
-                        <img src="/book_icon.png" />
-                        <p>Book</p>
+                        <img src="book_icon.png" />
+                        <p> Book</p>
                       </span>
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link
-                      className="movie-color"
+                      className={`movie-color ${
+                        activeTab === "movie" ? "active" : ""
+                      }`}
                       onClick={(e) => {
                         setInspi_element(<Movie />);
                         setbannerImg("/movieBanner.png");
                         setQuote(moviequotes);
+                        setActiveTab("movie");
                       }}
                     >
                       <span className="menu-tab">
-                        <img src="/movie_icon.png" />
-                        <p>Movie</p>
+                        <img src="movie_icon.png" />
+                        <p> Movie</p>
                       </span>
                     </Nav.Link>
                   </Nav.Item>
                 </Nav>
               </div>
-              <div className="menu-filter">{Inspi_element}</div>
             </div>
           </Row>
         </Row>
-        <Row></Row>
+        <Row>
+          {" "}
+          <div className="menu-filter">{Inspi_element}</div>
+        </Row>
         <Row></Row>
       </Container>
     </DefaultTemplate>

@@ -223,14 +223,18 @@
 .blog-cardPopularList .descriptionPopularList h1 {
   font-family: "Montserrat", sans-serif;
   color: wheat;
-}
-
-.blog-cardPopularList .descriptionPopularList h1 {
   line-height: 1;
   margin: 0;
   font-size: 1.7rem;
 }
 
+.caption-blog {
+  display: -webkit-box !important; /* Enable flexible box layout */
+  -webkit-line-clamp: 3 !important; /* Limit the number of lines to 3 */
+  -webkit-box-orient: vertical; /* Layout the content vertically */
+  overflow: hidden; /* Hide the overflowing text */
+  text-overflow: ellipsis; /* Display ellipsis (...) for the truncated text */
+}
 .blog-cardPopularList .descriptionPopularList .read-morePopularList a:after {
   content: "(づ￣ ³￣)づ";
   font-family: FontAwesome;

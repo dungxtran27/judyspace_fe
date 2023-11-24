@@ -59,12 +59,27 @@
   width: 40px;
 }
 .menu-tab p {
+  font-family: "montserrat";
   font-weight: 60px;
   font-size: 30px;
 }
 .nav-item {
   background-color: rgba(0, 0, 0, 0.607);
 }
-
+.nav-item:first-child {
+  border-top-left-radius: 5px;
+}
+.nav-item:last-child {
+  border-top-right-radius: 5px;
+}
+.music-color.active {
+  background-color: #1bd8edcc !important;
+}
 /* book */
+.book-color.active {
+  background-color: #248232c0 !important;
+}
 /* movie */
+.movie-color.active {
+  background-color: #ecd423d2 !important;
+}

@@ -55,31 +55,29 @@ const Header = () => {
             ></img>
           </Link>
         </Col>{" "}
-        <Container>
-          <Col xs={6} className="header-right">
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse>
-              <Nav className="me-auto">
-                <Link to={"/blog"} className={isActive("/blog")}>
-                  Blog
+        <Col xs={6} className="header-right">
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse>
+            <Nav className="me-auto">
+              <Link to={"/blog"} className={isActive("/blog")}>
+                Blog
+              </Link>
+              <Link to={"/portfolio"} className={isActive("/portfolio")}>
+                Portfolio
+              </Link>
+              <Link to="/music" className={isActive("/music")}>
+                Inspiration
+              </Link>
+              {user === null ? (
+                <Link to="/login" className={isActive("/musicInspiration")}>
+                  Login
                 </Link>
-                <Link to={"/portfolio"} className={isActive("/portfolio")}>
-                  Portfolio
-                </Link>
-                <Link to="/music" className={isActive("/music")}>
-                  Inspiration
-                </Link>
-                {user === null ? (
-                  <Link to="/login" className={isActive("/musicInspiration")}>
-                    Login
-                  </Link>
-                ) : (
-                  <img className="avt-header" src={user.avatarLink} />
-                )}
-              </Nav>
-            </Navbar.Collapse>
-          </Col>
-        </Container>
+              ) : (
+                <img className="avt-header" src={user.avatarLink} />
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Col>
       </Container>
     </Navbar>
   );

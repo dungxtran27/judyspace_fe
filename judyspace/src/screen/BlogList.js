@@ -365,7 +365,7 @@ export default function BlogList() {
                     <h1>{bp.title}</h1>
                   </Link>
 
-                  <p>{bp.caption}</p>
+                  <p className="caption-blog">{bp.caption}</p>
                   <p className="read-morePopularList">
                     <Link to={"/blog/blogDetail/" + bp.blogId}>Read More</Link>
                   </p>

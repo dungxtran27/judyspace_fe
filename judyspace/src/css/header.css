@@ -41,7 +41,11 @@
 
 .link-active {
   font-size: 16px;
-  background-color: var(--headercolor);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #c9aa8e,
+    0 0 30px #ff5918, 0 0 40px #ff5918, 0 0 55px #ff5918, 0 0 75px #ff5918;
+  color: #ffffff;
+
+  /* background-color: var(--headercolor); */
   margin-right: 10px;
 }
 .home-img {
