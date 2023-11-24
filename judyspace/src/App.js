@@ -24,7 +24,6 @@ function App() {
   const [user, SetUser] = useState();
   useEffect(() => {
     if (accessToken === null) {
-      console.log("deo on roi");
     } else {
       fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
         method: "GET",
@@ -38,7 +37,6 @@ function App() {
         })
         .then((data) => {
           SetUser(data);
-          console.log(data);
         })
         .catch((error) => {
           console.log("Fetch error: ", error);
@@ -52,9 +50,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login_SignUp />} />
           <Route path="/blog" element={<BlogList />} />
-          <Route path="/musicInspiration" element={<Music_inspiration />} />
-          <Route path="/bookInspiration" element={<Book_inspiration />} />
-          <Route path="/movieInspiration" element={<Movie_inspiration />} />
+          <Route path="/music" element={<Music_inspiration />} />
+          <Route path="/book" element={<Book_inspiration />} />
+          <Route path="/movie" element={<Movie_inspiration />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/default" element={<DisplayUserInfo />} />
           <Route path="/cmt" element={<Comment type parameter refreshcmt />} />

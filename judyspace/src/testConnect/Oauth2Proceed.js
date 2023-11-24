@@ -7,6 +7,6 @@ export default function Oauth2Proceed() {
   useEffect(() => {
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
-    navigate("/default");
+    navigate("/");
   }, []);
 }

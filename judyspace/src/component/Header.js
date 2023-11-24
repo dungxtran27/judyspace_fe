@@ -10,27 +10,29 @@ const Header = () => {
   const refreshToken = localStorage.getItem("refereshToken");
   const JudyLogo = `/3.png`;
   const [user, SetUser] = useState({});
+
   useEffect(() => {
-    if (accessToken !== null) {
-      console.log(user);
+    if (accessToken === null) {
+      SetUser(null);
+    } else {
+      fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          SetUser(data);
+          console.log(user);
+        })
+        .catch((error) => {
+          console.log("Fetch error: ", error);
+        });
     }
-    fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        SetUser(data);
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log("Fetch error: ", error);
-      });
   }, []);
 
   const userGlobe = createContext(user);
@@ -64,16 +66,16 @@ const Header = () => {
                 <Link to={"/portfolio"} className={isActive("/portfolio")}>
                   Portfolio
                 </Link>
-                <Link
-                  to="/musicInspiration"
-                  className={isActive("/musicInspiration")}
-                >
+                <Link to="/music" className={isActive("/music")}>
                   Inspiration
                 </Link>
-
-                <Link to="/login" className={isActive("/musicInspiration")}>
-                  Login
-                </Link>
+                {user === null ? (
+                  <Link to="/login" className={isActive("/musicInspiration")}>
+                    Login
+                  </Link>
+                ) : (
+                  <img className="avt-header" src={user.avatarLink} />
+                )}
               </Nav>
             </Navbar.Collapse>
           </Col>

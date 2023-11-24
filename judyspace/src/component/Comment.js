@@ -37,7 +37,7 @@ export default function Comment({ type, parameter, refreshcmt }) {
     if (token != null) {
       head.Authorization = `Bearer ${token}`;
     }
-    console.log("cmtRefresh");
+
     fetch(
       "http://localhost:8080/api/comment/get" + type + "Comments/" + parameter,
       {
@@ -239,7 +239,7 @@ export default function Comment({ type, parameter, refreshcmt }) {
                 </Button>
               </OverlayTrigger>
             ) : (
-              <div>{console.log(comment.postedByUser)}</div>
+              <div></div>
             )}
           </div>
           <div className="row-btn">

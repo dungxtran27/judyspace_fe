@@ -1,14 +1,23 @@
 import DefaultTemplate from "../template/DefaultTemplate";
 import "../css/BlogDetail.css";
-import { Image, Row } from "react-bootstrap";
+import { Col, Form, FormControl, Image, Row, Button } from "react-bootstrap";
 import Comment from "../component/Comment";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const BlogDetail = () => {
   const { blogId } = useParams();
   const [blogDetail, setBlogDetail] = useState({});
   const [paragraphs, setParagraphs] = useState([]);
+  const navigate = useNavigate();
+  const [newcmt, setNewcmt] = useState(1);
+  const [blogIdForComment, setBlogIdForComment] = useState(0);
+  useEffect(() => {
+    setBlogIdForComment(blogId);
+  }, []);
+
+  //blogdetail
   useEffect(() => {
     fetch("http://localhost:8080/api/blog/getBlogDetail/" + blogId)
       .then((response) => response.json())
@@ -16,6 +25,7 @@ const BlogDetail = () => {
         setBlogDetail(responseData);
       });
   }, []);
+  // blog content
   useEffect(() => {
     fetch("http://localhost:8080/api/blog/getBlogContent/" + blogId)
       .then((response) => response.json())
@@ -23,6 +33,45 @@ const BlogDetail = () => {
         setParagraphs(responseData);
       });
   }, []);
+  // comment
+
+  const commentRef = useRef();
+  const blogIdRef = useRef();
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+    const data = {
+      content: commentRef.current.value,
+      blogRepliedTo: { blogId: blogIdRef.current.value },
+    };
+    const token = localStorage.getItem("accessToken");
+
+    if (token === null) {
+      toast.error("Đăng nhập để bình luận nha m");
+      navigate("/login");
+    } else {
+      fetch("http://localhost:8080/api/comment/makeRootComment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }).then((response) => {
+        if (response.status !== 200) {
+          response.json().then((data2) => {
+            toast.error(data2.value);
+          });
+        } else {
+          setNewcmt(newcmt === 1 ? 2 : 1);
+          commentRef.current.value = "";
+          response.json().then((data2) => {
+            toast.success("comment success");
+          });
+        }
+      });
+    }
+  };
   return (
     <DefaultTemplate>
       <div className="blogDetailBackGround">
@@ -36,8 +85,7 @@ const BlogDetail = () => {
           />
           <div className="JudyText">
             <p>Judy the marketer</p>
-            <img src="./eye.png" />
-            Judy the marketer
+
             <p className="postdate">
               {" "}
               {new Date(blogDetail.createDate * 1000).toDateString()}
@@ -50,7 +98,7 @@ const BlogDetail = () => {
               {blogDetail.title}
             </h5>
             <div style={{ width: "5%", textAlign: "center" }}>
-              <Image src="./" />
+              <Image src="/eye.png" />
               <h6 style={{ color: "#D6b598" }}>
                 {blogDetail.upvoteUserSetSize}
               </h6>
@@ -69,8 +117,32 @@ const BlogDetail = () => {
           ))}
         </Row>
         <Row>
+          {" "}
+          <Form onSubmit={(e) => handleSubmitComment(e)}>
+            <Row>
+              <Col xs={10}>
+                <FormControl
+                  type="input"
+                  ref={commentRef}
+                  placeholder="enter your thought here"
+                ></FormControl>
+                <FormControl
+                  type="hidden"
+                  value={blogIdForComment}
+                  ref={blogIdRef}
+                ></FormControl>
+              </Col>
+              <Col xs={2}>
+                <Button variant="info" type="submit">
+                  send
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Row>
+        <Row>
           <h3 style={{ color: "white" }}>Comment</h3>
-          <Comment type={"Root"} parameter={1} />
+          <Comment type={"Root"} parameter={blogId} refreshcmt={newcmt} />
         </Row>
       </div>
     </DefaultTemplate>

@@ -9,7 +9,7 @@
 }
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css);
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 .cardBlogList .wrapperBlogList {
   background-color: #fff;
   min-height: 540px;
@@ -143,6 +143,7 @@
   border-radius: 5px;
   overflow: hidden;
   z-index: 0;
+  min-height: 180px;
 }
 
 .aninek {
@@ -214,13 +215,13 @@
 
 .blog-cardPopularList .descriptionPopularList {
   padding: 1rem;
-  background: #3f2e3e;
+  background: rgb(11, 5, 44);
   position: relative;
   z-index: 1;
 }
 
 .blog-cardPopularList .descriptionPopularList h1 {
-  font-family: Poppins;
+  font-family: "Montserrat", sans-serif;
   color: wheat;
 }
 
@@ -275,7 +276,7 @@
   .blog-cardPopularList .descriptionPopularList:before {
     transform: skewX(-3deg);
     content: "";
-    background: #3f2e3e;
+    background: rgb(11, 5, 44);
     width: 30px;
     position: absolute;
     left: -10px;
@@ -346,7 +347,6 @@
 
 .tagFilter {
   border-top: 1px solid black;
-
   background-color: rgb(255, 255, 255);
 }
 
@@ -480,4 +480,8 @@
 /* Show the dropdown content when the dropdown button is clicked */
 .dropdown:hover .dropdown-content {
   display: block;
+}
+.related-blog {
+  position: sticky;
+  top: 100px;
 }

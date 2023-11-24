@@ -44,6 +44,8 @@ export default function BlogList() {
             searchName: "",
             sortType: "popularity24h",
             tagId: null,
+            categoryId: 1,
+            movieCategories: [],
           }
         );
         // const blogArray = Object.values(response.blogs);
@@ -98,6 +100,8 @@ export default function BlogList() {
             searchName: searchName,
             sortType: sortType,
             tagId: tagId,
+            categoryId: 1,
+            movieCategories: [],
           },
           {
             headers: head,
@@ -105,6 +109,7 @@ export default function BlogList() {
         );
         setMaxLoadMore(response.data.last);
         setBlogListPage(response.data.content);
+        console.log(BlogListPage);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -240,10 +245,7 @@ export default function BlogList() {
                       <h1 className="titleBlogList">
                         <Link to="#">{t.title}</Link>
                       </h1>
-                      <p className="textBlogList">
-                        The antsy bingers of Netflix will eagerly anticipate the
-                        digital release of the Survive soundtrack, out today.
-                      </p>
+                      <p className="textBlogList">{t.caption}</p>
                       <Link to="#" className="buttonBlogList">
                         Read more
                       </Link>
@@ -275,12 +277,7 @@ export default function BlogList() {
                 <div className="descriptionPopularList">
                   <h1>{t.title}</h1>
 
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Donec pulvinar ac risus sit amet tempus. Sed mollis, sem
-                    viverra pellentesque volutpat, lectus tellus laoreet arcu,
-                    vitae venenatis risus nunc sit amet diam
-                  </p>
+                  <p>{t.caption}</p>
                   <p className="read-morePopularList">
                     <Link to="#">Read More</Link>
                   </p>
@@ -368,12 +365,7 @@ export default function BlogList() {
                     <h1>{bp.title}</h1>
                   </Link>
 
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Donec pulvinar ac risus sit amet tempus. Sed mollis, sem
-                    viverra pellentesque volutpat, lectus tellus laoreet arcu,
-                    vitae venenatis risus nunc sit amet diam
-                  </p>
+                  <p>{bp.caption}</p>
                   <p className="read-morePopularList">
                     <Link to={"/blog/blogDetail/" + bp.blogId}>Read More</Link>
                   </p>
@@ -414,11 +406,10 @@ export default function BlogList() {
               <button className="buttonLoadmore" onClick={loadmore}>
                 Load more
               </button>
-              <img src="./3.png" />
             </Row>
           </Col>
-          <Col xs={3} className="related-blog">
-            <Form>
+          <Col xs={3}>
+            <Form className="related-blog">
               <FormControl
                 onChange={(e) => setSearchName(e.currentTarget.value)}
                 placeholder="search"

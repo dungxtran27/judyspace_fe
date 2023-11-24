@@ -186,3 +186,8 @@
   font-size: large;
   width: fit-content;
 }
+.avt-header {
+  width: 4rem;
+  border-radius: 50%;
+  margin-left: 1rem;
+}

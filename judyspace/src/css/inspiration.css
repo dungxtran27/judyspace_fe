@@ -1,0 +1,70 @@
+/* music */
+.backgroundImg {
+  min-height: 80vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.banner {
+  display: flex;
+  flex-direction: column;
+}
+.quote {
+  max-width: 80vh !important;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.479) 100%
+  );
+  align-self: flex-end;
+  position: relative;
+  top: 4rem;
+  left: -4rem;
+  border-radius: 20px;
+}
+.quote-icon-left {
+  align-self: flex-start;
+}
+.quote-icon-right {
+  align-self: flex-end;
+}
+.quote-content {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+  color: aliceblue;
+}
+.menuBar_inspi {
+  display: flex;
+  flex-direction: column;
+
+  width: 85% !important;
+  margin: 0 auto;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.menu-list {
+  width: 30rem;
+}
+.menu-filter {
+  background-color: rgba(0, 0, 0, 0.566);
+  height: 100px;
+}
+.menu-tab {
+  display: flex;
+  align-items: center;
+  justify-content: cen;
+}
+.menu-tab img {
+  width: 40px;
+}
+.menu-tab p {
+  font-weight: 60px;
+  font-size: 30px;
+}
+.nav-item {
+  background-color: rgba(0, 0, 0, 0.607);
+}
+
+/* book */
+/* movie */
