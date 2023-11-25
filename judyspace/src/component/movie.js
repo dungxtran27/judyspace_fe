@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../css/book.css";
+import "../css/movie.css";
 import axios from "axios";
 import {
   Button,
@@ -62,52 +62,25 @@ const Movie = () => {
   return (
     <Container>
       <Row>
-        <Col xs={9}>
-          <Row>
-            {movieList.map((m) => (
-              <Col key={m.blogId} xs={4}>
-                <Card style={{ width: "18rem" }}>
-                  <Card.Img variant="top" src={m.blogThumbnail} />
-                  <Card.Body>
-                    <Card.Title>{m.title}</Card.Title>
-                    <Card.Text>{m.caption}</Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-          <Row>
-            {movieList.map((m) => (
-              <ImageList
-                sx={{ width: 2000, height: 450 }}
-                variant="woven"
-                cols={4}
-                gap={8}
-              >
-                {movieList.map((item) => (
-                  <ImageListItem key={item.img}>
-                    <img
-                      srcSet={`${item.blogThumbnail}?w=161&fit=crop&auto=format&dpr=2 2x`}
-                      src={`${item.blogThumbnail}?w=161&fit=crop&auto=format`}
-                      alt={item.title}
-                      loading="lazy"
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList>
-            ))}
-          </Row>
-        </Col>
-        <Col xs={3}>
-          {" "}
-          <Form className="related-blog">
-            <FormControl
-              onChange={(e) => setSearchName(e.currentTarget.value)}
-              placeholder="search"
-            ></FormControl>
-          </Form>
-        </Col>
+        {/* <Col xs={9}> */}
+        <Form className="related-blog">
+          <FormControl
+            onChange={(e) => setSearchName(e.currentTarget.value)}
+            placeholder="search"
+          ></FormControl>
+        </Form>
+        <Row>
+          {movieList.map((m) => (
+            <Col key={m.blogId} xs={3}>
+              <figure>
+                <img src={m.blogThumbnail} alt="Mountains" />
+                <figcaption>{m.title}</figcaption>
+              </figure>
+            </Col>
+          ))}
+        </Row>
+        {/* </Col> */}
+        {/* <Col xs={3}> */} {/* </Col> */}
       </Row>
     </Container>
   );

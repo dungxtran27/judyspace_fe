@@ -9,6 +9,9 @@ const Music_inspiration = () => {
   const [bannerImg, setbannerImg] = useState("/musicBanner.png");
   const [activeTab, setActiveTab] = useState("music");
   const [Inspi_element, setInspi_element] = useState(<Music />);
+  const [sortType, setSortTypeItem] = useState("latest");
+  const [tagId, setTagIdItem] = useState(null);
+  const [color_header, setColor] = useState("yellow");
   const musicquotes =
     " Không biết anh Thành Vũ có biết Tú có Ny anh ta đi cầm Flore trận thi đấu vừa xong là trận ";
 
@@ -19,7 +22,13 @@ const Music_inspiration = () => {
     "Một tình huống mà có lẽ Flo đang làm quá ngFlo, Flo đang múa quá nhức nách, phải nói làà Florentino,";
 
   const [quote, setQuote] = useState(musicquotes);
-
+  const setsortItem = () => {
+    if (sortType !== "latest") {
+      setSortTypeItem("latest");
+    } else {
+      setSortTypeItem("oldest");
+    }
+  };
   return (
     <DefaultTemplate>
       <Container fluid>
@@ -55,11 +64,11 @@ const Music_inspiration = () => {
                         setbannerImg("/musicBanner.png");
                         setQuote(musicquotes);
                         setActiveTab("music");
+                        setColor("aqua");
                       }}
                     >
                       <span className="menu-tab">
                         <img src="music_icon.png" />
-                        <p> Music</p>
                       </span>
                     </Nav.Link>
                   </Nav.Item>
@@ -73,11 +82,11 @@ const Music_inspiration = () => {
                         setbannerImg("/bookBanner.png");
                         setQuote(bookquotes);
                         setActiveTab("book");
+                        setColor("green");
                       }}
                     >
                       <span className="menu-tab">
                         <img src="book_icon.png" />
-                        <p> Book</p>
                       </span>
                     </Nav.Link>
                   </Nav.Item>
@@ -91,21 +100,122 @@ const Music_inspiration = () => {
                         setbannerImg("/movieBanner.png");
                         setQuote(moviequotes);
                         setActiveTab("movie");
+                        setColor("yellow");
                       }}
                     >
                       <span className="menu-tab">
-                        <img src="movie_icon.png" />
-                        <p> Movie</p>
+                        <img src="2798007.png" />
                       </span>
                     </Nav.Link>
                   </Nav.Item>
                 </Nav>
               </div>
+              <div className=" menu-filter">
+                <div
+                  className="filter  "
+                  style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+                >
+                  <button
+                    className="buttonFilter  hover_inspi"
+                    onClick={(e) => setsortItem()}
+                    style={{
+                      backgroundColor: "rgba(0, 0, 0, 0.01)",
+                      color: "white",
+                    }}
+                  >
+                    {sortType == "latest" ? (
+                      <div className="filter-icon">
+                        <p style={{ fontSize: "20px" }}>Oldest</p>
+                      </div>
+                    ) : (
+                      <div className="filter-icon">
+                        <p style={{ fontSize: "20px" }}>Latest</p>
+                        <img src="./new.png" />
+                      </div>
+                    )}
+                  </button>
+
+                  <div
+                    className="dropdown "
+                    style={{
+                      backgroundColor: "rgba(0, 0, 0, 0.01)",
+                    }}
+                  >
+                    <button
+                      className="dropbtn  hover_inspi"
+                      style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.01)",
+                        color: "white",
+                      }}
+                    >
+                      <p style={{ fontSize: "20px" }}>Popular </p>
+                      <img src="./whiteArr.png" />
+                    </button>
+                    <div className="dropdown-content">
+                      <a
+                        onClick={(e) => {
+                          setSortTypeItem("popularity24h");
+                        }}
+                      >
+                        24 Hours
+                      </a>
+                      <a
+                        onClick={(e) => {
+                          setSortTypeItem("popularityWeek");
+                        }}
+                      >
+                        Week
+                      </a>
+                      <a
+                        onClick={(e) => {
+                          setSortTypeItem("popularityAllTime");
+                        }}
+                      >
+                        All
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="tagFilter"
+                  style={{ backgroundColor: "rgba(0, 0, 0, 0.01)" }}
+                >
+                  <div
+                    className="tagIdFilter hover_inspi_other"
+                    style={{
+                      backgroundColor: "rgba(0, 0, 0, 0.01)",
+                      color: "white",
+                    }}
+                    onClick={(e) => setTagIdItem(null)}
+                  >
+                    All
+                  </div>
+                  <div
+                    className="tagIdFilter hover_inspi_other"
+                    style={{
+                      backgroundColor: "rgba(0, 0, 0, 0.01)",
+                      color: "white",
+                    }}
+                    onClick={(e) => setTagIdItem(1)}
+                  >
+                    The Talk
+                  </div>
+                  <div
+                    className="tagIdFilter hover_inspi_other"
+                    style={{
+                      backgroundColor: "rgba(0, 0, 0, 0.01)",
+                      color: "white",
+                    }}
+                    onClick={(e) => setTagIdItem(2)}
+                  >
+                    My Story
+                  </div>
+                </div>
+              </div>
             </div>
           </Row>
         </Row>
         <Row>
-          {" "}
           <div className="menu-filter">{Inspi_element}</div>
         </Row>
         <Row></Row>

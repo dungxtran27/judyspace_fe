@@ -344,7 +344,10 @@ export default function BlogList() {
               </div>
             </div>
             {BlogListPage.map((bp) => (
-              <div className="blog-cardPopularList  aninek" key={bp.blogId}>
+              <div
+                className="blog-cardPopularList list  aninek"
+                key={bp.blogId}
+              >
                 <div className="metaPopularList">
                   <div
                     className="photoPopularList"
@@ -415,6 +418,36 @@ export default function BlogList() {
                 placeholder="search"
               ></FormControl>
             </Form>
+            <div className="card-container">
+              <span className="pro">PRO</span>
+              <img
+                className="round "
+                src="https://i.ibb.co/Fqrdy5x/product-image-1593207438.jpg"
+                alt="user"
+              />
+              <h3>Thao Duong</h3>
+              <h6>Son Tay</h6>
+              <p>
+                some cool job and
+                <br /> another job
+              </p>
+              <div className="buttons">
+                <button className="primary">My Beacon</button>
+                <button className="primary ghost">Donate me</button>
+              </div>
+              <div className="skills">
+                <h6>Skills</h6>
+                <ul>
+                  <li>UI / UX</li>
+                  <li>Front End Development</li>
+                  <li>HTML</li>
+                  <li>CSS</li>
+                  <li>JavaScript</li>
+                  <li>React</li>
+                  <li>Node</li>
+                </ul>
+              </div>
+            </div>
           </Col>
         </Row>
         <Modal

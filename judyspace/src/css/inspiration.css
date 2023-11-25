@@ -1,8 +1,10 @@
 /* music */
 .backgroundImg {
-  min-height: 80vh;
+  min-height: 90vh;
   background-repeat: no-repeat;
   background-size: cover;
+  position: relative;
+  top: -80px;
 }
 .banner {
   display: flex;
@@ -42,18 +44,23 @@
   margin: 0 auto;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  position: relative;
+  bottom: -170px;
 }
 .menu-list {
   width: 30rem;
 }
 .menu-filter {
-  background-color: rgba(0, 0, 0, 0.566);
+  background-color: rgba(0, 0, 0, 0.523);
   height: 100px;
 }
 .menu-tab {
   display: flex;
   align-items: center;
-  justify-content: cen;
+  justify-content: center;
+}
+.nav-tabs {
+  border-bottom: none !important;
 }
 .menu-tab img {
   width: 40px;
@@ -82,4 +89,12 @@
 /* movie */
 .movie-color.active {
   background-color: #ecd423d2 !important;
+}
+.hover_inspi:hover {
+  background-color: rgb(246, 255, 120) !important;
+  color: rgb(1, 17, 30) !important;
+}
+.hover_inspi_other:hover {
+  background-color: rgb(120, 233, 255) !important;
+  color: rgb(1, 17, 30) !important;
 }
