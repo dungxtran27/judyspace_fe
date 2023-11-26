@@ -18,7 +18,6 @@ const Movie = ({ requestBody }) => {
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    console.log(requestBody);
     const fetchData = async () => {
       const head = {
         "Content-Type": "application/json",
@@ -44,7 +43,7 @@ const Movie = ({ requestBody }) => {
     };
 
     fetchData();
-  }, []);
+  }, [requestBody]);
   return (
     <Container>
       <Row>

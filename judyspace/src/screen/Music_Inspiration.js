@@ -8,7 +8,7 @@ import {
   Tabs,
 } from "react-bootstrap";
 import DefaultTemplate from "../template/DefaultTemplate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../css/inspiration.css";
 import Music from "../component/music";
 import Book from "../component/book";
@@ -19,10 +19,17 @@ const Music_inspiration = () => {
   const [sortType, setSortTypeItem] = useState("latest");
   const [color_header, setColor] = useState("yellow");
   const [movieCategories, setMovieCategories] = useState([]);
+  const [choosenMovieCategories, setChoosenMovieCategories] = useState([]);
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(8);
   const [searchName, setSearchName] = useState("");
-
+  useEffect(() => {
+    fetch("http://localhost:8080/api/movieController/getAll")
+      .then((response) => response.json())
+      .then((data) => {
+        setMovieCategories(data);
+      });
+  }, []);
   const requestBody = {
     pageIndex: pageIndex,
     pageSize: pageSize,
@@ -30,11 +37,25 @@ const Music_inspiration = () => {
     sortType: sortType,
     tagId: null,
     categoryId: 2,
-    movieCategories: movieCategories,
+    movieCategories: choosenMovieCategories,
   };
   const [Inspi_element, setInspi_element] = useState(
     <Music requestBody={requestBody} />
   );
+  const HanldeMoviesCategory = (movieCategoryId) => {
+    console.log(choosenMovieCategories);
+    const movieCatesCopy = [...choosenMovieCategories]
+    if(movieCatesCopy.includes(movieCategoryId)){
+      setChoosenMovieCategories(movieCatesCopy.filter(category=>category!==movieCategoryId)); 
+    }else{
+      movieCatesCopy.push(movieCategoryId)
+      // console.log();
+      setChoosenMovieCategories(movieCatesCopy)
+    }
+  };
+  // useEffect(()=>{
+  //   setInspi_element();
+  // }, [pageIndex, pageSize, sortType, movieCategories, searchName])
   const musicquotes =
     " Không biết anh Thành Vũ có biết Tú có Ny anh ta đi cầm Flore trận thi đấu vừa xong là trận ";
 
@@ -42,7 +63,7 @@ const Music_inspiration = () => {
     "rằng anh ta chưa để cái tốc biến mình hồi ủa trận thi đấu này với 14.0 điểm MVP";
 
   const moviequotes =
-    "Một tình huống mà có lẽ Flo đang làm quá ngFlo, Flo đang múa quá nhức nách, phải nói làà Florentino,";
+    "Một tình huống mà có lẽ Flo đang làm quá ngFlo, Flo đang múa quá nhức nách,";
 
   const [quote, setQuote] = useState(musicquotes);
   const setsortItem = () => {
@@ -83,7 +104,7 @@ const Music_inspiration = () => {
                         activeTab === "music" ? "active" : ""
                       }`}
                       onClick={(e) => {
-                        setInspi_element(<Music requestBody={requestBody}/>);
+                        setInspi_element(<Music requestBody={requestBody} />);
                         setbannerImg("/musicBanner.png");
                         setQuote(musicquotes);
                         setActiveTab("music");
@@ -101,7 +122,7 @@ const Music_inspiration = () => {
                         activeTab === "book" ? "active" : ""
                       }`}
                       onClick={(e) => {
-                        setInspi_element(<Book requestBody={requestBody}/>);
+                        setInspi_element(<Book requestBody={requestBody} />);
                         setbannerImg("/bookBanner.png");
                         setQuote(bookquotes);
                         setActiveTab("book");
@@ -119,7 +140,7 @@ const Music_inspiration = () => {
                         activeTab === "movie" ? "active" : ""
                       }`}
                       onClick={(e) => {
-                        setInspi_element(<Movie requestBody={requestBody}/>);
+                        setInspi_element(<Movie requestBody={requestBody} />);
                         setbannerImg("/movieBanner.png");
                         setQuote(moviequotes);
                         setActiveTab("movie");
@@ -203,36 +224,18 @@ const Music_inspiration = () => {
                   className="tagFilter"
                   style={{ backgroundColor: "rgba(0, 0, 0, 0.01)" }}
                 >
-                  <div
-                    className="tagIdFilter hover_inspi_other"
-                    style={{
-                      backgroundColor: "rgba(0, 0, 0, 0.01)",
-                      color: "white",
-                    }}
-                    // onClick={(e) => setTagIdItem(null)}
-                  >
-                    All
-                  </div>
-                  <div
-                    className="tagIdFilter hover_inspi_other"
-                    style={{
-                      backgroundColor: "rgba(0, 0, 0, 0.01)",
-                      color: "white",
-                    }}
-                    // onClick={(e) => setTagIdItem(1)}
-                  >
-                    The Talk
-                  </div>
-                  <div
-                    className="tagIdFilter hover_inspi_other"
-                    style={{
-                      backgroundColor: "rgba(0, 0, 0, 0.01)",
-                      color: "white",
-                    }}
-                    // onClick={(e) => setTagIdItem(2)}
-                  >
-                    My Story
-                  </div>
+                  {movieCategories.map((mc) => (
+                    <div
+                      className={"tagIdFilter hover_inspi_other " + (choosenMovieCategories.includes(mc.movieCategoryId)? "choosen": "")}
+                      style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.01)",
+                        color: "white",
+                      }}
+                      onClick={(e) => HanldeMoviesCategory(mc.movieCategoryId)}
+                    >
+                      {mc.categoryName}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -249,7 +252,9 @@ const Music_inspiration = () => {
               placeholder="search"
             ></FormControl>
           </Form>
-          <div className="menu-filter">{Inspi_element}</div>
+          <div className="inspirationContent">
+            {<Movie requestBody={requestBody} />}
+          </div>
         </Row>
         <Row></Row>
       </Container>
