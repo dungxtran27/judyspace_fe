@@ -51,8 +51,16 @@
   width: 30rem;
 }
 .menu-filter {
-  background-color: rgba(0, 0, 0, 0.523);
+  background-color: rgb(24,25,26,0.8);
   height: 100px;
+}
+.contentContainer{
+  width: 84% !important;
+  margin: 0 auto !important;
+  position: relative;
+  left: -10px;
+  min-height: 1000px;
+  background-color: red;
 }
 .menu-tab {
   display: flex;
@@ -80,11 +88,11 @@
   border-top-right-radius: 5px;
 }
 .music-color.active {
-  background-color: #1bd8edcc !important;
+  background-color: #4dc3d2 !important;
 }
 /* book */
 .book-color.active {
-  background-color: #248232c0 !important;
+  background-color: #04aa6d !important;
 }
 /* movie */
 .movie-color.active {
@@ -97,4 +105,12 @@
 .hover_inspi_other:hover {
   background-color: rgb(120, 233, 255) !important;
   color: rgb(1, 17, 30) !important;
+}
+.movieSearchBox{
+  width: 22% !important;
+  margin: 20px !important;
+  position: relative;
+  left: 950px;
+  top: 0;
+  height: 20px !important;
 }

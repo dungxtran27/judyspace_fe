@@ -1,4 +1,12 @@
-import { Container, Nav, Row, Tab, Tabs } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  FormControl,
+  Nav,
+  Row,
+  Tab,
+  Tabs,
+} from "react-bootstrap";
 import DefaultTemplate from "../template/DefaultTemplate";
 import { useState } from "react";
 import "../css/inspiration.css";
@@ -8,10 +16,25 @@ import Movie from "../component/movie";
 const Music_inspiration = () => {
   const [bannerImg, setbannerImg] = useState("/musicBanner.png");
   const [activeTab, setActiveTab] = useState("music");
-  const [Inspi_element, setInspi_element] = useState(<Music />);
   const [sortType, setSortTypeItem] = useState("latest");
-  const [tagId, setTagIdItem] = useState(null);
   const [color_header, setColor] = useState("yellow");
+  const [movieCategories, setMovieCategories] = useState([]);
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(8);
+  const [searchName, setSearchName] = useState("");
+
+  const requestBody = {
+    pageIndex: pageIndex,
+    pageSize: pageSize,
+    searchName: searchName,
+    sortType: sortType,
+    tagId: null,
+    categoryId: 2,
+    movieCategories: movieCategories,
+  };
+  const [Inspi_element, setInspi_element] = useState(
+    <Music requestBody={requestBody} />
+  );
   const musicquotes =
     " Không biết anh Thành Vũ có biết Tú có Ny anh ta đi cầm Flore trận thi đấu vừa xong là trận ";
 
@@ -60,7 +83,7 @@ const Music_inspiration = () => {
                         activeTab === "music" ? "active" : ""
                       }`}
                       onClick={(e) => {
-                        setInspi_element(<Music />);
+                        setInspi_element(<Music requestBody={requestBody}/>);
                         setbannerImg("/musicBanner.png");
                         setQuote(musicquotes);
                         setActiveTab("music");
@@ -68,7 +91,7 @@ const Music_inspiration = () => {
                       }}
                     >
                       <span className="menu-tab">
-                        <img src="music_icon.png" />
+                        <img src="https://images.vexels.com/media/users/3/270787/isolated/preview/c2b289d29af9a7e39c56b7bb26e638af-rainbow-cassette-icon.png" />
                       </span>
                     </Nav.Link>
                   </Nav.Item>
@@ -78,7 +101,7 @@ const Music_inspiration = () => {
                         activeTab === "book" ? "active" : ""
                       }`}
                       onClick={(e) => {
-                        setInspi_element(<Book />);
+                        setInspi_element(<Book requestBody={requestBody}/>);
                         setbannerImg("/bookBanner.png");
                         setQuote(bookquotes);
                         setActiveTab("book");
@@ -86,7 +109,7 @@ const Music_inspiration = () => {
                       }}
                     >
                       <span className="menu-tab">
-                        <img src="book_icon.png" />
+                        <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/book-folder-pen-pencil-notebook-education-log-office-15-8770.png?f=webp&w=256" />
                       </span>
                     </Nav.Link>
                   </Nav.Item>
@@ -96,7 +119,7 @@ const Music_inspiration = () => {
                         activeTab === "movie" ? "active" : ""
                       }`}
                       onClick={(e) => {
-                        setInspi_element(<Movie />);
+                        setInspi_element(<Movie requestBody={requestBody}/>);
                         setbannerImg("/movieBanner.png");
                         setQuote(moviequotes);
                         setActiveTab("movie");
@@ -186,7 +209,7 @@ const Music_inspiration = () => {
                       backgroundColor: "rgba(0, 0, 0, 0.01)",
                       color: "white",
                     }}
-                    onClick={(e) => setTagIdItem(null)}
+                    // onClick={(e) => setTagIdItem(null)}
                   >
                     All
                   </div>
@@ -196,7 +219,7 @@ const Music_inspiration = () => {
                       backgroundColor: "rgba(0, 0, 0, 0.01)",
                       color: "white",
                     }}
-                    onClick={(e) => setTagIdItem(1)}
+                    // onClick={(e) => setTagIdItem(1)}
                   >
                     The Talk
                   </div>
@@ -206,7 +229,7 @@ const Music_inspiration = () => {
                       backgroundColor: "rgba(0, 0, 0, 0.01)",
                       color: "white",
                     }}
-                    onClick={(e) => setTagIdItem(2)}
+                    // onClick={(e) => setTagIdItem(2)}
                   >
                     My Story
                   </div>
@@ -215,7 +238,17 @@ const Music_inspiration = () => {
             </div>
           </Row>
         </Row>
-        <Row>
+        <Row className="contentContainer">
+          <Form className="related-blog movieSearchBox">
+            <FormControl
+              onChange={(e) => setSearchName(e.currentTarget.value)}
+              style={{
+                backgroundColor: "RGB(38, 39, 40, 0.5)",
+                color: "white",
+              }}
+              placeholder="search"
+            ></FormControl>
+          </Form>
           <div className="menu-filter">{Inspi_element}</div>
         </Row>
         <Row></Row>

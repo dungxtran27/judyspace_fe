@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/movie.css";
 import axios from "axios";
 import {
@@ -11,20 +11,14 @@ import {
   Row,
 } from "react-bootstrap";
 import { ImageList, ImageListItem } from "@mui/material";
-const Movie = () => {
+const Movie = ({ requestBody }) => {
   const [movieList, setMovieList] = useState([]);
-  const [pageSize, setPageSize] = useState(4);
-  const [pageIndex, setPageIndex] = useState(0);
-  const [searchName, setSearchName] = useState("");
-  const [sortType, setSortType] = useState("latest");
-  const [tagId, setTagId] = useState(null);
-  const [movieCategory, setMovieCategory] = useState([]);
   const [maxLoadmore, setMaxLoadMore] = useState(false);
   const [BlogListPage, setBlogListPage] = useState([]);
-
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
+    console.log(requestBody);
     const fetchData = async () => {
       const head = {
         "Content-Type": "application/json",
@@ -36,15 +30,7 @@ const Movie = () => {
       try {
         const response = await axios.post(
           "http://localhost:8080/api/blog/getBlogsPaginated",
-          {
-            pageIndex: pageIndex,
-            pageSize: pageSize,
-            searchName: searchName,
-            sortType: sortType,
-            tagId: tagId,
-            categoryId: 2,
-            movieCategories: movieCategory,
-          },
+          requestBody,
           {
             headers: head,
           }
@@ -58,23 +44,33 @@ const Movie = () => {
     };
 
     fetchData();
-  }, [pageIndex, pageSize, tagId, searchName, sortType]);
+  }, []);
   return (
     <Container>
       <Row>
         {/* <Col xs={9}> */}
-        <Form className="related-blog">
-          <FormControl
-            onChange={(e) => setSearchName(e.currentTarget.value)}
-            placeholder="search"
-          ></FormControl>
-        </Form>
-        <Row>
+        <Row className="movies">
           {movieList.map((m) => (
             <Col key={m.blogId} xs={3}>
               <figure>
                 <img src={m.blogThumbnail} alt="Mountains" />
-                <figcaption>{m.title}</figcaption>
+                <figcaption>
+                  <div
+                    style={{
+                      fontSize: "15px",
+                      color: "RGB(220 223 177)",
+                      alignSelf: "start",
+                    }}
+                  >
+                    {m.movieCategories.map((mc) => (
+                      <div>
+                        {mc.categoryName}
+                        {<br />}
+                      </div>
+                    ))}
+                  </div>
+                  {m.title}
+                </figcaption>
               </figure>
             </Col>
           ))}
