@@ -33,7 +33,7 @@ figure:hover figcaption {
   --_i: 0%;
 }
 
-::placeholder{
+::placeholder {
   color: rgb(191, 191, 191) !important;
 }
 figure:hover img {
