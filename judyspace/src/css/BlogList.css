@@ -146,9 +146,14 @@
   min-height: 180px;
 }
 .list {
-  min-height: 263px !important;
+  /* min-height: 263px !important; */
 }
-
+.list h1{
+  min-height: 70px !important;
+}
+.list h1:first-child{
+  min-height: 70px !important;
+}
 .aninek {
   margin-top: 2%;
   animation: customAni 500ms linear 0ms 1 normal forwards;
@@ -509,8 +514,9 @@ p {
 }
 
 .card-container {
-  background-color: #231e39;
+  background-color: #231e3900;
   border-radius: 5px;
+  border: 1px solid white;
   box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
   color: #b3b8cd;
   padding-top: 30px;
