@@ -24,7 +24,7 @@ const Music_inspiration = () => {
   const [pageSize, setPageSize] = useState(8);
   const [searchName, setSearchName] = useState("");
   useEffect(() => {
-    fetch("http://localhost:8080/api/movieController/getAll")
+    fetch("http://localhost:8080/api/movieCategoryController/getAll")
       .then((response) => response.json())
       .then((data) => {
         setMovieCategories(data);
