@@ -2,8 +2,8 @@
   box-sizing: border-box;
 }
 :root {
-  --headercolor: #7286d3;
-  --blogDate: #8ea7e9;
+  --headercolor: #2a3f93;
+  --blogDate: #11236c;
   --nothover-btn: #749bc2;
   --hover-btn: #4682a9;
 }
@@ -67,8 +67,10 @@
 
 .authorBlogList {
   background: var(--blogDate);
-  color: black;
+  color: rgb(255, 255, 255);
   font-weight: 500;
+  padding: 3px 3px;
+  border-radius: 5px;
 }
 
 /* .wrapper {
@@ -145,13 +147,11 @@
   z-index: 0;
   min-height: 180px;
 }
-.list {
-  /* min-height: 263px !important; */
-}
-.list h1{
+
+.list h1 {
   min-height: 70px !important;
 }
-.list h1:first-child{
+.list h1:first-child {
   min-height: 70px !important;
 }
 .aninek {
@@ -237,6 +237,7 @@
 }
 
 .caption-blog {
+  min-height: 3.5rem;
   display: -webkit-box !important; /* Enable flexible box layout */
   -webkit-line-clamp: 3 !important; /* Limit the number of lines to 3 */
   -webkit-box-orient: vertical; /* Layout the content vertically */
@@ -496,6 +497,7 @@
 .related-blog {
   position: sticky;
   top: 100px;
+  z-index: 999;
 }
 /* card related blog */
 
@@ -514,11 +516,11 @@ p {
 }
 
 .card-container {
-  background-color: #231e3900;
+  background-color: #231e39a3;
   border-radius: 5px;
   border: 1px solid white;
   box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
-  color: #b3b8cd;
+  color: #c3c8dc;
   padding-top: 30px;
   position: relative;
   width: 350px;
@@ -545,7 +547,7 @@ p {
   border: 1px solid #03bfcb;
   border-radius: 50%;
   padding: 7px;
-  width: 5rem;
+  width: 7rem;
 }
 
 button.primary {
@@ -557,17 +559,21 @@ button.primary {
   font-weight: 500;
   padding: 10px 25px;
 }
-
+button.primary a {
+  color: #231e39;
+}
 button.primary.ghost {
-  background-color: transparent;
-  color: #02899c;
+  background-color: rgb(255, 0, 195);
+  color: #faea3b;
 }
 
 .skills {
   background-color: #1f1a36;
   text-align: left;
   padding: 15px;
-  margin-top: 30px;
+  color: #e0f4ff;
+  margin: 30px 10px 0px 10px;
+  border-radius: 10px;
 }
 
 .skills ul {

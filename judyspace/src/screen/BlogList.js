@@ -277,7 +277,7 @@ export default function BlogList() {
                 <div className="descriptionPopularList">
                   <h1>{t.title}</h1>
 
-                  <p>{t.caption}</p>
+                  <p className="caption-blog">{t.caption}</p>
                   <p className="read-morePopularList">
                     <Link to="#">Read More</Link>
                   </p>
@@ -426,20 +426,31 @@ export default function BlogList() {
                 alt="user"
               />
               <h3>Thao Duong</h3>
-              <h6>Son Tay</h6>
+              <h6>Ha Noi</h6>
               <p>
                 some cool job and
                 <br /> another job
               </p>
               <div className="buttons">
-                <button className="primary">My Beacon</button>
+                <button className="primary">
+                  <a href="https://beacons.ai/judythemarketer" target="_blank">
+                    My Beacon
+                  </a>
+                </button>
                 <button className="primary ghost">Donate me</button>
+              </div>{" "}
+              <div className="introduce skills">
+                <h6>About Me</h6>
+                <p>
+                  Câu hỏi trên hỏi thì rất dễ, và trong những thông điệp rút ra
+                  từ những sách vở, nghệ thuật
+                </p>
               </div>
               <div className="skills">
                 <h6>Skills</h6>
                 <ul>
-                  <li>UI / UX</li>
-                  <li>Front End Development</li>
+                  <li>Content Creator</li>
+                  <li> ui-ux</li>
                   <li>HTML</li>
                   <li>CSS</li>
                   <li>JavaScript</li>
