@@ -14,7 +14,6 @@ import Music from "../component/music";
 import Book from "../component/book";
 import Movie from "../component/movie";
 const Music_inspiration = () => {
-  const [bannerImg, setbannerImg] = useState("/musicBanner.png");
   const [activeTab, setActiveTab] = useState("music");
   const [sortType, setSortTypeItem] = useState("latest");
   const [color_header, setColor] = useState("yellow");
