@@ -43,19 +43,18 @@ const Music_inspiration = () => {
     <Music requestBody={requestBody} />
   );
   const HanldeMoviesCategory = (movieCategoryId) => {
-    console.log(choosenMovieCategories);
-    const movieCatesCopy = [...choosenMovieCategories]
-    if(movieCatesCopy.includes(movieCategoryId)){
-      setChoosenMovieCategories(movieCatesCopy.filter(category=>category!==movieCategoryId)); 
-    }else{
-      movieCatesCopy.push(movieCategoryId)
+    setActiveTab("movie");
+    const movieCatesCopy = [...choosenMovieCategories];
+    if (movieCatesCopy.includes(movieCategoryId)) {
+      setChoosenMovieCategories(
+        movieCatesCopy.filter((category) => category !== movieCategoryId)
+      );
+    } else {
+      movieCatesCopy.push(movieCategoryId);
       // console.log();
-      setChoosenMovieCategories(movieCatesCopy)
+      setChoosenMovieCategories(movieCatesCopy);
     }
   };
-  // useEffect(()=>{
-  //   setInspi_element();
-  // }, [pageIndex, pageSize, sortType, movieCategories, searchName])
   const musicquotes =
     " Không biết anh Thành Vũ có biết Tú có Ny anh ta đi cầm Flore trận thi đấu vừa xong là trận ";
 
@@ -79,7 +78,20 @@ const Music_inspiration = () => {
         <Row
           className="backgroundImg"
           style={{
-            backgroundImage: `url(${bannerImg})`,
+            backgroundImage: `url(${(() => {
+              console.log(activeTab);
+              switch (activeTab) {
+                case "music":
+                  return "musicBanner.png";
+                case "book":
+                  return "bookBanner.png";
+                case "movie":
+                  return "movieBanner.png";
+                // Add more cases as needed
+                default:
+                  return null; // Or render a default component
+              }
+            })()})`,
           }}
         >
           <Row className="banner">
@@ -105,7 +117,6 @@ const Music_inspiration = () => {
                       }`}
                       onClick={(e) => {
                         setInspi_element(<Music requestBody={requestBody} />);
-                        setbannerImg("/musicBanner.png");
                         setQuote(musicquotes);
                         setActiveTab("music");
                         setColor("aqua");
@@ -123,7 +134,6 @@ const Music_inspiration = () => {
                       }`}
                       onClick={(e) => {
                         setInspi_element(<Book requestBody={requestBody} />);
-                        setbannerImg("/bookBanner.png");
                         setQuote(bookquotes);
                         setActiveTab("book");
                         setColor("green");
@@ -141,7 +151,6 @@ const Music_inspiration = () => {
                       }`}
                       onClick={(e) => {
                         setInspi_element(<Movie requestBody={requestBody} />);
-                        setbannerImg("/movieBanner.png");
                         setQuote(moviequotes);
                         setActiveTab("movie");
                         setColor("yellow");
@@ -226,7 +235,12 @@ const Music_inspiration = () => {
                 >
                   {movieCategories.map((mc) => (
                     <div
-                      className={"tagIdFilter hover_inspi_other " + (choosenMovieCategories.includes(mc.movieCategoryId)? "choosen": "")}
+                      className={
+                        "tagIdFilter hover_inspi_other " +
+                        (choosenMovieCategories.includes(mc.movieCategoryId)
+                          ? "choosen"
+                          : "")
+                      }
                       style={{
                         backgroundColor: "rgba(0, 0, 0, 0.01)",
                         color: "white",
@@ -253,7 +267,19 @@ const Music_inspiration = () => {
             ></FormControl>
           </Form>
           <div className="inspirationContent">
-            {<Movie requestBody={requestBody} />}
+            {(() => {
+              console.log(activeTab);
+              switch (activeTab) {
+                case "music":
+                  return <Music />;
+                case "book":
+                  return <Book />;
+                case "movie":
+                  return <Movie requestBody={requestBody} />;
+                default:
+                  return null; // Or render a default component
+              }
+            })()}
           </div>
         </Row>
         <Row></Row>

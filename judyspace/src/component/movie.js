@@ -107,7 +107,15 @@ const Movie = ({ requestBody }) => {
                     modalshow(m);
                   }}
                 >
-                  <img src={m.blogThumbnail} alt="Mountains" />
+                  <div
+                    style={{
+                      backgroundImage: `url(${m.blogThumbnail?m.blogThumbnail:"./blueCateLoading.gif"})`,
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center center",
+                      minHeight: "410px"
+                    }}
+                  ></div>
                   <figcaption>
                     <div
                       style={{
