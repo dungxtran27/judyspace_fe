@@ -214,7 +214,10 @@ export default function Comment({ type, parameter, refreshcmt }) {
                 key={"right"}
                 placement={"right"}
                 overlay={
-                  <Popover id={`popover-positioned-${"right"}`}>
+                  <Popover
+                    className="editbtn"
+                    id={`popover-positioned-${"right"}`}
+                  >
                     <Popover.Body>
                       <p
                         onClick={(e) => {
@@ -239,7 +242,7 @@ export default function Comment({ type, parameter, refreshcmt }) {
                 </Button>
               </OverlayTrigger>
             ) : (
-              <div></div>
+              <></>
             )}
           </div>
           <div className="row-btn">

@@ -128,3 +128,7 @@ strong {
   border-radius: 50%;
   background-color: rgb(190, 185, 185) !important;
 }
+.editbtn {
+  z-index: 1090 !important
+  ;
+}
