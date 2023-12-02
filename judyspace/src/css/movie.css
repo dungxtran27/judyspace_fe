@@ -56,6 +56,15 @@ figure:hover img {
   align-items: center;
 }
 
+.cover {
+  width: "80%";
+  height: "100%";
+  backgroundImage: `url(${movieContent[0].imageParagraphs[0].imageLink})
+  backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center center",
+}
+
 @supports not (-webkit-mask-clip: text) {
   figure figcaption {
     -webkit-mask: none;

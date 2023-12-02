@@ -200,14 +200,10 @@ const Movie = ({ requestBody }) => {
             </Col>
             <Col xs={12} lg={5} style={{ textAlign: "center" }}>
               <div className="card1">
-                <div className="cover"
+                <div
+                  className="cover"
                   style={{
-                    width: "80%",
-                    height: "100%",
                     backgroundImage: `url(${movieContent[0].imageParagraphs[0].imageLink})`,
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center center",
                   }}
                 >
                   <div className="veil"></div>
