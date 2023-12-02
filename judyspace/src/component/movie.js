@@ -109,11 +109,15 @@ const Movie = ({ requestBody }) => {
                 >
                   <div
                     style={{
-                      backgroundImage: `url(${m.blogThumbnail?m.blogThumbnail:"./blueCateLoading.gif"})`,
+                      backgroundImage: `url(${
+                        m.blogThumbnail
+                          ? m.blogThumbnail
+                          : "./blueCateLoading.gif"
+                      })`,
                       backgroundSize: "cover",
                       backgroundRepeat: "no-repeat",
                       backgroundPosition: "center center",
-                      minHeight: "410px"
+                      minHeight: "410px",
                     }}
                   ></div>
                   <figcaption>
@@ -195,7 +199,21 @@ const Movie = ({ requestBody }) => {
               </Typography>
             </Col>
             <Col xs={12} lg={5} style={{ textAlign: "center" }}>
-              <Carousel
+              <div className="card1">
+                <div className="cover"
+                  style={{
+                    width: "80%",
+                    height: "100%",
+                    backgroundImage: `url(${movieContent[0].imageParagraphs[0].imageLink})`,
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center",
+                  }}
+                >
+                  <div className="veil"></div>
+                </div>
+              </div>
+              {/* <Carousel
                 style={{ marginTop: "70px", height: "400px" }}
                 interval={interval}
               >
@@ -226,7 +244,7 @@ const Movie = ({ requestBody }) => {
                     // onEnd={(e)=>{alteringInterval(2000)}}
                   ></iframe>
                 </CarouselItem>
-              </Carousel>
+              </Carousel> */}
             </Col>
           </Row>
           <Row>

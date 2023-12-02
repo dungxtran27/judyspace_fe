@@ -5,16 +5,18 @@ figure {
   cursor: pointer;
   margin-bottom: 0 !important;
 }
+
 figure img {
   height: 25rem;
   width: 100%;
   border-radius: 20px;
 }
 
-figure > * {
+figure>* {
   grid-area: 1/1;
   transition: 0.4s;
 }
+
 figure figcaption {
   display: grid;
   align-items: end;
@@ -31,6 +33,7 @@ figure figcaption {
   -webkit-mask-clip: text, padding-box; */
   margin: -1px;
 }
+
 figure:hover figcaption {
   --_i: 0%;
 }
@@ -38,9 +41,21 @@ figure:hover figcaption {
 ::placeholder {
   color: rgb(191, 191, 191) !important;
 }
+
 figure:hover img {
   transform: scale(1.2);
 }
+
+.card1 {
+  border: 1px solid white;
+  width: 100%;
+  margin-top: 50px;
+  height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @supports not (-webkit-mask-clip: text) {
   figure figcaption {
     -webkit-mask: none;
