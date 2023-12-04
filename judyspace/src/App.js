@@ -19,6 +19,7 @@ import { createContext, useEffect, useState } from "react";
 import BlogDetail from "./screen/BlogDetail";
 import InteractiveImage from "./testConnect/TestingInteractiveImage";
 import JwtRefreshing from "./testConnect/JwtRefreshing";
+import AddMovie from "./screen/AddMovies";
 export const userGlobe = createContext();
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
             element={<Oauth2Proceed />}
           />
           <Route path="/jwt" element={<JwtRefreshing />} />
+          <Route path="/addMovie" element={<AddMovie/>}/>
           <Route path="/testingImageUpload" element={<UploadForm />} />
           <Route path="/blog/blogDetail/:blogId" element={<BlogDetail />} />
           <Route path="/testingInteractiveImage" element={<InteractiveImage/>}/>
