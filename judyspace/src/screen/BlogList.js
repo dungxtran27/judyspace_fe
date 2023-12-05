@@ -446,7 +446,7 @@ export default function BlogList() {
                   từ những sách vở, nghệ thuật
                 </p>
               </div>
-              <div className="skills">
+              {/* <div className="skills">
                 <h6>Skills</h6>
                 <ul>
                   <li>Content Creator</li>
@@ -457,7 +457,7 @@ export default function BlogList() {
                   <li>React</li>
                   <li>Node</li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           </Col>
         </Row>

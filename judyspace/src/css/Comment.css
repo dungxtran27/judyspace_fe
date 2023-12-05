@@ -62,7 +62,7 @@
 }
 
 .children {
-  padding-left: 200px;
+  padding-left: 20px;
 }
 
 .icon-hover:hover {
@@ -77,7 +77,7 @@
   padding-right: 0px !important;
 }
 .popover {
-  border-radius: 10px !important;
+  border-radius: 5px !important;
   background-color: #3a3b3d !important;
 }
 
@@ -129,6 +129,5 @@ strong {
   background-color: rgb(190, 185, 185) !important;
 }
 .editbtn {
-  z-index: 1090 !important
-  ;
+  z-index: 999 !important;
 }

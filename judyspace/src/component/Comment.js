@@ -177,13 +177,7 @@ export default function Comment({ type, parameter, refreshcmt }) {
             <div className="cmt-container">
               <h6 className="cmt-user ">{comment.poster.username}</h6>
               {isEditing === true && comment.commentId === editingCommentId ? (
-                <Form
-                  id={"cmtedit" + comment.commentId}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    HandleEditSubmit(comment.commentId);
-                  }}
-                >
+                <Form id={"cmtedit" + comment.commentId}>
                   <Row>
                     <Col xs={10}>
                       <Form.Control
@@ -194,12 +188,14 @@ export default function Comment({ type, parameter, refreshcmt }) {
                       />
                     </Col>
                     <Col xs={2}>
-                      <Button type="submit">
-                        <FontAwesomeIcon
-                          className="icon-hover"
-                          icon={faPaperPlane}
-                        />
-                      </Button>
+                      <FontAwesomeIcon
+                        className="icon-hover"
+                        icon={faPaperPlane}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          HandleEditSubmit(comment.commentId);
+                        }}
+                      />
                     </Col>
                   </Row>
                   <p onClick={(e) => setEditing(false)}>Huỷ</p>
@@ -208,7 +204,7 @@ export default function Comment({ type, parameter, refreshcmt }) {
                 <h6 className="cmt-content">{comment.content}</h6>
               )}
             </div>
-            {comment.postedByUser ? (
+            {comment.postedByUser && (
               <OverlayTrigger
                 trigger="click"
                 key={"right"}
@@ -241,8 +237,6 @@ export default function Comment({ type, parameter, refreshcmt }) {
                   <div className="dot"></div>
                 </Button>
               </OverlayTrigger>
-            ) : (
-              <></>
             )}
           </div>
           <div className="row-btn">
