@@ -14,6 +14,7 @@ import "react-quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
 import { Editor } from "@tinymce/tinymce-react";
 import DefaultTemplate from "../template/DefaultTemplate";
+
 export default function UploadForm() {
   const [paragraphContent, setParagraphContent] = useState("");
   const [title, setBlogTitle] = useState("");
@@ -41,6 +42,7 @@ export default function UploadForm() {
   const getEditorContent = (content, editor) => {
     const raw = editor.getContent({ format: "raw" });
     const escapedParagraph = raw.replace(/"/g, '\\"');
+    console.log(escapedParagraph);
     setParagraphContent(escapedParagraph);
   };
   const blog = {
@@ -186,7 +188,7 @@ export default function UploadForm() {
               init={{
                 editorConfig,
                 plugins:
-                  "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
+                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
                 toolbar:
                   "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
                 tinycomments_mode: "embedded",

@@ -1,0 +1,31 @@
+.selectedCategories:hover {
+    background-color: rgba(241, 47, 47, 0.784);
+    .xicon {
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
+form{
+    width: 80%;
+    margin: 20px 40px;
+}
+p{
+    color: white;
+}
+h5{
+    color: white !important;
+    margin: 20px 0 !important;
+}
+input{
+    background-color: #242526 !important;
+    color: white !important;
+}
+tr{
+    color: white;
+}
+td{
+    overflow-x: auto !important;
+    overflow-wrap: break-word !important;
+    background-color: #242526 !important;
+    color: white !important;
+}

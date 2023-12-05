@@ -234,7 +234,7 @@ export default function BlogList() {
                   }}
                   className="wrapperBlogList"
                 >
-                  <div className="headerBlogList">
+                  <div className="headerBlogList" style={{backgroundColor: "transparent"}}>
                     <div className="dateBlogList">
                       {new Date(t.createDate * 1000).toDateString()}
                     </div>
@@ -288,7 +288,7 @@ export default function BlogList() {
         </Row>
         <Row className="paginatedBlogList ">
           <Col xs={9} className="blogListpaginate">
-            <div className="filter">
+            <div className="filter" style={{backgroundColor: "#febb0b"}}>
               <button className="buttonFilter" onClick={(e) => setsort()}>
                 {sortType == "latest" ? (
                   <div className="filter-icon">
@@ -332,7 +332,7 @@ export default function BlogList() {
                 </div>
               </div>
             </div>
-            <div className="tagFilter">
+            <div className="tagFilter" style={{backgroundColor: "#febb0b"}}>
               <div className="tagIdFilter" onClick={(e) => setTagId(null)}>
                 All
               </div>

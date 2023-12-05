@@ -113,7 +113,7 @@ const BlogDetail = () => {
               dangerouslySetInnerHTML={{
                 __html: paragraph.paragraphContent.replace(/\\\"/g, '"'),
               }}
-            />
+            ></div>
           ))}
         </Row>
         <Row>

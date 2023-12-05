@@ -17,6 +17,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Box, Modal, Typography } from "@mui/material";
 import Comment from "./Comment";
+import InteractiveImage from "./InteractiveImage";
+import MovieDetail from "./MovieDetail";
 const Movie = ({ requestBody }) => {
   const [movieList, setMovieList] = useState([]);
   const [maxLoadmore, setMaxLoadMore] = useState(false);
@@ -37,11 +39,13 @@ const Movie = ({ requestBody }) => {
           imageId: 20,
           imageLink:
             "https://media.timeout.com/images/106011281/750/422/image.jpg",
+          childImages: [],
         },
       ],
     },
   ]);
   const [like, setLike] = useState(1);
+
   const [viewingMovie, setViewingMovie] = useState({});
   const [blogIdForComment, setBlogIdForComment] = useState(0);
   const [newcmt, setNewcmt] = useState(1);
@@ -59,21 +63,7 @@ const Movie = ({ requestBody }) => {
   const alteringInterval = (e) => {
     setInterval(e);
   };
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "70%",
-    height: "550px",
-    bgcolor: "rgb(38 40 41)",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-    color: "white",
-    overflow: "scroll",
-    zIndex: "999",
-  };
+
   const navigate = useNavigate();
   //movie list
   useEffect(() => {
@@ -223,7 +213,19 @@ const Movie = ({ requestBody }) => {
                     modalshow(m);
                   }}
                 >
-                  <img src={m.blogThumbnail} alt="Mountains" />
+                  <div
+                    style={{
+                      backgroundImage: `url(${
+                        m.blogThumbnail
+                          ? m.blogThumbnail
+                          : "./blueCateLoading.gif"
+                      })`,
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center center",
+                      minHeight: "410px",
+                    }}
+                  ></div>
                   <figcaption>
                     <div
                       style={{
@@ -316,55 +318,12 @@ const Movie = ({ requestBody }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Row>
-            <Col xs={12} lg={7}>
-              <Typography
-                id="modal-modal-title"
-                variant="h4"
-                component="h2"
-                style={{ color: "RGB(244 85 140)" }}
-              >
-                {viewingMovie.title}
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                {movieContent[0].paragraphContent}
-              </Typography>
-            </Col>
-            <Col xs={12} lg={5} style={{ textAlign: "center" }}>
-              <Carousel
-                style={{ marginTop: "70px", height: "400px" }}
-                interval={interval}
-              >
-                {movieContent[0].imageParagraphs.map((ip) => (
-                  <CarouselItem>
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "350px",
-                        backgroundImage: `url(${ip.imageLink})`,
-                        backgroundSize: "contain",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center center",
-                      }}
-                    ></div>
-                  </CarouselItem>
-                ))}
-              </Carousel>
-            </Col>
-          </Row>
-          <Row>
-            <iframe
-              width="100%"
-              height={"550px"}
-              src={viewingMovie.youtubeLink}
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
-          </Row>
-        </Box>
+        <MovieDetail
+          movieContent={movieContent}
+          showModal={show}
+          movieTitle={viewingMovie.title}
+          youtubeLink={viewingMovie.youtubeLink}
+        />
       </Modal>
     </Container>
   );

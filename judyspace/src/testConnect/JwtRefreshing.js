@@ -2,41 +2,60 @@ import axios from "axios";
 import { useEffect } from "react";
 
 export default function JwtRefreshing() {
-    const accessToken = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refereshToken");
-    useEffect(()=>{
-        const fetchData = async()=>{
-            try{
-                const response = await fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
-                    method: "GET",
-                    headers: {
-                      Authorization: `Bearer ${accessToken}`,
-                      "Content-Type": "application/json",
-                    },
-                    credentials: "include"
-                  })
-                    .then((response) => {
-                      if(response.status===200){
-                        response.json().then((data)=>{
-                            console.log(data);
-                        })
-                      }else{
-                        response.json().then((data)=>{
-                            console.log("vao roi");
-                            console.log(data);
-                        })
-                      }
-                    })
-                    
-                
-            }catch(error){
-                console.log(error);
-            }
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "http://localhost:8080/api/users/getCurrentUserInfo",
+        {
+          method: "GET",
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
         }
-        fetchData();
-    }, [])
-
-    return(
-        <div>hehe</div>
-    );
+      ).then((response) => {
+        if (response.status === 200) {
+          response.json().then((data) => {
+            console.log(data);
+          });
+        } else {
+          if (response.status === 401) {
+            refreshAccessToken();
+          }
+          response.json().then((data) => {
+            console.log("vao roi");
+            console.log(data);
+          });
+        }
+      });
+    };
+    fetchData();
+  }, []);
+  const refreshAccessToken = () => {
+    console.log(refreshToken);
+    fetch("http://localhost:8080/api/auth/refreshToken", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          localStorage.setItem("accessToken", data.value);
+          console.log("refreshed: " + data.value);
+        });
+      } else {
+        if (response.status === 401) {
+          console.log("hahahah");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+        }
+      }
+    });
+  };
+  return <div>hehe</div>;
 }

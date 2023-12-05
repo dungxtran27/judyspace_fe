@@ -5,16 +5,18 @@ figure {
   cursor: pointer;
   margin-bottom: 0 !important;
 }
+
 figure img {
   width: 20rem;
 
   aspect-ratio: 6/8;
 }
 
-figure > * {
+figure>* {
   grid-area: 1/1;
   transition: 0.4s;
 }
+
 figure figcaption {
   display: grid;
   align-items: end;
@@ -31,6 +33,7 @@ figure figcaption {
   -webkit-mask-clip: text, padding-box; */
   margin: -1px;
 }
+
 figure:hover figcaption {
   --_i: 0%;
 }
@@ -38,9 +41,102 @@ figure:hover figcaption {
 ::placeholder {
   color: rgb(191, 191, 191) !important;
 }
+
 figure:hover img {
   transform: scale(1.2);
 }
+
+.card1 {
+  /* border: 1px solid white; */
+  width: 100%;
+  /* margin-top: 50px; */
+  height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottomVeil {
+  width: 100%;
+  height: 100%;
+  /* opacity: 0; */
+  animation-name: veil;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  background-image: linear-gradient(to bottom,
+      transparent 46%,
+      rgba(12, 13, 19, 0.5) 68%,
+      rgba(12, 13, 19) 97%);
+  /* background-color: black; */
+}
+
+.topVeil {
+  width: 100%;
+  height: 100%;
+  /* opacity: 0; */
+  animation-name: veil;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  background-image: linear-gradient(to top,
+      transparent 46%,
+      rgba(12, 13, 19, 0.5) 68%,
+      rgba(12, 13, 19) 97%);
+  /* background-color: black; */
+}
+
+.cover {
+  width: 80%;
+  height: 80%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  animation-name: cover;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  /* animation-timing-function: ease-in; */
+}
+
+.character {
+  position: absolute;
+  z-index: 100;
+  animation-name: character;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes veil {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes character {
+  0% {
+    opacity: 0;
+    transform: translateY(70px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+    /* filter: drop-shadow(-5px 5px 5px rgba(255, 255, 255)); */
+    /* transform: translate3d(0%, -10%, 60px); */
+  }
+}
+
+@keyframes cover {
+  from {}
+
+  to {
+    transform: perspective(900px) translateY(-5%) rotateX(15deg) translateZ(0);
+    box-shadow: 10px 20px 20px 10px rgba(0, 0, 0, 0.4);
+  }
+}
+
 @supports not (-webkit-mask-clip: text) {
   figure figcaption {
     -webkit-mask: none;
