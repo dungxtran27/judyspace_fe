@@ -1,26 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
 import "../css/movie.css";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 import {
   Button,
   Carousel,
   CarouselItem,
   Col,
   Container,
-  Image,
+  Form,
+  FormControl,
   Row,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { Box, Modal, Typography } from "@mui/material";
+<<<<<<< HEAD
 import InteractiveImage from "./InteractiveImage";
 import MovieDetail from "./MovieDetail";
+=======
+import Comment from "./Comment";
+>>>>>>> main
 const Movie = ({ requestBody }) => {
   const [movieList, setMovieList] = useState([]);
   const [maxLoadmore, setMaxLoadMore] = useState(false);
   const [BlogListPage, setBlogListPage] = useState([]);
   const token = localStorage.getItem("accessToken");
   const [interval, setInterval] = useState(2000);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const [showDetail, setShowDetail] = useState(false);
+  const [showComment, setShowComment] = useState(false);
+  const handleCloseDetail = () => setShowDetail(false);
   const [movieContent, setMovieContent] = useState([
     {
       paragraphId: 25,
@@ -37,8 +47,15 @@ const Movie = ({ requestBody }) => {
       ],
     },
   ]);
+<<<<<<< HEAD
 
+=======
+  const [like, setLike] = useState(1);
+>>>>>>> main
   const [viewingMovie, setViewingMovie] = useState({});
+  const [blogIdForComment, setBlogIdForComment] = useState(0);
+  const [newcmt, setNewcmt] = useState(1);
+
   const modalshow = (movie) => {
     fetch("http://localhost:8080/api/blog/getBlogContent/" + movie.blogId)
       .then((response) => response.json())
@@ -47,11 +64,31 @@ const Movie = ({ requestBody }) => {
         setMovieContent(data);
       });
     setViewingMovie(movie);
-    setShow(true);
+    setShowDetail(true);
   };
   const alteringInterval = (e) => {
     setInterval(e);
   };
+<<<<<<< HEAD
+=======
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "70%",
+    height: "550px",
+    bgcolor: "rgb(38 40 41)",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+    color: "white",
+    overflow: "scroll",
+    zIndex: "999",
+  };
+  const navigate = useNavigate();
+  //movie list
+>>>>>>> main
   useEffect(() => {
     const fetchData = async () => {
       const head = {
@@ -78,7 +115,106 @@ const Movie = ({ requestBody }) => {
     };
 
     fetchData();
-  }, [requestBody]);
+  }, [requestBody, like, newcmt]);
+
+  //upvoted movie
+  function upvoteBlog(blogid) {
+    if (token === null) {
+      toast.error("Bạn cần đăng nhập");
+      navigate("/login");
+    } else {
+      fetch(`http://localhost:8080/api/blogUpvote/add/${blogid}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            setLike(like === 1 ? 2 : 1);
+            console.log("done");
+          } else {
+            console.log("not done");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+  //delete upvote
+  function deleteUpvoteBlog(blogid) {
+    if (token === null) {
+      toast.error("Bạn cần đăng nhập");
+      navigate("/login");
+    } else {
+      fetch(`http://localhost:8080/api/blogUpvote/delete/${blogid}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            setLike(like === 1 ? 2 : 1);
+            console.log("done delete");
+          } else {
+            console.log("not done delete");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+  //comment
+  function handleShowComment(blogId) {
+    setBlogIdForComment(blogId);
+    setShowComment(true);
+  }
+  const handleCloseComment = () => setShowComment(false);
+
+  const commentRef = useRef();
+  const blogIdRef = useRef();
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+    const data = {
+      content: commentRef.current.value,
+      blogRepliedTo: { blogId: blogIdRef.current.value },
+    };
+    const token = localStorage.getItem("accessToken");
+
+    if (token === null) {
+      toast.error("Đăng nhập để bình luận nha m");
+      navigate("/login");
+    } else {
+      fetch("http://localhost:8080/api/comment/makeRootComment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }).then((response) => {
+        if (response.status !== 200) {
+          response.json().then((data2) => {
+            toast.error(data2.value);
+          });
+        } else {
+          setNewcmt(newcmt === 1 ? 2 : 1);
+          commentRef.current.value = "";
+          response.json().then((data2) => {
+            toast.success("comment success");
+          });
+        }
+      });
+    }
+  };
   return (
     <Container>
       <Row>
@@ -86,10 +222,13 @@ const Movie = ({ requestBody }) => {
         <Row className="movies">
           {movieList.map((m) => (
             <Col
-              style={{ border: "1px solid RGB(36,37, 38, 0.7)" }}
               key={m.blogId}
               lg={3}
               xs={12}
+              sm={6}
+              style={{
+                paddingBottom: "5px",
+              }}
             >
               <div>
                 <figure
@@ -128,48 +267,77 @@ const Movie = ({ requestBody }) => {
                     {m.title}
                   </figcaption>
                 </figure>
-
-                <Row
-                  style={{
-                    height: "50px",
-                    width: "95%",
-                    margin: "0 auto",
-                    display: "flex",
-                    justifyItems: "space-between",
-                  }}
+                <div
+                  className="icon-social-blog"
+                  style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <div
-                    style={{
-                      width: "50%",
-                      marginTop: "5px",
-                      textAlign: "left",
-                    }}
-                  >
-                    <Image src="./love2.png" />
-                    <span style={{ color: "RGB(184 184 184)" }}>&nbsp; 99</span>
-                  </div>
-                  <div
-                    style={{
-                      width: "50%",
-                      marginTop: "5px",
-                      textAlign: "right",
-                    }}
-                  >
-                    <Image src="./cmt.png" />
-                    <span style={{ color: "RGB(184 184 184)" }}>&nbsp; 99</span>
-                  </div>
-                </Row>
+                  <span>
+                    <span>
+                      {m.upvotedByCurrentUser ? (
+                        <img
+                          onClick={(e) => deleteUpvoteBlog(m.blogId)}
+                          src="/love2.png"
+                        />
+                      ) : (
+                        <img
+                          onClick={(e) => upvoteBlog(m.blogId)}
+                          src="/love.png"
+                        />
+                      )}
+
+                      <span> {m.upvoteUserSetSize}</span>
+                    </span>
+                  </span>
+                  <span>
+                    <img
+                      src="/cmt.png"
+                      onClick={(e) => handleShowComment(m.blogId)}
+                    />
+                    <span>{m.commentSetSize}</span>
+                  </span>
+                </div>
               </div>
             </Col>
           ))}
         </Row>
-        {/* </Col> */}
-        {/* <Col xs={3}> */} {/* </Col> */}
+
         <Button variant="Info">Load more</Button>
       </Row>
+
+      <Modal open={showComment} onClose={handleCloseComment}>
+        <Box sx={style}>
+          <Comment
+            type={"Root"}
+            parameter={blogIdForComment}
+            refreshcmt={newcmt}
+          />
+
+          <Form onSubmit={(e) => handleSubmitComment(e)}>
+            <Row>
+              <Col xs={10}>
+                <FormControl
+                  type="input"
+                  ref={commentRef}
+                  placeholder="enter your thought here"
+                ></FormControl>
+                <FormControl
+                  type="hidden"
+                  value={blogIdForComment}
+                  ref={blogIdRef}
+                ></FormControl>
+              </Col>
+              <Col xs={2}>
+                <Button variant="info" type="submit">
+                  send
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Box>
+      </Modal>
       <Modal
-        open={show}
-        onClose={handleClose}
+        open={showDetail}
+        onClose={handleCloseDetail}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
