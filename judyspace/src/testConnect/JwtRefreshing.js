@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
-
+import {toast} from "react-toastify"
 export default function JwtRefreshing() {
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
@@ -24,11 +24,17 @@ export default function JwtRefreshing() {
         } else {
           if (response.status === 401) {
             refreshAccessToken();
+            // fetchData();
           }
-          response.json().then((data) => {
-            console.log("vao roi");
-            console.log(data);
-          });
+          if (response.status === 417) {
+            toast.error("đăng nhập đê bạn ê")
+            window.location.href = "/login"
+          } else {
+            response.json().then((data) => {
+              console.log("vao roi");
+              console.log(data);
+            });
+          }
         }
       });
     };
@@ -39,7 +45,7 @@ export default function JwtRefreshing() {
     fetch("http://localhost:8080/api/auth/refreshToken", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${refreshToken}`,
         "Content-Type": "application/json",
       },
     }).then((response) => {

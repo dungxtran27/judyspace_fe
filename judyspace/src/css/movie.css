@@ -61,7 +61,7 @@ figure:hover img {
   height: 100%;
   /* opacity: 0; */
   animation-name: veil;
-  animation-duration: 2s;
+  animation-duration: 1.5s;
   animation-fill-mode: forwards;
   background-image: linear-gradient(to bottom,
       transparent 46%,
