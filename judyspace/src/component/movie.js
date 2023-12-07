@@ -16,12 +16,9 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Box, Modal, Typography } from "@mui/material";
-<<<<<<< HEAD
 import InteractiveImage from "./InteractiveImage";
 import MovieDetail from "./MovieDetail";
-=======
 import Comment from "./Comment";
->>>>>>> main
 const Movie = ({ requestBody }) => {
   const [movieList, setMovieList] = useState([]);
   const [maxLoadmore, setMaxLoadMore] = useState(false);
@@ -47,11 +44,7 @@ const Movie = ({ requestBody }) => {
       ],
     },
   ]);
-<<<<<<< HEAD
-
-=======
   const [like, setLike] = useState(1);
->>>>>>> main
   const [viewingMovie, setViewingMovie] = useState({});
   const [blogIdForComment, setBlogIdForComment] = useState(0);
   const [newcmt, setNewcmt] = useState(1);
@@ -69,26 +62,7 @@ const Movie = ({ requestBody }) => {
   const alteringInterval = (e) => {
     setInterval(e);
   };
-<<<<<<< HEAD
-=======
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "70%",
-    height: "550px",
-    bgcolor: "rgb(38 40 41)",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-    color: "white",
-    overflow: "scroll",
-    zIndex: "999",
-  };
   const navigate = useNavigate();
-  //movie list
->>>>>>> main
   useEffect(() => {
     const fetchData = async () => {
       const head = {
@@ -303,38 +277,6 @@ const Movie = ({ requestBody }) => {
 
         <Button variant="Info">Load more</Button>
       </Row>
-
-      <Modal open={showComment} onClose={handleCloseComment}>
-        <Box sx={style}>
-          <Comment
-            type={"Root"}
-            parameter={blogIdForComment}
-            refreshcmt={newcmt}
-          />
-
-          <Form onSubmit={(e) => handleSubmitComment(e)}>
-            <Row>
-              <Col xs={10}>
-                <FormControl
-                  type="input"
-                  ref={commentRef}
-                  placeholder="enter your thought here"
-                ></FormControl>
-                <FormControl
-                  type="hidden"
-                  value={blogIdForComment}
-                  ref={blogIdRef}
-                ></FormControl>
-              </Col>
-              <Col xs={2}>
-                <Button variant="info" type="submit">
-                  send
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-        </Box>
-      </Modal>
       <Modal
         open={showDetail}
         onClose={handleCloseDetail}
@@ -343,7 +285,7 @@ const Movie = ({ requestBody }) => {
       >
         <MovieDetail
           movieContent={movieContent}
-          showModal={show}
+          showModal={showDetail}
           movieTitle={viewingMovie.title}
           youtubeLink={viewingMovie.youtubeLink}
         />
