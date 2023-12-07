@@ -12,7 +12,7 @@ figure img {
   aspect-ratio: 6/8;
 }
 
-figure>* {
+figure > * {
   grid-area: 1/1;
   transition: 0.4s;
 }
@@ -45,21 +45,21 @@ figure:hover figcaption {
 figure:hover img {
   transform: scale(1.2);
 }
-
-.card1 {
+/* 
+.card11 {
   /* border: 1px solid white; */
-  width: 100%;
-  /* margin-top: 50px; */
-  height: 550px;
+/* width: 100%; */
+/* margin-top: 50px; */
+/* height: 550px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
-.bottomVeil {
+/* .bottomVeil {
   width: 100%;
   height: 100%;
-  /* opacity: 0; */
+  opacity: 0;
   animation-name: veil;
   animation-duration: 2s;
   animation-fill-mode: forwards;
@@ -67,13 +67,13 @@ figure:hover img {
       transparent 46%,
       rgba(12, 13, 19, 0.5) 68%,
       rgba(12, 13, 19) 97%);
-  /* background-color: black; */
-}
-
+  background-color: black;
+} */
+/* 
 .topVeil {
   width: 100%;
   height: 100%;
-  /* opacity: 0; */
+  opacity: 0;
   animation-name: veil;
   animation-duration: 1.5s;
   animation-fill-mode: forwards;
@@ -81,7 +81,7 @@ figure:hover img {
       transparent 46%,
       rgba(12, 13, 19, 0.5) 68%,
       rgba(12, 13, 19) 97%);
-  /* background-color: black; */
+  background-color: black;
 }
 
 .cover {
@@ -93,7 +93,7 @@ figure:hover img {
   animation-name: cover;
   animation-duration: 1.5s;
   animation-fill-mode: forwards;
-  /* animation-timing-function: ease-in; */
+  animation-timing-function: ease-in;
 }
 
 .character {
@@ -102,7 +102,7 @@ figure:hover img {
   animation-name: character;
   animation-duration: 1.5s;
   animation-fill-mode: forwards;
-}
+} */
 
 @keyframes veil {
   0% {
@@ -129,7 +129,8 @@ figure:hover img {
 }
 
 @keyframes cover {
-  from {}
+  from {
+  }
 
   to {
     transform: perspective(900px) translateY(-5%) rotateX(15deg) translateZ(0);
@@ -142,4 +143,103 @@ figure:hover img {
     -webkit-mask: none;
     color: #fff;
   }
+}
+.cover {
+  width: 100%;
+  margin-top: 50px;
+  height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.card1 {
+  width: var(--card1-width);
+  height: var(--card1-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 36px;
+  perspective: 2500px;
+  margin: 0 50px;
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wrapper {
+  transition: all 0.5s;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+.card1:hover .wrapper {
+  transform: perspective(900px) translateY(-5%) rotateX(25deg);
+  box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+}
+
+.wrapper::before,
+.wrapper::after {
+  content: "";
+  opacity: 0;
+  width: 100%;
+  height: 80px;
+  transition: all 0.5s;
+  position: absolute;
+  left: 0;
+}
+.wrapper::before {
+  top: 0;
+  height: 100%;
+  background-image: linear-gradient(
+    to top,
+    transparent 46%,
+    rgba(12, 13, 19, 0.5) 68%,
+    rgba(12, 13, 19) 97%
+  );
+}
+.wrapper::after {
+  bottom: 0;
+  opacity: 1;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 46%,
+    rgba(12, 13, 19, 0.5) 68%,
+    rgba(12, 13, 19) 97%
+  );
+}
+
+.card1:hover .wrapper::before,
+.wrapper::after {
+  opacity: 1;
+}
+
+.card1:hover .wrapper::after {
+  height: 120px;
+}
+.title {
+  width: 100%;
+  transition: transform 0.5s;
+}
+.card1:hover .title {
+  transform: translate3d(0%, -50px, 100px);
+}
+
+.character {
+  width: 100%;
+  opacity: 0;
+  transition: all 0.5s;
+  position: absolute;
+  z-index: -1;
+}
+
+.card1:hover .character {
+  opacity: 1;
+  transform: translate3d(0%, -30%, 100px);
 }

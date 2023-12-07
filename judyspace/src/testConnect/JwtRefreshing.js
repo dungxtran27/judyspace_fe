@@ -50,7 +50,6 @@ export default function JwtRefreshing() {
         });
       } else {
         if (response.status === 401) {
-          console.log("hahahah");
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
         }

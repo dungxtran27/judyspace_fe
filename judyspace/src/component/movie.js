@@ -45,7 +45,6 @@ const Movie = ({ requestBody }) => {
     },
   ]);
   const [like, setLike] = useState(1);
-
   const [viewingMovie, setViewingMovie] = useState({});
   const [blogIdForComment, setBlogIdForComment] = useState(0);
   const [newcmt, setNewcmt] = useState(1);
@@ -54,7 +53,6 @@ const Movie = ({ requestBody }) => {
     fetch("http://localhost:8080/api/blog/getBlogContent/" + movie.blogId)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setMovieContent(data);
       });
     setViewingMovie(movie);
@@ -63,7 +61,21 @@ const Movie = ({ requestBody }) => {
   const alteringInterval = (e) => {
     setInterval(e);
   };
-
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "70%",
+    height: "550px",
+    bgcolor: "rgb(38 40 41)",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+    color: "white",
+    overflow: "scroll",
+    zIndex: "999",
+  };
   const navigate = useNavigate();
   //movie list
   useEffect(() => {
@@ -320,7 +332,7 @@ const Movie = ({ requestBody }) => {
       >
         <MovieDetail
           movieContent={movieContent}
-          showModal={show}
+          showModal={showDetail}
           movieTitle={viewingMovie.title}
           youtubeLink={viewingMovie.youtubeLink}
         />

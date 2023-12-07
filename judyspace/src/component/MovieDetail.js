@@ -48,38 +48,6 @@ export default function MovieDetail({ movieContent, movieTitle, youtubeLink }) {
           ) : (
             <h5 style={{ color: "white" }}>None</h5>
           )}
-          {/* <Carousel
-                style={{ marginTop: "70px", height: "400px" }}
-                interval={interval}
-              >
-                {movieContent[0].imageParagraphs.map((ip) => (
-                  <CarouselItem>
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "350px",
-                        backgroundImage: `url(${ip.imageLink})`,
-                        backgroundSize: "contain",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center center",
-                      }}
-                    ></div>
-                  </CarouselItem>
-                ))}
-                <CarouselItem>
-                  <iframe
-                    width="100%"
-                    height={"350px"}
-                    src={viewingMovie.youtubeLink}
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen
-                    // onPlay={(e)=>{alteringInterval(null)}}
-                    // onEnd={(e)=>{alteringInterval(2000)}}
-                  ></iframe>
-                </CarouselItem>
-              </Carousel> */}
         </Col>
       </Row>
       <Row>
