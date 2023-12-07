@@ -53,7 +53,6 @@ const Movie = ({ requestBody }) => {
     fetch("http://localhost:8080/api/blog/getBlogContent/" + movie.blogId)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setMovieContent(data);
       });
     setViewingMovie(movie);

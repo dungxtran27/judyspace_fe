@@ -24,7 +24,7 @@ const Movie = ({ requestBody }) => {
         Accept: "application/json",
       };
       if (token !== null) {
-        head.Authorization = Bearer ${token};
+        head.Authorization = Bearer` ${token}`;
       }
       try {
         const response = await axios.post(
