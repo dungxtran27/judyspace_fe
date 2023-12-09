@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import { Editor } from "@tinymce/tinymce-react";
 import DefaultTemplate from "../template/DefaultTemplate";
 
-export default function UploadForm() {
+export default function AddBlog() {
   const [paragraphContent, setParagraphContent] = useState("");
   const [title, setBlogTitle] = useState("");
   const [blogThumbnail, setBlogThumbnail] = useState(
@@ -27,9 +27,21 @@ export default function UploadForm() {
   const [caption, setCaption] = useState("");
   const editorRef = useRef();
   const token = localStorage.getItem("accessToken");
+  //alert if refresh
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = ""; // Required for Chrome
+    };
 
-  //  bắt lỗi  null từng cái của blog
-  // useEffect render 6 lần onsubmit
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  // get blog tag
 
   useEffect(() => {
     fetch("http://localhost:8080/api/blogTag/getAll")

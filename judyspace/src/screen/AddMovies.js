@@ -24,6 +24,23 @@ export default function AddMovie() {
   const handleClose = () => setShow(false);
   const [imageParagraphs, setImageParagraphs] = useState([]);
   const token = localStorage.getItem("accessToken");
+
+  // alert if refresh
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  //add movie
   const handleSubmitMovie = (e) => {
     console.log("haha");
     const head = {

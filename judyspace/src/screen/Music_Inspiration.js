@@ -78,14 +78,13 @@ const Music_inspiration = () => {
           className="backgroundImg"
           style={{
             backgroundImage: `url(${(() => {
-              console.log(activeTab);
               switch (activeTab) {
                 case "music":
                   return "musicBanner.png";
                 case "book":
                   return "bookBanner.png";
                 case "movie":
-                  return "movieBanner.png";
+                  return "movieBanner2.png";
                 // Add more cases as needed
                 default:
                   return null; // Or render a default component

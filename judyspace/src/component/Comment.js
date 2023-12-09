@@ -205,38 +205,62 @@ export default function Comment({ type, parameter, refreshcmt }) {
               )}
             </div>
             {comment.postedByUser && (
-              <OverlayTrigger
-                trigger="click"
-                key={"right"}
-                placement={"right"}
-                overlay={
-                  <Popover
-                    className="editbtn"
-                    id={`popover-positioned-${"right"}`}
+              // <OverlayTrigger
+              //   trigger="click"
+              //   key={"right"}
+              //   placement={"right"}
+              //   overlay={
+              //     <Popover
+              //       className="editbtn"
+              //       id={`popover-positioned-${"right"}`}
+              //     >
+              //       <Popover.Body>
+              //         <p
+              //           onClick={(e) => {
+              //             seteditingCommentId(comment.commentId);
+              //             setEditing(true);
+              //           }}
+              //         >
+              //           <strong>Sửa</strong>
+              //         </p>
+              //         <p onClick={(e) => deleteCmt(comment.commentId)}>
+              //           <strong>Xoá</strong>
+              //         </p>
+              //       </Popover.Body>
+              //     </Popover>
+              //   }
+              // >
+              //   <Button className="btn-edit-cmt">
+              //     {" "}
+              //     <div className="dot"></div>
+              //     <div className="dot"></div>
+              //     <div className="dot"></div>
+              //   </Button>
+              // </OverlayTrigger>
+              <div className="button-container">
+                <button className="main-button">
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                </button>
+                <div className="hover-buttons">
+                  <button
+                    className="edit-button"
+                    onClick={(e) => {
+                      seteditingCommentId(comment.commentId);
+                      setEditing(true);
+                    }}
                   >
-                    <Popover.Body>
-                      <p
-                        onClick={(e) => {
-                          seteditingCommentId(comment.commentId);
-                          setEditing(true);
-                        }}
-                      >
-                        <strong>Sửa</strong>
-                      </p>
-                      <p onClick={(e) => deleteCmt(comment.commentId)}>
-                        <strong>Xoá</strong>
-                      </p>
-                    </Popover.Body>
-                  </Popover>
-                }
-              >
-                <Button className="btn-edit-cmt">
-                  {" "}
-                  <div className="dot"></div>
-                  <div className="dot"></div>
-                  <div className="dot"></div>
-                </Button>
-              </OverlayTrigger>
+                    Sửa
+                  </button>
+                  <button
+                    className="delete-button"
+                    onClick={(e) => deleteCmt(comment.commentId)}
+                  >
+                    Xoá
+                  </button>
+                </div>
+              </div>
             )}
           </div>
           <div className="row-btn">

@@ -31,20 +31,14 @@ export default function InteractiveImage({
     //     />
     //   ))}
     // </div>
-    <div className=" cover">
-      {" "}
+    <div className=" cover" key={imageLink}>
       <div className="card1">
         <div className="wrapper">
-          <img
-            src="https://i.ibb.co/mDNVJPc/wonder.jpg"
-            className="cover-image"
-          />
+          <img src={imageLink} className="cover-image" />
         </div>
-        <img
-          src="https://i.ibb.co/tpbR98p/image-14-removebg-preview.png"
-          className="title"
-        />
-        <img src="https://i.ibb.co/VSCcRz0/wonder1.png" className="character" />
+        {childImages.map((ci) => (
+          <img src={ci.imageLink} className={ci.imageClass} />
+        ))}
       </div>
     </div>
   );

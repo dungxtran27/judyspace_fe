@@ -54,6 +54,7 @@ const Movie = ({ requestBody }) => {
       .then((response) => response.json())
       .then((data) => {
         setMovieContent(data);
+        console.log(movieContent);
       });
     setViewingMovie(movie);
     setShowDetail(true);
@@ -238,7 +239,7 @@ const Movie = ({ requestBody }) => {
                       minHeight: "410px",
                     }}
                   ></div>
-                  <figcaption>
+                  <figcaption key={m.blogId}>
                     <div
                       style={{
                         fontSize: "15px",

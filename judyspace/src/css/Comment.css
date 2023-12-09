@@ -104,23 +104,6 @@ strong {
   color: rgb(251, 251, 251);
 }
 
-.btn-edit-cmt {
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  top: 19px;
-  display: flex !important;
-  background-color: #3a3b3d !important;
-  border: none !important;
-  margin-left: 5px !important;
-  height: 20px !important;
-  padding: 10px 5px !important;
-  border-radius: 40% !important;
-}
-
-.cmt-container:hover .dot {
-}
-
 .dot {
   margin: 0.7px;
   width: 4px;
@@ -128,6 +111,60 @@ strong {
   border-radius: 50%;
   background-color: rgb(190, 185, 185) !important;
 }
-.editbtn {
-  z-index: 999 !important;
+
+.button-container {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 0.3rem;
+}
+
+.main-button {
+  padding: 5px 5px;
+  background-color: #303031;
+  border-radius: 20%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+}
+
+.hover-buttons {
+  display: none;
+
+  position: absolute;
+  top: 0;
+  left: 100%;
+}
+
+.button-container:hover .hover-buttons {
+  display: block;
+}
+.button-container:hover .main-button {
+  display: none;
+}
+
+.edit-button {
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.delete-button {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.edit-button,
+.delete-button {
+  font-size: 0.7rem;
+  display: block;
+  color: white;
+  padding: 2px 5px;
+  background-color: #303031;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  background-color: #1b1b1e;
 }

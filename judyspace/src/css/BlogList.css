@@ -430,7 +430,10 @@
   position: relative;
   display: inline-block;
 }
-
+.filter-text {
+  color: black !important;
+  font-size: 1rem;
+}
 /* Style the dropdown button */
 .dropdown .dropbtn {
   background-color: #ffffff;
@@ -499,18 +502,17 @@
   top: 100px;
   z-index: 999;
 }
-/* card related blog */
 
-h3 {
+.card-h3 {
   margin: 10px 0;
 }
 
-h6 {
+.card-h6 {
   margin: 5px 0;
   text-transform: uppercase;
 }
 
-p {
+.card-text {
   font-size: 14px;
   line-height: 21px;
 }

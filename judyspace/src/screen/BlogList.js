@@ -234,7 +234,10 @@ export default function BlogList() {
                   }}
                   className="wrapperBlogList"
                 >
-                  <div className="headerBlogList" style={{backgroundColor: "transparent"}}>
+                  <div
+                    className="headerBlogList"
+                    style={{ backgroundColor: "transparent" }}
+                  >
                     <div className="dateBlogList">
                       {new Date(t.createDate * 1000).toDateString()}
                     </div>
@@ -288,15 +291,15 @@ export default function BlogList() {
         </Row>
         <Row className="paginatedBlogList ">
           <Col xs={9} className="blogListpaginate">
-            <div className="filter" style={{backgroundColor: "#febb0b"}}>
+            <div className="filter">
               <button className="buttonFilter" onClick={(e) => setsort()}>
                 {sortType == "latest" ? (
                   <div className="filter-icon">
-                    <p>Oldest</p>
+                    <p className="filter-text">Oldest</p>
                   </div>
                 ) : (
                   <div className="filter-icon">
-                    <p>Latest</p>
+                    <p className="filter-text">Latest</p>
                     <img src="./new.png" />
                   </div>
                 )}
@@ -304,7 +307,7 @@ export default function BlogList() {
 
               <div className="dropdown">
                 <button className="dropbtn">
-                  <p>Popular </p>
+                  <p className="filter-text">Popular </p>
                   <img src="./right-arrow.png" />
                 </button>
                 <div className="dropdown-content">
@@ -332,7 +335,7 @@ export default function BlogList() {
                 </div>
               </div>
             </div>
-            <div className="tagFilter" style={{backgroundColor: "#febb0b"}}>
+            <div className="tagFilter">
               <div className="tagIdFilter" onClick={(e) => setTagId(null)}>
                 All
               </div>
@@ -425,9 +428,9 @@ export default function BlogList() {
                 src="https://i.ibb.co/Fqrdy5x/product-image-1593207438.jpg"
                 alt="user"
               />
-              <h3>Thao Duong</h3>
-              <h6>Ha Noi</h6>
-              <p>
+              <h3 className="card-h3">Thao Duong</h3>
+              <h6 className="card-h6">Ha Noi</h6>
+              <p className="card-text">
                 some cool job and
                 <br /> another job
               </p>
@@ -440,8 +443,8 @@ export default function BlogList() {
                 <button className="primary ghost">Donate me</button>
               </div>{" "}
               <div className="introduce skills">
-                <h6>About Me</h6>
-                <p>
+                <h6 className="card-h6">About Me</h6>
+                <p className="card-text">
                   Câu hỏi trên hỏi thì rất dễ, và trong những thông điệp rút ra
                   từ những sách vở, nghệ thuật
                 </p>

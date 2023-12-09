@@ -14,7 +14,7 @@ import Portfolio from "./screen/Portfolio";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Comment from "./component/Comment";
-import UploadForm from "./testConnect/AddBlog";
+import AddBlog from "./screen/AddBlog";
 import { createContext, useEffect, useState } from "react";
 import BlogDetail from "./screen/BlogDetail";
 import InteractiveImage from "./testConnect/TestingInteractiveImage";
@@ -64,10 +64,13 @@ function App() {
             element={<Oauth2Proceed />}
           />
           <Route path="/jwt" element={<JwtRefreshing />} />
-          <Route path="/addMovie" element={<AddMovie/>}/>
-          <Route path="/testingImageUpload" element={<UploadForm />} />
+          <Route path="/addMovie" element={<AddMovie />} />
+          <Route path="/addBlog" element={<AddBlog />} />
           <Route path="/blog/blogDetail/:blogId" element={<BlogDetail />} />
-          <Route path="/testingInteractiveImage" element={<InteractiveImage/>}/>
+          <Route
+            path="/testingInteractiveImage"
+            element={<InteractiveImage />}
+          />
         </Routes>
         <ToastContainer
           position="top-right"
