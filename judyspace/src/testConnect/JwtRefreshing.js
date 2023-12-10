@@ -1,9 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 export default function JwtRefreshing() {
-  const accessToken = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken");
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -12,7 +10,7 @@ export default function JwtRefreshing() {
           method: "GET",
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             "Content-Type": "application/json",
           },
         }
@@ -23,12 +21,12 @@ export default function JwtRefreshing() {
           });
         } else {
           if (response.status === 401) {
-            refreshAccessToken();
+            refreshAccessToken().then(()=>{fetchData()});
             // fetchData();
           }
           if (response.status === 417) {
-            toast.error("đăng nhập đê bạn ê")
-            window.location.href = "/login"
+            toast.error("đăng nhập đê bạn ê");
+            window.location.href = "/login";
           } else {
             response.json().then((data) => {
               console.log("vao roi");
@@ -40,12 +38,11 @@ export default function JwtRefreshing() {
     };
     fetchData();
   }, []);
-  const refreshAccessToken = () => {
-    console.log(refreshToken);
+  const refreshAccessToken = async () => {
     fetch("http://localhost:8080/api/auth/refreshToken", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${refreshToken}`,
+        Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
         "Content-Type": "application/json",
       },
     }).then((response) => {

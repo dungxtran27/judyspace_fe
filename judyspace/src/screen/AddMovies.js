@@ -6,6 +6,7 @@ import {
   Button,
   Container,
   Form,
+  FormCheck,
   FormControl,
   Image,
   Row,
@@ -346,11 +347,12 @@ export default function AddMovie() {
                 <thead>
                   <tr>
                     <td className="col-1">#</td>
-                    <td className="col-2">Link</td>
-                    <td className="col-2">Top Index</td>
+                    <td className="col-4">Link</td>
+                    {/* <td className="col-2">Top Index</td>
                     <td className="col-2">Left Index</td>
-                    <td className="col-2">width</td>
-                    <td className="col-2">Image</td>
+                    <td className="col-2">width</td> */}
+                    <td className="col-4">Image</td>
+                    <td className="col-3">is Title</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -368,7 +370,7 @@ export default function AddMovie() {
                             }}
                           />
                         </td>
-                        <td>
+                        {/* <td>
                           <FormControl
                             type="number"
                             defaultValue={ci.topIndex}
@@ -405,9 +407,15 @@ export default function AddMovie() {
                               handleChidImageChange(index, "width", width);
                             }}
                           />
-                        </td>
+                        </td> */}
+
                         <td>
                           <Image style={{ width: "100%" }} src={ci.imageLink} />
+                        </td>
+                        <td>
+                          <FormCheck type="switch" onChange={(e)=>{
+                            handleChidImageChange(index, "imageClass", e.currentTarget.checked ? "title" : "character" )
+                          }}/>
                         </td>
                       </tr>
                     )
@@ -433,6 +441,7 @@ export default function AddMovie() {
                                 topIndex: 0,
                                 leftIndex: 0,
                                 width: 100,
+                                imageClass: "character"
                               },
                             ],
                           },

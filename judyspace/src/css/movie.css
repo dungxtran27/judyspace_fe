@@ -154,8 +154,8 @@ figure:hover img {
   margin-bottom: 1rem;
 }
 .card1 {
-  width: var(--card1-width);
-  height: var(--card1-height);
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -226,6 +226,8 @@ figure:hover img {
 .title {
   width: 100%;
   transition: transform 0.5s;
+  position: relative;
+  /* left: -45%; */
 }
 .card1:hover .title {
   transform: translate3d(0%, -50px, 100px);
@@ -235,7 +237,8 @@ figure:hover img {
   width: 100%;
   opacity: 0;
   transition: all 0.5s;
-  position: absolute;
+  position: relative;
+  /* left: 6.7rem; */
   z-index: -1;
 }
 
