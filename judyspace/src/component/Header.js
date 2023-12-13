@@ -4,40 +4,39 @@ import "../css/header.css";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { createContext, useContext, useEffect, useState } from "react";
-
+import { userGlobe } from "../App";
 const Header = () => {
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refereshToken");
   const JudyLogo = `/3.png`;
-  const [user, SetUser] = useState({});
 
-  useEffect(() => {
-    if (accessToken === null) {
-      SetUser(null);
-    } else {
-      fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          SetUser(data);
-          console.log(user);
-        })
-        .catch((error) => {
-          console.log("Fetch error: ", error);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (accessToken === null) {
+  //     SetUser(null);
+  //   } else {
+  //     fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
+  //       method: "GET",
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //       .then((response) => {
+  //         return response.json();
+  //       })
+  //       .then((data) => {
+  //         SetUser(data);
+  //       })
+  //       .catch((error) => {
+  //         console.log("Fetch error: ", error);
+  //       });
+  //   }
+  // }, []);
 
-  const userGlobe = createContext(user);
+  // const userGlobe = createContext(user);
   const location = useLocation();
-
+  const user = useContext(userGlobe);
+  console.log(user);
   const isActive = (path) => {
     return location.pathname === path ? "link-active" : "link";
   };
@@ -68,7 +67,7 @@ const Header = () => {
               <Link to="/music" className={isActive("/music")}>
                 Inspiration
               </Link>
-              {user === null ? (
+              {user === undefined ? (
                 <Link to="/login" className={isActive("/musicInspiration")}>
                   Login
                 </Link>

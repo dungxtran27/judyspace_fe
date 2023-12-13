@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Login_SignUp from "./screen/Login_SignUp";
 import DisplayUserInfo from "./testConnect/DisplayUserInfo";
@@ -24,28 +24,88 @@ export const userGlobe = createContext();
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");
-  const [user, SetUser] = useState();
+  const [user, setUser] = useState();
+  console.log(user);
+
   useEffect(() => {
-    if (accessToken === null) {
-    } else {
-      fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          SetUser(data);
-        })
-        .catch((error) => {
-          console.log("Fetch error: ", error);
-        });
-    }
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/users/getCurrentUserInfo",
+          {
+            method: "GET",
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.status === 200) {
+          const data = await response.json();
+          setUser(data);
+        } else if (response.status === 401) {
+          await refreshAccessToken();
+          fetchData();
+        } else if (response.status === 417) {
+          // window.location.href = "/login";
+        } else {
+          const errorData = await response.json();
+          console.log("vao roi");
+          console.log(errorData);
+        }
+      } catch (error) {
+        console.error("Error while fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   if (accessToken === null) {
+  //   } else {
+  //     fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
+  //       method: "GET",
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //       .then((response) => {
+  //         return response.json();
+  //       })
+  //       .then((data) => {
+  //         setUser(data);
+  //       })
+  //       .catch((error) => {
+  //         console.log("Fetch error: ", error);
+  //       });
+  //   }
+  // }, []);
+  const refreshAccessToken = async () => {
+    fetch("http://localhost:8080/api/auth/refreshToken", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          localStorage.setItem("accessToken", data.value);
+          console.log("refreshed: " + data.value);
+        });
+      } else {
+        if (response.status === 401) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+        }
+      }
+    });
+  };
+  console.log(user);
+
   return (
     <userGlobe.Provider value={user}>
       <BrowserRouter>
@@ -64,10 +124,13 @@ function App() {
             element={<Oauth2Proceed />}
           />
           <Route path="/jwt" element={<JwtRefreshing />} />
-          <Route path="/addMovie" element={<AddMovie/>}/>
+          <Route path="/addMovie" element={<AddMovie />} />
           <Route path="/testingImageUpload" element={<UploadForm />} />
           <Route path="/blog/blogDetail/:blogId" element={<BlogDetail />} />
-          <Route path="/testingInteractiveImage" element={<InteractiveImage/>}/>
+          <Route
+            path="/testingInteractiveImage"
+            element={<InteractiveImage />}
+          />
         </Routes>
         <ToastContainer
           position="top-right"
