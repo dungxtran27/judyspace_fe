@@ -1,6 +1,7 @@
 body {
   background-image: url("../img/bg_3.jpg");
-  background-size: auto;
+  background-size: auto
+  /* background-attachment: fixed; */
 }
 
 a {
@@ -17,4 +18,8 @@ a {
 
 #wrapper {
   padding: 0 !important;
+}
+input{
+  background-color: #18191a !important;
+  color: white !important;
 }

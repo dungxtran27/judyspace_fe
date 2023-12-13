@@ -10,6 +10,7 @@ import {
   Container,
   Form,
   FormControl,
+  Image,
   Modal,
   ModalBody,
   Row,
@@ -17,6 +18,8 @@ import {
 import "../css/BlogList.css";
 import { Link, useNavigate } from "react-router-dom";
 import { userGlobe } from "../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBank, faCoffee, faLeaf } from "@fortawesome/free-solid-svg-icons";
 export default function BlogList() {
   const [BlogListPopula, setBloglistPopula] = useState([]);
   const [BlogListPage, setBlogListPage] = useState([]);
@@ -234,7 +237,10 @@ export default function BlogList() {
                   }}
                   className="wrapperBlogList"
                 >
-                  <div className="headerBlogList" style={{backgroundColor: "transparent"}}>
+                  <div
+                    className="headerBlogList"
+                    style={{ backgroundColor: "transparent" }}
+                  >
                     <div className="dateBlogList">
                       {new Date(t.createDate * 1000).toDateString()}
                     </div>
@@ -287,8 +293,8 @@ export default function BlogList() {
           </Col>
         </Row>
         <Row className="paginatedBlogList ">
-          <Col xs={9} className="blogListpaginate">
-            <div className="filter" style={{backgroundColor: "#febb0b"}}>
+          <Col xs={8} lg={9} className="blogListpaginate">
+            <div className="filter">
               <button className="buttonFilter" onClick={(e) => setsort()}>
                 {sortType == "latest" ? (
                   <div className="filter-icon">
@@ -332,7 +338,7 @@ export default function BlogList() {
                 </div>
               </div>
             </div>
-            <div className="tagFilter" style={{backgroundColor: "#febb0b"}}>
+            <div className="tagFilter">
               <div className="tagIdFilter" onClick={(e) => setTagId(null)}>
                 All
               </div>
@@ -353,7 +359,6 @@ export default function BlogList() {
                     className="photoPopularList"
                     style={{
                       background: `url(${bp.blogThumbnail}) center / cover no-repeat`,
-                      // background: `url("https://www.publicdomainpictures.net/pictures/80000/velka/kitty-cat-1395206763uwr.jpg") center / cover no-repeat`,
                     }}
                   ></div>
                   <ul className="detailsPopularList">
@@ -374,12 +379,12 @@ export default function BlogList() {
                   </p>
                   <div className="icon-social-blog">
                     <span>
-                      <img src="./eye.png" />
+                      <img src="./eye1.png" />
                       <span>99+</span>
                     </span>
                     <span>
                       <img
-                        src="./cmt.png"
+                        src="./comment1.png"
                         onClick={(e) => handleShow(bp.blogId)}
                       />
                       <span>{bp.commentSetSize}</span>
@@ -389,12 +394,12 @@ export default function BlogList() {
                         {bp.upvotedByCurrentUser ? (
                           <img
                             onClick={(e) => deleteUpvoteBlog(bp.blogId)}
-                            src="./love2.png"
+                            src="./love4.png"
                           />
                         ) : (
                           <img
                             onClick={(e) => upvoteBlog(bp.blogId)}
-                            src="./love.png"
+                            src="./love3.png"
                           />
                         )}
 
@@ -411,53 +416,92 @@ export default function BlogList() {
               </button>
             </Row>
           </Col>
-          <Col xs={3}>
+          <Col xs={4} lg={3}>
             <Form className="related-blog">
               <FormControl
+                className="blogSearch"
                 onChange={(e) => setSearchName(e.currentTarget.value)}
                 placeholder="search"
               ></FormControl>
             </Form>
             <div className="card-container">
-              <span className="pro">PRO</span>
-              <img
-                className="round "
-                src="https://i.ibb.co/Fqrdy5x/product-image-1593207438.jpg"
-                alt="user"
-              />
-              <h3>Thao Duong</h3>
-              <h6>Ha Noi</h6>
-              <p>
-                some cool job and
-                <br /> another job
-              </p>
-              <div className="buttons">
-                <button className="primary">
-                  <a href="https://beacons.ai/judythemarketer" target="_blank">
-                    My Beacon
-                  </a>
-                </button>
-                <button className="primary ghost">Donate me</button>
-              </div>{" "}
-              <div className="introduce skills">
-                <h6>About Me</h6>
-                <p>
-                  Câu hỏi trên hỏi thì rất dễ, và trong những thông điệp rút ra
-                  từ những sách vở, nghệ thuật
+              {/* <span className="pro">PRO</span> */}
+              <div className="potraitContainer">
+                <img
+                  className="potrait"
+                  src="https://scontent.fhan5-8.fna.fbcdn.net/v/t1.6435-9/85202335_1114975875516132_7790395098063175680_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=0bb214&_nc_ohc=RZobT9C2IDUAX9tPOjQ&_nc_ht=scontent.fhan5-8.fna&oh=00_AfCY2N2oB_FN4q2ssAl8BH-2x4-tOHTNUZUVim39IPk6ng&oe=659FFCE1"
+                  alt="user"
+                />
+              </div>
+              <div className="introduce">
+                <p className="quote1">
+                  "Câu hỏi trên hỏi thì rất dễ, và trong những thông điệp rút ra
+                  từ những sách vở, nghệ thuật"
                 </p>
               </div>
-              {/* <div className="skills">
-                <h6>Skills</h6>
-                <ul>
-                  <li>Content Creator</li>
-                  <li> ui-ux</li>
-                  <li>HTML</li>
-                  <li>CSS</li>
-                  <li>JavaScript</li>
-                  <li>React</li>
-                  <li>Node</li>
-                </ul>
-              </div> */}
+            </div>
+            <div className="card-container">
+              <div className="sideHeader">
+                <p className="text">Buy me a coffee</p>
+              </div>
+              <div className="donateRow">
+                <div className="donateLink">
+                  <FontAwesomeIcon className="icon" icon={faCoffee} />
+                </div>
+                <div className="donateLink">
+                  <FontAwesomeIcon className="icon" icon={faBank} />
+                </div>
+              </div>
+            </div>
+            <div className="card-container">
+              <div className="sideHeader">
+                <p className="text">My Book</p>
+              </div>
+              <div className="potraitContainer">
+                <img
+                  className="potrait"
+                  src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/art-book-cover-design-template-34323b0f0734dccded21e0e3bebf004c_screen.jpg?ts=1637015198"
+                  alt="user"
+                />
+              </div>
+              <div className="introduce">
+                <p className="quote1">
+                  "Câu hỏi trên hỏi thì rất dễ, và trong những thông điệp rút ra
+                  từ những sách vở, nghệ thuật"
+                </p>
+              </div>
+            </div>
+            <div className="card-container">
+              <div className="sideHeader">
+                <p className="text">Contact Me</p>
+              </div>
+              <div className="contactRow">
+                <div className="contactLink">
+                  <Image
+                    className="contactIcon"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
+                  />
+                </div>
+                <div className="contactLink">
+                  <Image
+                  style={{border: "1px solid RGB(128 128 128)", borderRadius: "50px"}}
+                    className="contactIcon"
+                    src="https://static.vecteezy.com/system/resources/thumbnails/016/716/450/small_2x/tiktok-icon-free-png.png"
+                  />
+                </div>
+                <div className="contactLink">
+                  <Image
+                    className="contactIcon"
+                    src="./instaRounded.png"
+                  />
+                </div>
+                <div className="contactLink">
+                  <Image
+                    className="contactIcon"
+                    src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png"
+                  />
+                </div>
+              </div>
             </div>
           </Col>
         </Row>
