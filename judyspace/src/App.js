@@ -104,7 +104,6 @@ function App() {
       }
     });
   };
-  console.log(user);
 
   return (
     <userGlobe.Provider value={user}>
