@@ -6,6 +6,9 @@
   --blogDate: #11236c;
   --nothover-btn: #749bc2;
   --hover-btn: #4682a9;
+  --blogCardPopular: rgb(6, 2, 29);
+  --card-height: 65vh;
+  --card-width: calc(var(--card-height) / 1.5);
 }
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css);
 
@@ -134,18 +137,22 @@
   opacity: 1;
 }
 
+.blog-cardPopularList:hover {
+  border: 2px lightblue solid;
+}
 .blog-cardPopularList {
   display: flex;
   flex-direction: column;
-  box-shadow: 0 3px 7px -1px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.6%;
-  background: #fff;
   line-height: 1.4;
   font-family: sans-serif;
   border-radius: 5px;
   overflow: hidden;
   z-index: 0;
   min-height: 180px;
+  position: relative;
+  background-clip: padding-box;
+  border: 1px solid transparent;
 }
 
 .list h1 {
@@ -223,7 +230,7 @@
 
 .blog-cardPopularList .descriptionPopularList {
   padding: 1rem;
-  background: rgb(11, 5, 44);
+  background: var(--blogCardPopular);
   position: relative;
   z-index: 1;
 }
@@ -289,7 +296,7 @@
   .blog-cardPopularList .descriptionPopularList:before {
     transform: skewX(-3deg);
     content: "";
-    background: rgb(11, 5, 44);
+    background: var(--blogCardPopular);
     width: 30px;
     position: absolute;
     left: -10px;
@@ -517,18 +524,67 @@
   line-height: 21px;
 }
 
+.card-container:hover::before {
+  content: "";
+  width: 104%;
+  height: 102%;
+  border-radius: 8px;
+  background-image: linear-gradient(
+    var(--rotate),
+    #5ddcff,
+    #3c67e3 43%,
+    #4e00c2
+  );
+  position: absolute;
+  z-index: -1;
+  top: -1%;
+  left: -2%;
+  animation: spin 2.5s linear infinite;
+}
+
+.card-container:hover::after {
+  position: absolute;
+  content: "";
+  top: calc(var(--card-height) / 6);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.8);
+  filter: blur(calc(var(--card-height) / 6));
+  background-image: linear-gradient(
+    var(--rotate),
+    #5ddcff,
+    #3c67e3 43%,
+    #4e00c2
+  );
+  opacity: 1;
+  transition: opacity 0.5s;
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
 .card-container {
-  background-color: #231e39a3;
+  display: flex;
+  flex-direction: column;
+  background-color: #231e;
   border-radius: 5px;
   border: 1px solid white;
-  box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
+  position: relative;
+  z-index: 1;
   color: #c3c8dc;
   padding-top: 30px;
-  position: relative;
-  width: 350px;
   max-width: 100%;
   text-align: center;
-  position: sticky;
   top: 150px;
   margin-top: 10px;
 }
@@ -591,4 +647,76 @@ button.primary.ghost {
   font-size: 12px;
   margin: 0 7px 7px 0;
   padding: 7px;
+}
+
+.card {
+  background: #191c29;
+  width: var(--card-width);
+  height: var(--card-height);
+  padding: 3px;
+  position: relative;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  font-size: 1.5em;
+  color: rgb(88 199 250 / 0%);
+  cursor: pointer;
+  font-family: cursive;
+}
+
+.card:hover {
+  color: rgb(88 199 250 / 100%);
+  transition: color 1s;
+}
+.card:hover:before,
+.card:hover:after {
+  animation: none;
+  opacity: 0;
+}
+
+.card::before {
+  content: "";
+  width: 104%;
+  height: 102%;
+  border-radius: 8px;
+  background-image: linear-gradient(var(--rotate), red, blue);
+  position: absolute;
+  z-index: -1;
+  top: -1%;
+  left: -2%;
+  animation: spin 2.5s linear infinite;
+}
+
+.card::after {
+  position: absolute;
+  content: "";
+  top: calc(var(--card-height) / 6);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(1.2);
+  filter: blur(calc(var(--card-height) / 6));
+  background-image: linear-gradient(var(--rotate), red, blue);
+  opacity: 1;
+  transition: opacity 0.5s;
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 132deg;
+  inherits: false;
 }

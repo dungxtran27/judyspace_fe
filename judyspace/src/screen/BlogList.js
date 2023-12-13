@@ -421,7 +421,7 @@ export default function BlogList() {
                 placeholder="search"
               ></FormControl>
             </Form>
-            <div className="card-container">
+            {/* <div className="card-container">
               <span className="pro">PRO</span>
               <img
                 className="round "
@@ -449,19 +449,8 @@ export default function BlogList() {
                   từ những sách vở, nghệ thuật
                 </p>
               </div>
-              {/* <div className="skills">
-                <h6>Skills</h6>
-                <ul>
-                  <li>Content Creator</li>
-                  <li> ui-ux</li>
-                  <li>HTML</li>
-                  <li>CSS</li>
-                  <li>JavaScript</li>
-                  <li>React</li>
-                  <li>Node</li>
-                </ul>
-              </div> */}
-            </div>
+            </div> */}
+            <div class="card">Magic Card</div>
           </Col>
         </Row>
         <Modal
