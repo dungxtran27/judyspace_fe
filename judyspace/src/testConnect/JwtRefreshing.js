@@ -21,7 +21,9 @@ export default function JwtRefreshing() {
           });
         } else {
           if (response.status === 401) {
-            refreshAccessToken().then(()=>{fetchData()});
+            refreshAccessToken().then(() => {
+              fetchData();
+            });
             // fetchData();
           }
           if (response.status === 417) {
