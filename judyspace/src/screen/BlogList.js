@@ -254,12 +254,12 @@ export default function BlogList() {
       const listButton = document.getElementById("listDisplay");
       listButton.classList.remove("selectedDisplayMode");
       setIsGrid(true);
-      // setPageSize(9);
+      setPageSize(9);
     } else {
       const gridButton = document.getElementById("gridDisplay");
       gridButton.classList.remove("selectedDisplayMode");
       setIsGrid(false);
-      // setPageSize(6);
+      setPageSize(6);
     }
   };
   return (
@@ -450,7 +450,7 @@ export default function BlogList() {
             {isGrid ? (
               <Row>
                 {BlogListPage.content?.map((bp) => (
-                  <div className="gridCard col-xs-6 col-lg-4" key={bp.blogId}>
+                  <div className="gridCard col-sm-6 col-lg-4" key={bp.blogId}>
                     <div className="gridCardContent">
                       <div className="gridCardThumbnail">
                         <Image
@@ -461,10 +461,10 @@ export default function BlogList() {
                       <div className="gridCardText">
                         <div className="gridCradHeader">
                           <Link to={"/blog/blogDetail/" + bp.blogId}>
-                            <h5>{bp.title}</h5>
+                            <h5 style={{fontFamily: ""}}>{bp.title}</h5>
                           </Link>
 
-                          <p style={{ color: "RGB(120 120 120)" }}>
+                          <p style={{ color: "RGB(120 120 120)", margin: "0" }}>
                             {new Date(bp.createDate * 1000).toLocaleDateString(
                               "vn-VN",
                               {

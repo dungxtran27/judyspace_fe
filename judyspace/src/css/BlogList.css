@@ -341,18 +341,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .pageSizeSet{
+
+  .pageSizeSet {
     color: #D6b598;
     display: inline-block;
     width: 50%;
+
     input {
       display: inline-block;
       width: 55px;
       height: 25px;
     }
+
     text-align: right;
   }
-  .MuiStack-root{
+
+  .MuiStack-root {
     width: 50% !important;
   }
 }
@@ -786,11 +790,13 @@ button.primary.ghost {
 .gridCard {
   display: inline-block;
   padding: 10px;
+
   .gridCardContent {
     background-color: #18191a;
     border: 1px solid rgb(134, 134, 134);
     height: 470px;
     border-radius: 5px;
+
     .gridCardThumbnail {
       height: 170px;
       margin: 5px;
@@ -801,9 +807,11 @@ button.primary.ghost {
         object-fit: cover;
       }
     }
-    .gridCradHeader{
+
+    .gridCradHeader {
       min-height: 101px;
     }
+
     .gridCardText {
       margin: 5px;
 
@@ -820,9 +828,10 @@ button.primary.ghost {
       }
 
       .read-morePopularList a {
-        color: wheat;
+        color: RGB(231 27 82);
       }
-      .icon-social-blog{
+
+      .icon-social-blog {
         display: flex;
         justify-content: space-between;
         padding-bottom: 10px;
