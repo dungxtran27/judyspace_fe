@@ -39,7 +39,7 @@ import {
 export default function BlogList() {
   const [BlogListPopula, setBloglistPopula] = useState([]);
   const [BlogListPage, setBlogListPage] = useState({});
-  const [pageSize, setPageSize] = useState(9);
+  const [pageSize, setPageSize] = useState(6);
   const [pageIndex, setPageIndex] = useState(0);
   const [searchName, setSearchName] = useState("");
   const [sortType, setSortType] = useState("latest");
@@ -254,12 +254,12 @@ export default function BlogList() {
       const listButton = document.getElementById("listDisplay");
       listButton.classList.remove("selectedDisplayMode");
       setIsGrid(true);
-      setPageSize(9);
+      // setPageSize(9);
     } else {
       const gridButton = document.getElementById("gridDisplay");
       gridButton.classList.remove("selectedDisplayMode");
       setIsGrid(false);
-      setPageSize(6);
+      // setPageSize(6);
     }
   };
   return (
@@ -447,24 +447,23 @@ export default function BlogList() {
                 </span>
               </div>
             </Row>
-            {isGrid ? (
-              <Row>
-                {BlogListPage.content?.map((bp) => (
-                  <div className="gridCard col-sm-6 col-lg-4" key={bp.blogId}>
-                    <div className="gridCardContent">
-                      <div className="gridCardThumbnail">
-                        <Image
-                          className="thumnailImage"
-                          src={bp.blogThumbnail}
-                        />
-                      </div>
-                      <div className="gridCardText">
-                        <div className="gridCradHeader">
-                          <Link to={"/blog/blogDetail/" + bp.blogId}>
-                            <h5 style={{fontFamily: ""}}>{bp.title}</h5>
-                          </Link>
-
-                          <p style={{ color: "RGB(120 120 120)", margin: "0" }}>
+            <div className="blogsContainer">
+              {isGrid ? (
+                <Row>
+                  {BlogListPage.content?.map((bp) => (
+                    <div
+                      className="gridCard col-sm-12 col-lg-6"
+                      key={bp.blogId}
+                    >
+                      <div
+                        className="gridCardContent"
+                        style={{
+                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${bp.blogThumbnail})`,
+                        }}
+                      >
+                        <div className="gridCardHeader">
+                          <h6>Judy the marketer</h6>
+                          <p className="gridCardDate">
                             {new Date(bp.createDate * 1000).toLocaleDateString(
                               "vn-VN",
                               {
@@ -477,117 +476,130 @@ export default function BlogList() {
                             )}
                           </p>
                         </div>
-                        <p
-                          className="gridCardCaption"
-                          style={{ color: "RGB(231 231 231)" }}
-                        >
-                          {bp.caption}
-                        </p>
-                        <p className="read-morePopularList">
-                          <Link to={"/blog/blogDetail/" + bp.blogId}>
+                        <h3 className="gridCardTitle">{bp.title}</h3>
+                        <div className="gridCardBody">
+                          <p className="gridBlogCaption">{bp.caption}</p>
+                          <a
+                            className="hehe"
+                            href={"/blog/blogDetail/" + bp.blogId}
+                          >
                             Read More
-                          </Link>
-                        </p>
-                        <div className="icon-social-blog">
-                          <span>
-                            <img src="./eye1.png" />
-                            <span>99+</span>
-                          </span>
-                          <span>
-                            <img
-                              src="./comment1.png"
-                              onClick={(e) => handleShow(bp.blogId)}
-                            />
-                            <span>{bp.commentSetSize}</span>
-                          </span>
-                          <span>
+                          </a>
+                        </div>
+                        <div className="gridCardFooter">
+                          <div
+                            style={{
+                              width: "87%",
+                              margin: "0 auto",
+                              height: "1px",
+                              backgroundColor: "white",
+                            }}
+                          ></div>
+                          <div className="grid-icon-social-blog">
                             <span>
-                              {bp.upvotedByCurrentUser ? (
+                              <span className="gridSocial">
+                                <img src="./eye1.png" />
+                                <span>99+</span>
+                              </span>
+                              <span className="gridSocial">
                                 <img
-                                  onClick={(e) => deleteUpvoteBlog(bp.blogId)}
-                                  src="./love4.png"
+                                  src="./comment1.png"
+                                  onClick={(e) => handleShow(bp.blogId)}
                                 />
-                              ) : (
-                                <img
-                                  onClick={(e) => upvoteBlog(bp.blogId)}
-                                  src="./love3.png"
-                                />
-                              )}
-
-                              <span> {bp.upvoteUserSetSize}</span>
+                                <span>{bp.commentSetSize}</span>
+                              </span>
                             </span>
-                          </span>
+                            <span>
+                              <span>
+                                {bp.upvotedByCurrentUser ? (
+                                  <img
+                                    onClick={(e) => deleteUpvoteBlog(bp.blogId)}
+                                    src="./love2.png"
+                                  />
+                                ) : (
+                                  <img
+                                    onClick={(e) => upvoteBlog(bp.blogId)}
+                                    src="./love.png"
+                                  />
+                                )}
+
+                                <span> {bp.upvoteUserSetSize}</span>
+                              </span>
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </Row>
-            ) : (
-              BlogListPage.content?.map((bp) => (
-                <div
-                  className="blog-cardPopularList list aninek"
-                  key={bp.blogId}
-                >
-                  <div className="metaPopularList">
-                    <div
-                      className="photoPopularList"
-                      style={{
-                        background: `url(${bp.blogThumbnail}) center / cover no-repeat`,
-                      }}
-                    ></div>
-                    <ul className="detailsPopularList">
-                      <li className="authorPopularList">- waozouq</li>
-                      <li className="datePopularList">
-                        - {new Date(bp.createDate * 1000).toDateString()}
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="descriptionPopularList">
-                    <Link to={"/blog/blogDetail/" + bp.blogId}>
-                      <h1>{bp.title}</h1>
-                    </Link>
-
-                    <p className="caption-blog">{bp.caption}</p>
-                    <p className="read-morePopularList">
+                    
+                  ))}
+                </Row>
+               
+              ) : (
+                BlogListPage.content?.map((bp) => (
+                  <div
+                    className="blog-cardPopularList list aninek"
+                    key={bp.blogId}
+                  >
+                    <div className="metaPopularList">
+                      <div
+                        className="photoPopularList"
+                        style={{
+                          background: `url(${bp.blogThumbnail}) center / cover no-repeat`,
+                        }}
+                      ></div>
+                      <ul className="detailsPopularList">
+                        <li className="authorPopularList">- waozouq</li>
+                        <li className="datePopularList">
+                          - {new Date(bp.createDate * 1000).toDateString()}
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="descriptionPopularList">
                       <Link to={"/blog/blogDetail/" + bp.blogId}>
-                        Read More
+                        <h1>{bp.title}</h1>
                       </Link>
-                    </p>
-                    <div className="icon-social-blog">
-                      <span>
-                        <img src="./eye1.png" />
-                        <span>99+</span>
-                      </span>
-                      <span>
-                        <img
-                          src="./comment1.png"
-                          onClick={(e) => handleShow(bp.blogId)}
-                        />
-                        <span>{bp.commentSetSize}</span>
-                      </span>
-                      <span>
-                        <span>
-                          {bp.upvotedByCurrentUser ? (
-                            <img
-                              onClick={(e) => deleteUpvoteBlog(bp.blogId)}
-                              src="./love4.png"
-                            />
-                          ) : (
-                            <img
-                              onClick={(e) => upvoteBlog(bp.blogId)}
-                              src="./love3.png"
-                            />
-                          )}
 
-                          <span> {bp.upvoteUserSetSize}</span>
+                      <p className="caption-blog">{bp.caption}</p>
+                      <p className="read-morePopularList">
+                        <Link to={"/blog/blogDetail/" + bp.blogId}>
+                          Read More
+                        </Link>
+                      </p>
+                      <div className="icon-social-blog">
+                        <span>
+                          <img src="./eye1.png" />
+                          <span>99+</span>
                         </span>
-                      </span>
+                        <span>
+                          <img
+                            src="./comment1.png"
+                            onClick={(e) => handleShow(bp.blogId)}
+                          />
+                          <span>{bp.commentSetSize}</span>
+                        </span>
+                        <span>
+                          <span>
+                            {bp.upvotedByCurrentUser ? (
+                              <img
+                                onClick={(e) => deleteUpvoteBlog(bp.blogId)}
+                                src="./love4.png"
+                              />
+                            ) : (
+                              <img
+                                onClick={(e) => upvoteBlog(bp.blogId)}
+                                src="./love3.png"
+                              />
+                            )}
+
+                            <span> {bp.upvoteUserSetSize}</span>
+                          </span>
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            )}
+                ))
+              )}
+            </div>
 
             {/* {debugging()} */}
             <Row xs={12} lg={4} className="btnRow">
@@ -609,7 +621,7 @@ export default function BlogList() {
                     type="number"
                     className="form-control"
                     defaultValue={pageSize}
-                    onChange={(e)=>setPageSize(e.currentTarget.value)}
+                    onChange={(e) => setPageSize(e.currentTarget.value)}
                   />
                   &nbsp; /{BlogListPage.totalElements} kết quả tìm được
                 </p>

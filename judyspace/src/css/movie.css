@@ -61,7 +61,7 @@ figure:hover img {
   height: 100%;
   opacity: 0;
   animation-name: veil;
-  animation-duration: 1.5s;
+  animation-duration: 2s;
   animation-fill-mode: forwards;
   background-image: linear-gradient(to bottom,
       transparent 46%,
@@ -154,8 +154,8 @@ figure:hover img {
   margin-bottom: 1rem;
 }
 .card1 {
-  width: 100%;
-  height: 100%;
+  width: var(--card1-width);
+  height: var(--card1-height);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -224,10 +224,10 @@ figure:hover img {
   height: 120px;
 }
 .title {
+  position: relative;
+  top: 6rem;
   width: 100%;
   transition: transform 0.5s;
-  position: relative;
-  left: -45%;
 }
 .card1:hover .title {
   transform: translate3d(0%, -50px, 100px);
@@ -237,9 +237,10 @@ figure:hover img {
   width: 100%;
   opacity: 0;
   transition: all 0.5s;
-  position: relative;
-  left: 6.7rem;
+  position: absolute;
   z-index: -1;
+  /* left: 100px;
+  top: 100px; */
 }
 
 .card1:hover .character {
