@@ -479,6 +479,17 @@ export default function BlogList() {
                         <h3 className="gridCardTitle">{bp.title}</h3>
                         <div className="gridCardBody">
                           <p className="gridBlogCaption">{bp.caption}</p>
+                          {/* <div className="gridBlogHashTag">
+                            {bp.blogHashTagsSet.map(
+                              (tag, index) =>
+                                index > 0 && (
+                                  <span key={index}>
+                                    #{tag}&nbsp;
+                                  </span>
+                                )
+                            )}
+                          </div> */}
+
                           <a
                             className="hehe"
                             href={"/blog/blogDetail/" + bp.blogId}
@@ -530,10 +541,8 @@ export default function BlogList() {
                         </div>
                       </div>
                     </div>
-                    
                   ))}
                 </Row>
-               
               ) : (
                 BlogListPage.content?.map((bp) => (
                   <div

@@ -841,7 +841,7 @@ button.primary.ghost {
       margin-bottom: 0;
       padding-left: 30px;
       position: absolute;
-      bottom: 50px;
+      bottom: 55px;
       animation-name: gridCardBodyAnimationTitleOut;
       animation-duration: 0.7s;
       animation-fill-mode: forwards;
@@ -850,12 +850,18 @@ button.primary.ghost {
     .gridCardBody {
       position: absolute;
       bottom: -100px;
-      height: 150px;
+      height: 155px;
       width: 100%;
       animation-name: gridCardBodyAnimationOut;
       animation-duration: 0.7s;
 
-
+      .gridBlogHashTag {
+        color: #eb3767;
+        padding-left: 30px;
+        opacity: 0;
+      }
+      .gridBlogHashTag span:hover {
+      }
       .gridBlogCaption {
         color: white;
         opacity: 0;
@@ -863,7 +869,7 @@ button.primary.ghost {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 2;
         text-overflow: "hidden";
         margin-bottom: 5px;
       }
@@ -878,25 +884,31 @@ button.primary.ghost {
 
 }
 
-.gridCard:hover .gridCardBody, .gridCard:focus .gridCardBody {
+.gridCard:hover .gridCardBody,
+.gridCard:focus .gridCardBody {
   animation-name: gridCardBodyAnimationIn;
   animation-duration: 0.7s;
   animation-fill-mode: forwards;
 }
 
-.gridCard:hover .gridBlogCaption, .gridCard:focus .gridBlogCaption {
+.gridCard:hover .gridBlogCaption,
+.gridCard:focus .gridBlogCaption,
+.gridCard:hover .gridBlogHashTag,
+.gridCard:focus .gridBlogHashTag {
   animation-name: gridCardBodyAnimationCaption;
   animation-fill-mode: forwards;
   animation-duration: 0.7s;
 }
 
-.gridCard:hover .gridCardTitle, .gridCard:focus .gridCardTitle {
+.gridCard:hover .gridCardTitle,
+.gridCard:focus .gridCardTitle {
   animation-name: gridCardBodyAnimationTitle;
   animation-duration: 0.7s;
   animation-fill-mode: forwards;
 }
 
-.gridCard:hover .hehe, .gridCard:focus .hehe {
+.gridCard:hover .hehe,
+.gridCard:focus .hehe {
   animation-name: gridCardBodyAnimationCaption;
   animation-fill-mode: forwards;
   animation-duration: 0.7s;
