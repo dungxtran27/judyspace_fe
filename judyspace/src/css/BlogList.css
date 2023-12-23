@@ -261,7 +261,8 @@
   /* Display ellipsis (...) for the truncated text */
 }
 
-.blog-cardPopularList .descriptionPopularList .read-morePopularList a:after {
+.blog-cardPopularList .descriptionPopularList .read-morePopularList,
+.gridCardText .read-morePopularList a:after {
   content: "(づ￣ ³￣)づ";
   font-family: FontAwesome;
   margin-left: -10px;
@@ -349,7 +350,25 @@
 .btnRow {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+
+  .pageSizeSet {
+    color: #d6b598;
+    display: inline-block;
+    width: 50%;
+
+    input {
+      display: inline-block;
+      width: 55px;
+      height: 25px;
+    }
+
+    text-align: right;
+  }
+
+  .MuiStack-root {
+    width: 50% !important;
+  }
 }
 
 .buttonLoadmore {
@@ -687,6 +706,275 @@ button.primary.ghost {
     object-fit: cover;
   }
 }
-/* @media screen and (max-width: 768px){
-  .contactLink
-} */
+
+.MuiPagination-ul {
+  button {
+    color: #ebb98e;
+    border: 1px solid #ebb98e;
+  }
+
+  .MuiPaginationItem-ellipsis {
+    color: #ebb98e;
+  }
+
+  .Mui-selected {
+    color: black;
+    background-color: #ebb98e !important;
+  }
+
+  /* justify-content: center; */
+}
+
+.blogAction {
+  display: flex !important;
+  width: 50% !important;
+  justify-items: left !important;
+  align-items: center !important;
+
+  .blogActionIcon {
+    display: inline-block;
+    width: 20px;
+    color: #d6b598;
+    position: relative;
+    top: 10px;
+  }
+
+  legend {
+    color: #ebb98e !important;
+  }
+
+  svg {
+    color: #ebb98e;
+  }
+
+  .MuiOutlinedInput-notchedOutline,
+  .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    border-color: #ebb98e;
+
+    &:focus {
+      border-color: #ebb98e !important;
+    }
+  }
+
+  .MuiList-root {
+    background-color: #242526;
+  }
+}
+
+.toogleDisplayMode {
+  display: flex;
+  width: 50% !important;
+
+  .toogleIcon {
+    padding: 10px;
+    background-color: #242526;
+    color: black;
+    border-radius: 5px;
+    height: 40px;
+    margin: 5px;
+    border: 1px solid #5a5a5a;
+  }
+
+  .toogleIcon:hover {
+    cursor: pointer;
+  }
+
+  .daheo svg {
+    position: relative;
+    top: -3px;
+  }
+
+  .selectedDisplayMode {
+    background-color: #d6b598 !important;
+  }
+
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.gridCard {
+  display: inline-block;
+  padding: 10px;
+
+  .gridCardContent {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgb(134, 134, 134);
+    height: 471px;
+    box-shadow: 5px 5px #2b2b2b;
+
+    .gridCardHeader {
+      color: white;
+      padding: 30px 30px;
+
+      h6 {
+        font-family: sans-serif !important;
+      }
+
+      p {
+        color: #bcbcbc;
+        font-weight: 500;
+      }
+    }
+
+    .gridCardFooter {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+
+      /* Add this */
+      .grid-icon-social-blog {
+        color: white;
+        width: 90%;
+        margin: 5px auto;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      span {
+        padding: 0 !important;
+        margin: 5px;
+      }
+    }
+
+    .gridCardTitle {
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
+      width: 100%;
+      margin-bottom: 0;
+      padding-left: 30px;
+      position: absolute;
+      bottom: 55px;
+      animation-name: gridCardBodyAnimationTitleOut;
+      animation-duration: 0.7s;
+      animation-fill-mode: forwards;
+    }
+
+    .gridCardBody {
+      position: absolute;
+      bottom: -100px;
+      height: 155px;
+      width: 100%;
+      animation-name: gridCardBodyAnimationOut;
+      animation-duration: 0.7s;
+
+      .gridBlogHashTag {
+        color: #eb3767;
+        padding-left: 30px;
+        opacity: 0;
+      }
+      .gridBlogHashTag span:hover {
+      }
+      .gridBlogCaption {
+        color: white;
+        opacity: 0;
+        margin-left: 30px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        -webkit-line-clamp: 2;
+        text-overflow: "hidden";
+        margin-bottom: 5px;
+      }
+
+      a.hehe {
+        margin-left: 30px;
+        color: white;
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.gridCard:hover .gridCardBody,
+.gridCard:focus .gridCardBody {
+  animation-name: gridCardBodyAnimationIn;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
+}
+
+.gridCard:hover .gridBlogCaption,
+.gridCard:focus .gridBlogCaption,
+.gridCard:hover .gridBlogHashTag,
+.gridCard:focus .gridBlogHashTag {
+  animation-name: gridCardBodyAnimationCaption;
+  animation-fill-mode: forwards;
+  animation-duration: 0.7s;
+}
+
+.gridCard:hover .gridCardTitle,
+.gridCard:focus .gridCardTitle {
+  animation-name: gridCardBodyAnimationTitle;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
+}
+
+.gridCard:hover .hehe,
+.gridCard:focus .hehe {
+  animation-name: gridCardBodyAnimationCaption;
+  animation-fill-mode: forwards;
+  animation-duration: 0.7s;
+}
+
+@keyframes gridCardBodyAnimationTitle {
+  0% {
+    transform: translateY(0px);
+  }
+
+  100% {
+    transform: translateY(-100px);
+    background-color: #0000008b;
+    color: #eb3767;
+  }
+}
+
+@keyframes gridCardBodyAnimationTitleOut {
+  0% {
+    transform: translateY(-100px);
+    background-color: #0000008b;
+    color: #eb3767;
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes gridCardBodyAnimationCaption {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes gridCardBodyAnimationIn {
+  0% {
+    transform: translateY(0px);
+    background-color: #00000000;
+  }
+
+  100% {
+    transform: translateY(-100px);
+    background-color: #0000008b;
+  }
+}
+
+@keyframes gridCardBodyAnimationOut {
+  0% {
+    transform: translateY(-100px);
+    background-color: #0000008b;
+  }
+
+  100% {
+    transform: translateY(0px);
+    background-color: #00000000;
+  }
+}
+
+.blogsContainer {
+  background-color: #000000;
+}

@@ -12,7 +12,7 @@ figure img {
   aspect-ratio: 6/8;
 }
 
-figure > * {
+figure>* {
   grid-area: 1/1;
   transition: 0.4s;
 }
@@ -45,12 +45,12 @@ figure:hover figcaption {
 figure:hover img {
   transform: scale(1.2);
 }
-/* 
-.card11 {
-  /* border: 1px solid white; */
-/* width: 100%; */
-/* margin-top: 50px; */
-/* height: 550px;
+
+/* .card1 {
+  border: 1px solid white;
+  width: 100%;
+  margin-top: 50px;
+  height: 550px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +61,7 @@ figure:hover img {
   height: 100%;
   opacity: 0;
   animation-name: veil;
-  animation-duration: 1.5s;
+  animation-duration: 2s;
   animation-fill-mode: forwards;
   background-image: linear-gradient(to bottom,
       transparent 46%,
@@ -129,8 +129,7 @@ figure:hover img {
 }
 
 @keyframes cover {
-  from {
-  }
+  from {}
 
   to {
     transform: perspective(900px) translateY(-5%) rotateX(15deg) translateZ(0);
@@ -144,6 +143,7 @@ figure:hover img {
     color: #fff;
   }
 }
+
 .cover {
   width: 100%;
   margin-top: 50px;
@@ -153,9 +153,10 @@ figure:hover img {
   align-items: center;
   margin-bottom: 1rem;
 }
+
 .card1 {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -194,25 +195,23 @@ figure:hover img {
   position: absolute;
   left: 0;
 }
+
 .wrapper::before {
   top: 0;
   height: 100%;
-  background-image: linear-gradient(
-    to top,
-    transparent 46%,
-    rgba(12, 13, 19, 0.5) 68%,
-    rgba(12, 13, 19) 97%
-  );
+  background-image: linear-gradient(to top,
+      transparent 46%,
+      rgba(12, 13, 19, 0.5) 68%,
+      rgba(12, 13, 19) 97%);
 }
+
 .wrapper::after {
   bottom: 0;
   opacity: 1;
-  background-image: linear-gradient(
-    to bottom,
-    transparent 46%,
-    rgba(12, 13, 19, 0.5) 68%,
-    rgba(12, 13, 19) 97%
-  );
+  background-image: linear-gradient(to bottom,
+      transparent 46%,
+      rgba(12, 13, 19, 0.5) 68%,
+      rgba(12, 13, 19) 97%);
 }
 
 .card1:hover .wrapper::before,
@@ -223,12 +222,14 @@ figure:hover img {
 .card1:hover .wrapper::after {
   height: 120px;
 }
+
 .title {
+  position: relative;
+  top: 6rem;
   width: 100%;
   transition: transform 0.5s;
-  position: relative;
-  /* left: -45%; */
 }
+
 .card1:hover .title {
   transform: translate3d(0%, -50px, 100px);
 }
@@ -237,9 +238,10 @@ figure:hover img {
   width: 100%;
   opacity: 0;
   transition: all 0.5s;
-  position: relative;
-  /* left: 6.7rem; */
+  position: absolute;
   z-index: -1;
+  /* left: 100px;
+  top: 100px; */
 }
 
 .card1:hover .character {

@@ -38,7 +38,11 @@ export default function InteractiveImage({
           <img src={imageLink} className="cover-image" />
         </div>
         {childImages.map((ci) => (
-          <img className={ci.imageClass} src={ci.imageLink} />
+          <img
+            className="character"
+            src={ci.imageLink}
+            style={{ width: ci.width, left: ci.leftIndex, top: ci.topIndex }}
+          />
         ))}
         {/* <img
           src="https://i.ibb.co/tpbR98p/image-14-removebg-preview.png"

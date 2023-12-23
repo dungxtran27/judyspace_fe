@@ -9,7 +9,7 @@ import {
   Col,
   Container,
   Form,
-  FormControl,
+  // FormControl,
   Image,
   Modal,
   ModalBody,
@@ -19,11 +19,27 @@ import "../css/BlogList.css";
 import { Link, useNavigate } from "react-router-dom";
 import { userGlobe } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBank, faCoffee, faLeaf } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBank,
+  faCoffee,
+  faFilter,
+  faFire,
+  faSort,
+  faList,
+} from "@fortawesome/free-solid-svg-icons";
+import { Grid } from "react-feather";
+import {
+  Pagination,
+  Stack,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
 export default function BlogList() {
   const [BlogListPopula, setBloglistPopula] = useState([]);
-  const [BlogListPage, setBlogListPage] = useState([]);
-  const [pageSize, setPageSize] = useState(4);
+  const [BlogListPage, setBlogListPage] = useState({});
+  const [pageSize, setPageSize] = useState(6);
   const [pageIndex, setPageIndex] = useState(0);
   const [searchName, setSearchName] = useState("");
   const [sortType, setSortType] = useState("latest");
@@ -32,7 +48,7 @@ export default function BlogList() {
   const [blogIdForComment, setBlogIdForComment] = useState(0);
   const [like, setLike] = useState(1);
   const [newcmt, setNewcmt] = useState(1);
-
+  const [isGrid, setIsGrid] = useState(true);
   const token = localStorage.getItem("accessToken");
   const userCurr = useContext(userGlobe);
   //list popular
@@ -69,6 +85,11 @@ export default function BlogList() {
     } else {
       setSortType("oldest");
     }
+    setPageIndex(0);
+  };
+  const setTag = (tagId) => {
+    setTagId(tagId);
+    setPageIndex(0);
   };
   //search
   // const submitSearch = () => {
@@ -85,27 +106,6 @@ export default function BlogList() {
     }
   };
   //list paginated
-  const refreshAccessToken = async () => {
-    fetch("http://localhost:8080/api/auth/refreshToken", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      if (response.status === 200) {
-        response.json().then((data) => {
-          localStorage.setItem("accessToken", data.value);
-          console.log("refreshed: " + data.value);
-        });
-      } else {
-        if (response.status === 401) {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-        }
-      }
-    });
-  };
   useEffect(() => {
     const fetchData = async () => {
       const head = {
@@ -131,12 +131,9 @@ export default function BlogList() {
             headers: head,
           }
         );
-        if (response.status === 200) {
-          setMaxLoadMore(response.data.last);
-          setBlogListPage(response.data.content);
-        } else if (response.status === 401) {
-          await refreshAccessToken();
-        }
+        setMaxLoadMore(response.data.last);
+        setBlogListPage(response.data);
+        // console.log(BlogListPage.content);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -247,6 +244,24 @@ export default function BlogList() {
         });
     }
   }
+  const debugging = () => {
+    console.log(BlogListPage.content);
+  };
+  const toogleDisplayMode = (id) => {
+    const clickedButton = document.getElementById(id);
+    clickedButton.classList.add("selectedDisplayMode");
+    if (id === "gridDisplay") {
+      const listButton = document.getElementById("listDisplay");
+      listButton.classList.remove("selectedDisplayMode");
+      setIsGrid(true);
+      // setPageSize(9);
+    } else {
+      const gridButton = document.getElementById("gridDisplay");
+      gridButton.classList.remove("selectedDisplayMode");
+      setIsGrid(false);
+      // setPageSize(6);
+    }
+  };
   return (
     <DefaultTemplate>
       <Container>
@@ -318,135 +333,318 @@ export default function BlogList() {
         </Row>
         <Row className="paginatedBlogList ">
           <Col xs={8} lg={9} className="blogListpaginate">
-            <div className="filter">
-              <button className="buttonFilter" onClick={(e) => setsort()}>
-                {sortType == "latest" ? (
-                  <div className="filter-icon">
-                    <p>Oldest</p>
-                  </div>
-                ) : (
-                  <div className="filter-icon">
-                    <p>Latest</p>
-                    <img src="./new.png" />
-                  </div>
-                )}
-              </button>
-
-              <div className="dropdown">
-                <button className="dropbtn">
-                  <p>Popular </p>
-                  <img src="./right-arrow.png" />
-                </button>
-                <div className="dropdown-content">
-                  <a
-                    onClick={(e) => {
-                      setSortType("popularity24h");
-                    }}
-                  >
-                    24 Hours
-                  </a>
-                  <a
-                    onClick={(e) => {
-                      setSortType("popularityWeek");
-                    }}
-                  >
-                    Week
-                  </a>
-                  <a
-                    onClick={(e) => {
-                      setSortType("popularityAllTime");
-                    }}
-                  >
-                    All
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="tagFilter">
-              <div className="tagIdFilter" onClick={(e) => setTagId(null)}>
-                All
-              </div>
-              <div className="tagIdFilter" onClick={(e) => setTagId(1)}>
-                The Talk
-              </div>
-              <div className="tagIdFilter" onClick={(e) => setTagId(2)}>
-                My Story
-              </div>
-            </div>
-            {BlogListPage.map((bp) => (
-              <div
-                className="blog-cardPopularList list  aninek"
-                key={bp.blogId}
-              >
-                <div className="metaPopularList">
-                  <div
-                    className="photoPopularList"
+            <Row style={{ display: "flex !important" }}>
+              <div className="blogAction">
+                <FontAwesomeIcon className="blogActionIcon" icon={faFilter} />{" "}
+                <FormControl
+                  style={{ width: "200px", display: "inline-block" }}
+                >
+                  <InputLabel
+                    id="tagIdLabel"
                     style={{
-                      background: `url(${bp.blogThumbnail}) center / cover no-repeat`,
+                      width: "140px",
+                      color: "#e4a46c",
+                      borderRadius: "15px",
+                      display: "flex",
+                      alignContent: "top",
+                      position: "relative",
+                      top: "15px",
                     }}
-                  ></div>
-                  <ul className="detailsPopularList">
-                    <li className="authorPopularList">- waozouq</li>
-                    <li className="datePopularList">
-                      - {new Date(bp.createDate * 1000).toDateString()}
-                    </li>
-                  </ul>
-                </div>
-                <div className="descriptionPopularList">
-                  <Link to={"/blog/blogDetail/" + bp.blogId}>
-                    <h1>{bp.title}</h1>
-                  </Link>
-
-                  <p className="caption-blog">{bp.caption}</p>
-                  <p className="read-morePopularList">
-                    <Link to={"/blog/blogDetail/" + bp.blogId}>Read More</Link>
-                  </p>
-                  <div className="icon-social-blog">
-                    <span>
-                      <img src="./eye1.png" />
-                      <span>99+</span>
-                    </span>
-                    <span>
-                      <img
-                        src="./comment1.png"
-                        onClick={(e) => handleShow(bp.blogId)}
-                      />
-                      <span>{bp.commentSetSize}</span>
-                    </span>
-                    <span>
-                      <span>
-                        {bp.upvotedByCurrentUser ? (
-                          <img
-                            onClick={(e) => deleteUpvoteBlog(bp.blogId)}
-                            src="./love4.png"
-                          />
-                        ) : (
-                          <img
-                            onClick={(e) => upvoteBlog(bp.blogId)}
-                            src="./love3.png"
-                          />
-                        )}
-
-                        <span> {bp.upvoteUserSetSize}</span>
-                      </span>
-                    </span>
-                  </div>
-                </div>
+                  >
+                    Thể loại
+                  </InputLabel>
+                  <Select
+                    labelId="tagIdLabel"
+                    id="tagIdFilter"
+                    value={tagId}
+                    label="Thể loại"
+                    onChange={(e) => setTag(e.target.value)}
+                    style={{
+                      width: "160px",
+                      height: "35px",
+                      color: "#e4a46c",
+                      borderRadius: "15px",
+                    }}
+                    sx={{
+                      "&:hover": {
+                        "&& fieldset": {
+                          border: "2px solid #e4a46c ",
+                        },
+                      },
+                    }}
+                  >
+                    <MenuItem value={null}>All</MenuItem>
+                    <MenuItem value={1}>My Story</MenuItem>
+                    <MenuItem value={2}>The Talk</MenuItem>
+                  </Select>
+                </FormControl>
+                <FontAwesomeIcon className="blogActionIcon" icon={faSort} />{" "}
+                <FormControl
+                  style={{ width: "150px", display: "inline-block" }}
+                >
+                  <InputLabel
+                    id="tagIdLabel"
+                    style={{
+                      width: "140px",
+                      color: "#e4a46c",
+                      borderRadius: "15px",
+                      display: "flex",
+                      alignContent: "top",
+                      position: "relative",
+                      top: "15px",
+                    }}
+                  >
+                    Sắp xếp
+                  </InputLabel>
+                  <Select
+                    labelId="tagIdLabel"
+                    id="tagIdFilter"
+                    value={sortType}
+                    label="Thể loại"
+                    onChange={(e) => setSortType(e.target.value)}
+                    style={{
+                      width: "160px",
+                      height: "35px",
+                      color: "#e4a46c",
+                      borderRadius: "15px",
+                    }}
+                    sx={{
+                      "&:hover": {
+                        "&& fieldset": {
+                          border: "2px solid #e4a46c ",
+                        },
+                      },
+                    }}
+                  >
+                    <MenuItem value={"latest"}>Mới nhất</MenuItem>
+                    <MenuItem value={"oldest"}>Cũ nhất</MenuItem>
+                    <MenuItem value={"popularity24h"}>
+                      <FontAwesomeIcon icon={faFire} /> Hot ngày
+                    </MenuItem>
+                    <MenuItem value={"popularityWeek"}>
+                      <FontAwesomeIcon icon={faFire} /> Hot tuần
+                    </MenuItem>
+                    <MenuItem value={"popularityAllTime"}>
+                      <FontAwesomeIcon icon={faFire} /> Top tương tác
+                    </MenuItem>
+                  </Select>
+                </FormControl>
               </div>
-            ))}
+              <div className="toogleDisplayMode">
+                <span
+                  id="listDisplay"
+                  className="toogleIcon"
+                  onClick={(e) => toogleDisplayMode(e.currentTarget.id)}
+                >
+                  <FontAwesomeIcon icon={faList} />
+                </span>
+                <span
+                  id="gridDisplay"
+                  className="toogleIcon daheo selectedDisplayMode"
+                  onClick={(e) => toogleDisplayMode(e.currentTarget.id)}
+                >
+                  <Grid size={20} />
+                </span>
+              </div>
+            </Row>
+            <div className="blogsContainer">
+              {isGrid ? (
+                <Row>
+                  {BlogListPage.content?.map((bp) => (
+                    <div
+                      className="gridCard col-sm-12 col-lg-6"
+                      key={bp.blogId}
+                    >
+                      <div
+                        className="gridCardContent"
+                        style={{
+                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${bp.blogThumbnail})`,
+                        }}
+                      >
+                        <div className="gridCardHeader">
+                          <h6>Judy the marketer</h6>
+                          <p className="gridCardDate">
+                            {new Date(bp.createDate * 1000).toLocaleDateString(
+                              "vn-VN",
+                              {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              }
+                            )}
+                          </p>
+                        </div>
+                        <h3 className="gridCardTitle">{bp.title}</h3>
+                        <div className="gridCardBody">
+                          <p className="gridBlogCaption">{bp.caption}</p>
+                          {/* <div className="gridBlogHashTag">
+                            {bp.blogHashTagsSet.map(
+                              (tag, index) =>
+                                index > 0 && (
+                                  <span key={index}>
+                                    #{tag}&nbsp;
+                                  </span>
+                                )
+                            )}
+                          </div> */}
+
+                          <a
+                            className="hehe"
+                            href={"/blog/blogDetail/" + bp.blogId}
+                          >
+                            Read More
+                          </a>
+                        </div>
+                        <div className="gridCardFooter">
+                          <div
+                            style={{
+                              width: "87%",
+                              margin: "0 auto",
+                              height: "1px",
+                              backgroundColor: "white",
+                            }}
+                          ></div>
+                          <div className="grid-icon-social-blog">
+                            <span>
+                              <span className="gridSocial">
+                                <img src="./eye1.png" />
+                                <span>99+</span>
+                              </span>
+                              <span className="gridSocial">
+                                <img
+                                  src="./comment1.png"
+                                  onClick={(e) => handleShow(bp.blogId)}
+                                />
+                                <span>{bp.commentSetSize}</span>
+                              </span>
+                            </span>
+                            <span>
+                              <span>
+                                {bp.upvotedByCurrentUser ? (
+                                  <img
+                                    onClick={(e) => deleteUpvoteBlog(bp.blogId)}
+                                    src="./love2.png"
+                                  />
+                                ) : (
+                                  <img
+                                    onClick={(e) => upvoteBlog(bp.blogId)}
+                                    src="./love.png"
+                                  />
+                                )}
+
+                                <span> {bp.upvoteUserSetSize}</span>
+                              </span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Row>
+              ) : (
+                BlogListPage.content?.map((bp) => (
+                  <div
+                    className="blog-cardPopularList list aninek"
+                    key={bp.blogId}
+                  >
+                    <div className="metaPopularList">
+                      <div
+                        className="photoPopularList"
+                        style={{
+                          background: `url(${bp.blogThumbnail}) center / cover no-repeat`,
+                        }}
+                      ></div>
+                      <ul className="detailsPopularList">
+                        <li className="authorPopularList">- waozouq</li>
+                        <li className="datePopularList">
+                          - {new Date(bp.createDate * 1000).toDateString()}
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="descriptionPopularList">
+                      <Link to={"/blog/blogDetail/" + bp.blogId}>
+                        <h1>{bp.title}</h1>
+                      </Link>
+
+                      <p className="caption-blog">{bp.caption}</p>
+                      <p className="read-morePopularList">
+                        <Link to={"/blog/blogDetail/" + bp.blogId}>
+                          Read More
+                        </Link>
+                      </p>
+                      <div className="icon-social-blog">
+                        <span>
+                          <img src="./eye1.png" />
+                          <span>99+</span>
+                        </span>
+                        <span>
+                          <img
+                            src="./comment1.png"
+                            onClick={(e) => handleShow(bp.blogId)}
+                          />
+                          <span>{bp.commentSetSize}</span>
+                        </span>
+                        <span>
+                          <span>
+                            {bp.upvotedByCurrentUser ? (
+                              <img
+                                onClick={(e) => deleteUpvoteBlog(bp.blogId)}
+                                src="./love4.png"
+                              />
+                            ) : (
+                              <img
+                                onClick={(e) => upvoteBlog(bp.blogId)}
+                                src="./love3.png"
+                              />
+                            )}
+
+                            <span> {bp.upvoteUserSetSize}</span>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* {debugging()} */}
             <Row xs={12} lg={4} className="btnRow">
-              <button className="buttonLoadmore" onClick={loadmore}>
+              {/* <button className="buttonLoadmore" onClick={loadmore}>
                 Load more
-              </button>
+              </button> */}
+              <Stack spacing={2} style={{ width: "100%" }}>
+                <Pagination
+                  count={BlogListPage.totalPages}
+                  variant="outlined"
+                  shape="rounded"
+                  onChange={(e, value) => setPageIndex(value - 1)}
+                />
+              </Stack>
+              <div className="pageSizeSet">
+                <p>
+                  Hiển thị{" "}
+                  <input
+                    type="number"
+                    className="form-control"
+                    defaultValue={pageSize}
+                    onChange={(e) => setPageSize(e.currentTarget.value)}
+                  />
+                  &nbsp; /{BlogListPage.totalElements} kết quả tìm được
+                </p>
+              </div>
             </Row>
           </Col>
           <Col xs={4} lg={3}>
             <Form className="related-blog">
-              <FormControl
-                className="blogSearch"
+              <input
+                type="text"
+                className="form-control blogSearch"
                 onChange={(e) => setSearchName(e.currentTarget.value)}
                 placeholder="search"
-              ></FormControl>
+              />
             </Form>
             <div className="card-container">
               {/* <span className="pro">PRO</span> */}
@@ -559,16 +757,18 @@ export default function BlogList() {
             <Form onSubmit={(e) => handleSubmitComment(e)}>
               <Row>
                 <Col xs={10}>
-                  <FormControl
-                    type="input"
+                  <input
+                    type="text"
                     ref={commentRef}
                     placeholder="enter your thought here"
-                  ></FormControl>
-                  <FormControl
+                    className="form-control"
+                  />
+                  <input
                     type="hidden"
                     value={blogIdForComment}
                     ref={blogIdRef}
-                  ></FormControl>
+                    className="form-control"
+                  />
                 </Col>
                 <Col xs={2}>
                   <Button variant="info" type="submit">
