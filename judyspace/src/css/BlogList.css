@@ -7,6 +7,12 @@
   --blogDate: #11236c;
   --nothover-btn: #749bc2;
   --hover-btn: #4682a9;
+  /* --color-over: #98a1d6; */
+  /* --color-over: #d6b598; */
+  --color-over: #3c649f;
+  /* --color-over: #83aff0; */
+  /* --color-over: #07d2ff; */
+  /* --color-over: #6ff8f1; */
 }
 
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css);
@@ -15,7 +21,7 @@
 
 .cardBlogList .wrapperBlogList {
   background-color: #fff;
-  min-height: 540px;
+  height: 560px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.2);
@@ -56,14 +62,16 @@
   display: none;
 }
 
-.cardBlogList input[type="checkbox"]:checked+.menu-content {
+.cardBlogList input[type="checkbox"]:checked + .menu-content {
   transform: translateY(-60px);
 }
 
 .dataBlogList {
-  background: linear-gradient(0deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(255, 255, 255, 0) 92%);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(255, 255, 255, 0) 92%
+  );
 }
 
 .authorBlogList {
@@ -262,7 +270,10 @@
   transition: margin 0.3s, opacity 0.3s;
 }
 
-.blog-cardPopularList .descriptionPopularList .read-morePopularList a:hover:after {
+.blog-cardPopularList
+  .descriptionPopularList
+  .read-morePopularList
+  a:hover:after {
   margin-left: 5px;
   opacity: 1;
 }
@@ -342,7 +353,7 @@
 }
 
 .buttonLoadmore {
-  background: #d6b598;
+  background: var(--color-over);
   padding: 10px 10px;
   border-radius: 10px;
   color: rgb(0, 0, 0);
@@ -368,19 +379,18 @@
   border-top: 1px solid black;
   background-color: #18191a;
   border-radius: 0 0 15px 15px;
-
 }
 
 .tagIdFilter {
   display: inline-block;
-  color: #D6b598;
+  color: var(--color-over);
   padding: 0.5rem 1rem;
   background-color: #18191a;
-  border: 1px solid #D6b598 !important;
+  border: 1px solid var(--color-over) !important;
 }
 
 .tagIdFilter:hover {
-  background-color: #D6b598;
+  background-color: var(--color-over);
   color: black;
 }
 
@@ -392,7 +402,7 @@
   border-radius: 1rem;
   margin: 5px 8px;
   background-color: #242526;
-  border: 1px solid #D6b598;
+  border: 1px solid var(--color-over);
 }
 
 .filter-icon {
@@ -400,7 +410,7 @@
   display: flex;
   height: 1.5rem;
   position: relative;
-  color: #D6b598;
+  color: var(--color-over);
 }
 
 .filter-icon img {
@@ -425,7 +435,7 @@
 }
 
 .buttonFilter:hover {
-  background-color: #D6b598;
+  background-color: var(--color-over);
 }
 
 .filter-icon:hover img {
@@ -534,9 +544,9 @@ p {
 
 .card-container {
   background-color: transparent;
-  border: 1px solid #D6b598;
+  border: 1px solid var(--color-over);
   box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
-  color: #D6b598;
+  color: var(--color-over);
   padding-top: 30px;
   position: relative;
   width: 350px;
@@ -546,7 +556,7 @@ p {
   margin-bottom: 30px !important;
 
   .donateLink {
-    background-color: #D6b598;
+    background-color: var(--color-over);
     padding: 10px 0;
     width: 40%;
     margin-top: 0 !important;
@@ -560,7 +570,7 @@ p {
   }
 
   .contactLink {
-    border: 1px solid #D6b598;
+    border: 1px solid var(--color-over);
     padding: 10px 0;
     width: 40% !important;
     margin-top: 0 !important;
@@ -581,12 +591,12 @@ p {
 }
 
 .blogSearch {
-  border: 1px solid #D6b598 !important;
+  border: 1px solid var(--color-over) !important;
 }
 
 .card-container .pro {
   color: #231e39;
-  background-color: #D6b598;
+  background-color: var(--color-over);
   border-radius: 3px;
   font-size: 14px;
   font-weight: bold;
@@ -597,7 +607,7 @@ p {
 }
 
 .card-container .round {
-  border: 1px solid #D6b598;
+  border: 1px solid var(--color-over);
   border-radius: 50%;
   padding: 7px;
   width: 7rem;
@@ -639,15 +649,13 @@ button.primary.ghost {
   }
 }
 
-
-
 .beacon a {
-  color: #D6b598 !important;
+  color: var(--color-over) !important;
 }
 
 .beacon {
   padding: 10px 15px;
-  border: 1px solid #D6b598;
+  border: 1px solid var(--color-over);
   background-color: #18191a;
   border-radius: 10px;
   margin: 0 5px;
@@ -655,7 +663,7 @@ button.primary.ghost {
 
 .sideHeader {
   width: 80%;
-  background-color: #d6b598;
+  background-color: var(--color-over);
   text-align: center;
   position: relative;
   top: -40px;
@@ -677,7 +685,6 @@ button.primary.ghost {
     width: 100%;
     height: 100%;
     object-fit: cover;
-
   }
 }
 /* @media screen and (max-width: 768px){

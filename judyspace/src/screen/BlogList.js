@@ -85,6 +85,27 @@ export default function BlogList() {
     }
   };
   //list paginated
+  const refreshAccessToken = async () => {
+    fetch("http://localhost:8080/api/auth/refreshToken", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          localStorage.setItem("accessToken", data.value);
+          console.log("refreshed: " + data.value);
+        });
+      } else {
+        if (response.status === 401) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+        }
+      }
+    });
+  };
   useEffect(() => {
     const fetchData = async () => {
       const head = {
@@ -110,9 +131,12 @@ export default function BlogList() {
             headers: head,
           }
         );
-        setMaxLoadMore(response.data.last);
-        setBlogListPage(response.data.content);
-        console.log(BlogListPage);
+        if (response.status === 200) {
+          setMaxLoadMore(response.data.last);
+          setBlogListPage(response.data.content);
+        } else if (response.status === 401) {
+          await refreshAccessToken();
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -484,16 +508,16 @@ export default function BlogList() {
                 </div>
                 <div className="contactLink">
                   <Image
-                  style={{border: "1px solid RGB(128 128 128)", borderRadius: "50px"}}
+                    style={{
+                      border: "1px solid RGB(128 128 128)",
+                      borderRadius: "50px",
+                    }}
                     className="contactIcon"
                     src="https://static.vecteezy.com/system/resources/thumbnails/016/716/450/small_2x/tiktok-icon-free-png.png"
                   />
                 </div>
                 <div className="contactLink">
-                  <Image
-                    className="contactIcon"
-                    src="./instaRounded.png"
-                  />
+                  <Image className="contactIcon" src="./instaRounded.png" />
                 </div>
                 <div className="contactLink">
                   <Image
