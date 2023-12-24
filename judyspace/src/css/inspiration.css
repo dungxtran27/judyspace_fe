@@ -60,7 +60,7 @@
   margin: 0 auto !important;
   position: relative;
   left: -10px;
-  background-color: rgb(19,20,21,0.721);
+  background-color: rgba(22, 22, 23, 0.936);
 }
 .menu-tab {
   display: flex;

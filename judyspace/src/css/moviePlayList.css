@@ -1,0 +1,17 @@
+.MoviePlayListContainer {
+    min-height: 600px !important;
+    width: 100%;
+}
+.playList {
+    /* height: 100px; */
+    width: 95%;
+    margin: 20px auto !important;
+    /* background-color: red; */
+    .playListNameIcon {
+        color: rgb(255, 225, 0) !important;
+    }
+    .movieCard{
+        background-color: red;
+        height: 100px;
+    }
+}
