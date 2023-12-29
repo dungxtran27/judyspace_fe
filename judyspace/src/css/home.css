@@ -1,8 +1,49 @@
-.banner {
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --text-white: white;
+  --text-grey: rgb(192, 192, 192);
+}
+.welcome-text {
+  font-weight: 500;
+  font-size: large;
+  color: var(--text-white);
+  background-color: rgb(46, 46, 138);
+  width: fit-content;
+  padding: 0.3rem 1rem;
+  text-align: center;
+  border: 1px solid rgb(189, 188, 188);
+  margin-bottom: 1rem;
+}
+.banner-home {
+  margin-top: 7rem !important;
 }
 .word,
 .postword {
-  color: white;
-  font: 700 normal 4rem "tahoma";
+  display: inline;
+  color: var(--text-white);
+  font: 700 normal 3rem "tahoma";
   text-shadow: 5px 2px #222324, 2px 4px #222324, 3px 5px #222324;
+}
+.banner-summary {
+  margin-top: 2rem;
+  color: var(--text-grey);
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.5rem;
+  word-spacing: 0.13rem;
+  letter-spacing: 0.5;
+}
+.banner-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.banner-image img {
+  width: 15rem;
+}
+.banner-text {
+  margin: 0 auto;
+}
+.word-flick-ctn {
+  height: 6rem;
 }
