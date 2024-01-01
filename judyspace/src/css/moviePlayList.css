@@ -2,16 +2,62 @@
     min-height: 600px !important;
     width: 100%;
 }
+
+.playListNameIcon {
+    color: rgb(255, 225, 0) !important;
+}
+
 .playList {
     /* height: 100px; */
     width: 95%;
     margin: 20px auto !important;
+
     /* background-color: red; */
-    .playListNameIcon {
-        color: rgb(255, 225, 0) !important;
+    .movieCard {
+
+        padding: 10px;
+
+        .movieThumnail {
+            height: 300px;
+            background-size: cover;
+        }
     }
-    .movieCard{
-        background-color: red;
-        height: 100px;
+
+}
+
+.moviesContainner {
+    display: flex;
+    flex-wrap: wrap;
+
+    .movieCard {
+        padding: 20px;
+        display: inline-block;
+        border: 1px solid #a6acb640;
+
+        .movieCardInner {
+            vertical-align: top;
+            width: 100%;
+
+            .cardText {
+                height: 150px;
+            }
+
+            .movieCategories {
+                display: flex;
+
+                span {
+                    padding: 5px 7px;
+                    color: white;
+                    border: 1px solid #3c649f;
+                    margin-right: 5px;
+                    border-radius: 5px;
+                    /* background-color: #3c649f */
+                }
+            }
+        }
+    }
+
+    .movieCard:hover {
+        border: 1px solid #3c649f;
     }
 }

@@ -31,7 +31,6 @@ figure figcaption {
   /* -webkit-mask: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   -webkit-mask-clip: text, padding-box; */
-  margin: -1px;
 }
 
 figure:hover figcaption {

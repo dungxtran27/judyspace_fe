@@ -24,7 +24,8 @@ export default function JwtRefreshing() {
             refreshAccessToken().then(() => {
               fetchData();
             });
-            // fetchData();
+  
+            console.log("da hell");
           }
           if (response.status === 417) {
             toast.error("đăng nhập đê bạn ê");

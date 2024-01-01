@@ -20,45 +20,43 @@ import BlogDetail from "./screen/BlogDetail";
 import InteractiveImage from "./testConnect/TestingInteractiveImage";
 import JwtRefreshing from "./testConnect/JwtRefreshing";
 import AddMovie from "./screen/AddMovies";
+import Inspiration from "./screen/Inspiration";
+import Music_Managing from "./screen/Music_Managing";
 export const userGlobe = createContext();
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");
   const [user, setUser] = useState();
   console.log(user);
-
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8080/api/users/getCurrentUserInfo",
-          {
-            method: "GET",
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (response.status === 200) {
-          const data = await response.json();
-          setUser(data);
-        } else if (response.status === 401) {
-          await refreshAccessToken();
-          fetchData();
-        } else if (response.status === 417) {
-          // window.location.href = "/login";
-        } else {
-          const errorData = await response.json();
-          console.log("vao roi");
-          console.log(errorData);
+      const response = await fetch(
+        "http://localhost:8080/api/users/getCurrentUserInfo",
+        {
+          method: "GET",
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            "Content-Type": "application/json",
+          },
         }
-      } catch (error) {
-        console.error("Error while fetching data:", error);
-      }
+      ).then((response) => {
+        if (response.status === 200) {
+          response.json().then((data) => {
+            setUser(data);
+          });
+        } else {
+          if (response.status === 401) {
+            refreshAccessToken().then(() => {
+              fetchData();
+            });
+  
+            console.log("da hell");
+          }
+          
+        }
+      });
     };
-
     fetchData();
   }, []);
 
@@ -130,6 +128,8 @@ function App() {
             path="/testingInteractiveImage"
             element={<InteractiveImage />}
           />
+          <Route path="/inspiration" element={<Inspiration/>}/>
+          <Route path="/musicManaging" element={<Music_Managing/>}/>
         </Routes>
         <ToastContainer
           position="top-right"

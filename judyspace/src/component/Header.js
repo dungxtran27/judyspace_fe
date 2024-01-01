@@ -64,11 +64,11 @@ const Header = () => {
               <Link to={"/portfolio"} className={isActive("/portfolio")}>
                 Portfolio
               </Link>
-              <Link to="/music" className={isActive("/music")}>
+              <Link to="/inspiration" className={isActive("/inspiration")}>
                 Inspiration
               </Link>
               {user === undefined ? (
-                <Link to="/login" className={isActive("/musicInspiration")}>
+                <Link to="/login" className={isActive("/login")}>
                   Login
                 </Link>
               ) : (
