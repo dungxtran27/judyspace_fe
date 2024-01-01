@@ -8,7 +8,12 @@
   font-weight: 500;
   font-size: large;
   color: var(--text-white);
-  background-color: rgb(46, 46, 138);
+  background: linear-gradient(
+    40deg,
+    rgb(45, 14, 83) 0%,
+    rgb(124, 124, 219) 35%,
+    rgb(11, 23, 155) 100%
+  );
   width: fit-content;
   padding: 0.3rem 1rem;
   text-align: center;
@@ -46,4 +51,117 @@
 }
 .word-flick-ctn {
   height: 6rem;
+}
+.para {
+  scale: 0.8;
+  opacity: 0;
+  display: flex;
+  width: 20vh;
+  padding: 20px;
+  margin: 10vh auto;
+  animation: appear-para linear;
+  animation-timeline: view();
+  animation-range-start: 100px;
+  animation-range-end: 900px;
+}
+@keyframes appear-para {
+  0% {
+    scale: 0.6;
+    opacity: 0;
+  }
+  20% {
+    scale: 0.6;
+    opacity: 0;
+  }
+  55% {
+    scale: 1;
+    opacity: 1;
+  }
+  65% {
+    scale: 1;
+    opacity: 1;
+  }
+  80% {
+    scale: 0.6;
+    opacity: 0;
+  }
+  100% {
+    scale: 0.6;
+    opacity: 0;
+  }
+}
+
+.para:first-child {
+  margin-top: 2vh;
+}
+
+.chibi {
+  width: 200px;
+}
+.text {
+  margin-left: 30px;
+}
+
+.inspi-home {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inspicard {
+  opacity: 0;
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  text-align: center;
+  border-radius: 1.5rem;
+  animation: slide-fade-in 1s linear 0s 1 normal forwards;
+  animation-timeline: view();
+  animation-range-start: 100px;
+  animation-range-end: 900px;
+}
+@keyframes slide-fade-in {
+  0% {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-0200px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.inspicard:nth-child(1) {
+  background-color: #ff9999; /* red */
+  z-index: 333;
+}
+
+.inspicard:nth-child(2) {
+  background-color: #99ff99; /* green */
+  animation-delay: 300ms;
+  z-index: 332;
+}
+
+.inspicard:nth-child(3) {
+  background-color: #9999ff; /* blue */
+  animation-delay: 600ms;
+  z-index: 331;
+}
+.inspicard:nth-child(1) p {
+  color: rgb(10, 79, 253);
+}
+
+.inspicard:nth-child(2) p {
+  color: rgb(250, 7, 7);
+}
+
+.inspicard:nth-child(3) p {
+  color: rgb(253, 237, 7);
+}
+
+.inspicard p {
+  color: rgb(0, 0, 0);
+  font-size: 1.5rem;
+  font-weight: 500;
 }

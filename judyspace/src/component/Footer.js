@@ -4,8 +4,8 @@ import Navbar from "react-bootstrap/Navbar";
 
 const Footer = () => {
   return (
-    <Navbar expand="lg" className="footer">
-      <Container>
+    <Navbar expand="lg">
+      <Container className="footer">
         <Row className="footer-up">
           <Col xs={8} className="footer-left ">
             <div className="footer-logo">

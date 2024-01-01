@@ -5,6 +5,11 @@
   --footer-text-grey: #cacaca;
 }
 .footer {
+  margin-top: 2rem;
+  padding-top: 1rem !important;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background-color: rgba(61, 43, 78, 0.281);
 }
 .footer-down {
   position: absolute;
