@@ -54,14 +54,15 @@
 .navbar-nav a {
   padding: 0.5em;
   padding-top: 0.5em;
-
+  font-size: 1.3rem;
   text-decoration: none;
-  letter-spacing: 0.15em;
-
+  letter-spacing: 0.13em;
+  color: rgb(225, 219, 219);
   display: inline-block;
   padding: 15px 20px;
   position: relative;
 }
+
 .navbar-nav a:after {
   background: none repeat scroll 0 0 transparent;
   bottom: 0;
@@ -79,7 +80,6 @@
   left: 0;
 }
 .navbar {
-
 }
 .header-avatar {
   color: #fff;

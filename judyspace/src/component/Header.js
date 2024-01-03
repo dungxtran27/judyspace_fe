@@ -42,7 +42,7 @@ const Header = () => {
   };
 
   return (
-    <Navbar expand="lg" sticky="top">
+    <Navbar expand="lg">
       <Container>
         <Col xs={6} className="header-left">
           <Link to={"/"}>

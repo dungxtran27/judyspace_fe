@@ -1,20 +1,17 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-export default function JwtRefreshing() {
+export default function JwtRefreshing(api) {
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        "http://localhost:8080/api/users/getCurrentUserInfo",
-        {
-          method: "GET",
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      ).then((response) => {
+      const response = await fetch(api, {
+        method: "GET",
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
         if (response.status === 200) {
           response.json().then((data) => {
             console.log(data);
@@ -24,7 +21,7 @@ export default function JwtRefreshing() {
             refreshAccessToken().then(() => {
               fetchData();
             });
-  
+
             console.log("da hell");
           }
           if (response.status === 417) {

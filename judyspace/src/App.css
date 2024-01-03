@@ -1,8 +1,8 @@
 body {
-  background-image: url("../img/bg_3.jpg");
+  background-image: url("../img/banner-bg.png");
 
-  background-size: auto
-    /* background-attachment: fixed; */
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 a {
