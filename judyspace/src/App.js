@@ -27,82 +27,9 @@ export const userGlobe = createContext();
 function App() {
   const accessToken = localStorage.getItem("accessToken");
   const [user, setUser] = useState();
-  console.log(user);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        "http://localhost:8080/api/users/getCurrentUserInfo",
-        {
-          method: "GET",
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      ).then((response) => {
-        if (response.status === 200) {
-          response.json().then((data) => {
-            setUser(data);
-          });
-        } else {
-          if (response.status === 401) {
-            refreshAccessToken().then(() => {
-              fetchData();
-            });
-  
-            console.log("da hell");
-          }
-          
-        }
-      });
-    };
-    fetchData();
-  }, []);
-
-  // useEffect(() => {
-  //   if (accessToken === null) {
-  //   } else {
-  //     fetch("http://localhost:8080/api/users/getCurrentUserInfo", {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //       .then((response) => {
-  //         return response.json();
-  //       })
-  //       .then((data) => {
-  //         setUser(data);
-  //       })
-  //       .catch((error) => {
-  //         console.log("Fetch error: ", error);
-  //       });
-  //   }
-  // }, []);
-  const refreshAccessToken = async () => {
-    fetch("http://localhost:8080/api/auth/refreshToken", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      if (response.status === 200) {
-        response.json().then((data) => {
-          localStorage.setItem("accessToken", data.value);
-          console.log("refreshed: " + data.value);
-        });
-      } else {
-        if (response.status === 401) {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-        }
-      }
-    });
-  };
-
+  if (accessToken !== null) {
+    JwtRefreshing("http://localhost:8080/api/users/getCurrentUserInfo");
+  }
   return (
     <userGlobe.Provider value={user}>
       <BrowserRouter>
@@ -128,8 +55,8 @@ function App() {
             path="/testingInteractiveImage"
             element={<InteractiveImage />}
           />
-          <Route path="/inspiration" element={<Inspiration/>}/>
-          <Route path="/musicManaging" element={<Music_Managing/>}/>
+          <Route path="/inspiration" element={<Inspiration />} />
+          <Route path="/musicManaging" element={<Music_Managing />} />
         </Routes>
         <ToastContainer
           position="top-right"

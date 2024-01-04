@@ -104,22 +104,23 @@
 
 .inspi-home {
   display: flex;
-  justify-content: space-between;
+  background-color: transparent;
+  justify-content: space-around;
 }
 
 .inspicard {
-  opacity: 0;
+  /* opacity: 0; */
   flex: 1;
-  margin: 10px;
+  /* margin: 10px; */
   padding: 20px;
   text-align: center;
-  border-radius: 1.5rem;
+  /* border-radius: 1.5rem; */
   animation: slide-fade-in 1s linear 0s 1 normal forwards;
   animation-timeline: view();
   animation-range-start: 100px;
   animation-range-end: 900px;
 }
-@keyframes slide-fade-in {
+/* @keyframes slide-fade-in {
   0% {
     opacity: 0;
     filter: blur(5px);
@@ -130,7 +131,7 @@
     opacity: 1;
     transform: translateX(0);
   }
-}
+} */
 
 .inspicard:nth-child(1) {
   background-color: #ff9999; /* red */
@@ -164,4 +165,26 @@
   color: rgb(0, 0, 0);
   font-size: 1.5rem;
   font-weight: 500;
+}
+.static {
+  height: 100vh;
+}
+
+.panel {
+  height: 100vh;
+}
+.description {
+  background-color: red;
+}
+.introHome {
+  background-color: green;
+}
+.inspicardHome {
+  background-color: blue;
+}
+.tiktok-videos {
+  background-color: yellow;
+}
+.blogHome {
+  background-color: violet;
 }

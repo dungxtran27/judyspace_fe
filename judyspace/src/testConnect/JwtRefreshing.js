@@ -22,11 +22,11 @@ export default function JwtRefreshing(api) {
               fetchData();
             });
 
-            console.log("da hell");
+            console.log("refresh done");
           }
           if (response.status === 417) {
             toast.error("đăng nhập đê bạn ê");
-            window.location.href = "/login";
+            // window.location.href = "/login";
           } else {
             response.json().then((data) => {
               console.log("vao roi");
