@@ -25,7 +25,7 @@ export default function AddMovie() {
   const [imageParagraphs, setImageParagraphs] = useState([]);
   const token = localStorage.getItem("accessToken");
   const handleSubmitMovie = (e) => {
-    console.log("haha");
+    
     const head = {
       "Content-Type": "application/json",
       Accept: "application/json",

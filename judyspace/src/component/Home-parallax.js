@@ -24,17 +24,26 @@ const HomeParallax = () => {
           pin: true,
           pinSpacing: false,
         });
+        ScrollTrigger.create({
+          snap: false, // snap whole page to the closest section!
+        });
       });
     }
   }, []);
   return (
-    <div>
-      <div ref={panelRef} className="panel bannerHome pin-panel">
+    <div className="container-home">
+      {/* <div ref={panelRef} className="  panel bannerHome pin-panel">
         <Container>
           <Banner />
         </Container>
-      </div>
-      <section ref={panelRef} className="panel introHome pin-panel">
+      </div> */}
+      <Banner />
+      <Intro />
+      <InspiCard />
+      <TiktokCarousel />
+      <BlogCard />
+      <Footer />
+      {/* <section ref={panelRef} className="panel introHome pin-panel">
         <Container>
           <Intro />
         </Container>
@@ -56,7 +65,7 @@ const HomeParallax = () => {
       </section>
       <section>
         <Footer />
-      </section>
+      </section> */}
     </div>
   );
 };
